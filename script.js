@@ -145,3 +145,22 @@ toggle.addEventListener('click', () => {
   toggle.textContent = isLight ? '☀️' : '🌙';
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
 });
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', (e) => {
+  const value = e.target.value.toLowerCase();
+
+  // Search patches
+  document.querySelectorAll('.update-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(value) ? 'block' : 'none';
+  });
+
+  // Search news cards
+  document.querySelectorAll('.news-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(value) ? 'block' : 'none';
+  });
+
+  // Optional: hide table rows if you want search to filter tables too
+});
