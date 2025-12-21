@@ -1,22 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const latestDiv = document.getElementById('latest-updates');
-  const tableBody = document.getElementById('patch-table-body');
-  const patchContent = document.getElementById('patch-content');
+  // Helper function to create clean slugs
+  function createSlug(text) {
+    return text
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/\./g, '-')
+      .replace(/[^a-z0-9-]/g, '');
+  }
 
   // Main page (index.html)
-  if (latestDiv && tableBody) {
+  const latestDiv = document.getElementById('latest-updates');
+  const tableBody = document.getElementById('patch-table-body');
+  const latestNewsDiv = document.getElementById('latest-news');
+  const newsTableBody = document.getElementById('news-table-body');
+
+  if (latestDiv && tableBody) { // We're on index.html
+    // Load patches
     fetch('patches.json')
-      .then(res => {
-        if (!res.ok) throw new Error('patches.json not found');
-        return res.json();
-      })
+      .then(res => res.json())
       .then(patches => {
         latestDiv.innerHTML = '';
         tableBody.innerHTML = '';
 
-        // Latest updates
         patches.filter(p => p.isLatest).forEach(patch => {
-          const slug = patch.version.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-').replace(/[^a-z0-9-]/g, '');
+          const slug = createSlug(patch.version);
           const card = document.createElement('div');
           card.className = 'update-card';
           card.innerHTML = `
@@ -27,9 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
           latestDiv.appendChild(card);
         });
 
-        // Full table
         patches.forEach(patch => {
-          const slug = patch.version.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-').replace(/[^a-z0-9-]/g, '');
+          const slug = createSlug(patch.version);
           const row = document.createElement('tr');
           row.innerHTML = `
             <td>${patch.version}</td>
@@ -40,26 +46,53 @@ document.addEventListener('DOMContentLoaded', () => {
           tableBody.appendChild(row);
         });
       })
-      .catch(err => {
-        console.error(err);
-        if (latestDiv) latestDiv.innerHTML = '<p style="color:red;">Error loading patches.</p>';
-      });
+      .catch(err => console.error('Patches error:', err));
+
+    // Load news
+    fetch('news.json')
+      .then(res => res.json())
+      .then(news => {
+        if (latestNewsDiv) latestNewsDiv.innerHTML = '';
+        if (newsTableBody) newsTableBody.innerHTML = '';
+
+        news.filter(n => n.isLatest).forEach(item => {
+          const slug = createSlug(item.title);
+          const card = document.createElement('div');
+          card.className = 'news-card';
+          card.innerHTML = `
+            <h3>${item.title}</h3>
+            <p>${item.date}</p>
+            <p>${item.summary}</p>
+            <a href="news.html?id=${slug}">Read Full News</a>
+          `;
+          latestNewsDiv.appendChild(card);
+        });
+
+        news.forEach(item => {
+          const slug = createSlug(item.title);
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${item.title}</td>
+            <td>${item.date}</td>
+            <td>${item.summary}</td>
+            <td><a href="news.html?id=${slug}">Read More</a></td>
+          `;
+          newsTableBody.appendChild(row);
+        });
+      })
+      .catch(err => console.error('News error:', err));
   }
 
   // Patch detail page (patches.html?v=...)
+  const patchContent = document.getElementById('patch-content');
   if (patchContent) {
     const urlParams = new URLSearchParams(window.location.search);
     const slug = urlParams.get('v');
-
     if (slug) {
       fetch('patches.json')
         .then(res => res.json())
         .then(patches => {
-          const patch = patches.find(p => {
-            const pSlug = p.version.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-').replace(/[^a-z0-9-]/g, '');
-            return pSlug === slug;
-          });
-
+          const patch = patches.find(p => createSlug(p.version) === slug);
           if (patch) {
             document.title = `Arc Raiders Patch Notes - ${patch.version}`;
             patchContent.querySelector('h2').textContent = `${patch.version} - ${patch.date}`;
@@ -70,11 +103,31 @@ document.addEventListener('DOMContentLoaded', () => {
             patchContent.innerHTML = '<p>Patch not found.</p>';
           }
         })
-        .catch(() => {
-          patchContent.innerHTML = '<p>Error loading patch details.</p>';
-        });
-    } else {
-      patchContent.innerHTML = '<p>No patch selected. Go back to <a href="index.html">Home</a>.</p>';
+        .catch(() => patchContent.innerHTML = '<p>Error loading patch.</p>');
+    }
+  }
+
+  // News detail page (news.html?id=...)
+  const newsContent = document.getElementById('news-content');
+  if (newsContent) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('id');
+    if (slug) {
+      fetch('news.json')
+        .then(res => res.json())
+        .then(news => {
+          const item = news.find(n => createSlug(n.title) === slug);
+          if (item) {
+            document.title = `Arc Raiders News - ${item.title}`;
+            newsContent.querySelector('h2').textContent = item.title;
+            newsContent.querySelector('.meta').textContent = `Posted: ${item.date}`;
+            newsContent.querySelector('.news-content').innerHTML = item.fullContent || '<p>No details available.</p>';
+            newsContent.querySelector('.button').href = item.link;
+          } else {
+            newsContent.innerHTML = '<p>News item not found.</p>';
+          }
+        })
+        .catch(() => newsContent.innerHTML = '<p>Error loading news.</p>');
     }
   }
 });
