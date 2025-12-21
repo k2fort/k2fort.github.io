@@ -104,4 +104,35 @@ footer {
   margin-top: 1rem;
 }
 .button:hover { background: #00aaff; }
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 60px;                /* Adjust size as needed */
+  width: auto;
+  border-radius: 50%;          /* Optional: circular logo */
+  object-fit: contain;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  header .container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .logo-wrapper {
+    justify-content: center;
+  }
+}
+
 
