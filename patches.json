@@ -4,14 +4,16 @@
     "date": "2025-12-18",
     "keyChanges": "Blueprint drop rates adjusted, Hidden Bunker re-enabled, interact spam fix, quest item spawns fixed.",
     "link": "https://arcraiders.com/news/hotfix-dec-18",
-    "isLatest": true
+    "isLatest": true,
+    "fullNotes": "<h3>Key Changes in Hotfix 1.7.2</h3><ul><li>Blueprint drop rates slightly lowered (still higher than pre-1.7.0)</li><li>Hidden Bunker re-enabled</li><li>Fix for interact spam on bad connections</li><li>Indoor Cold Snap damage prevented</li><li>Quest items now spawn correctly</li></ul><p>Full details on the official site.</p>"
   },
   {
     "version": "Cold Snap 1.7.0",
     "date": "2025-12-16",
     "keyChanges": "New Cold Snap condition, Flickering Flames event, skill tree resets, weapon buffs, 100+ fixes.",
     "link": "https://arcraiders.com/news/cold-snap-patch-notes",
-    "isLatest": true
+    "isLatest": true,
+    "fullNotes": "<h3>Cold Snap Update Highlights</h3><p>New winter map condition with blizzards and freezing effects.</p><ul><li>Flickering Flames event</li><li>Free Goalie Raider Deck (Dec 26)</li><li>Skill tree resets now cost 2k Coins per point</li><li>ADS toggle added</li><li>Buffs to Bettina/Rattler weapons</li></ul><p>And over 100 bug fixes!</p>"
   },
   {
     "version": "1.6.0",
@@ -20,4 +22,5 @@
     "link": "https://steamcommunity.com/games/1808500/announcements/detail/527614009105449110",
     "isLatest": false
   }
+
 ]
