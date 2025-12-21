@@ -1,115 +1,80 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Only run on main page (index.html)
-  if (!window.location.pathname.includes('/patches/')) {
-    const latestDiv = document.getElementById('latest-updates');
-    const tableBody = document.getElementById('patch-table-body');
+  const latestDiv = document.getElementById('latest-updates');
+  const tableBody = document.getElementById('patch-table-body');
+  const patchContent = document.getElementById('patch-content');
 
-    if (!latestDiv || !tableBody) {
-      console.error('Missing HTML elements on main page!');
-      return;
-    }
-
+  // Main page (index.html)
+  if (latestDiv && tableBody) {
     fetch('patches.json')
-      .then(response => {
-        if (!response.ok) throw new Error(`patches.json not found - Status: ${response.status}`);
-        return response.json();
+      .then(res => {
+        if (!res.ok) throw new Error('patches.json not found');
+        return res.json();
       })
       .then(patches => {
         latestDiv.innerHTML = '';
         tableBody.innerHTML = '';
 
-        // Generate clean slugs and populate latest updates
+        // Latest updates
         patches.filter(p => p.isLatest).forEach(patch => {
-          const slug = patch.version
-            .toLowerCase()
-            .replace(/\s+/g, '-')      // spaces → hyphen
-            .replace(/\./g, '-')       // dots → hyphen
-            .replace(/[^a-z0-9-]/g, ''); // remove special chars
-
+          const slug = patch.version.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-').replace(/[^a-z0-9-]/g, '');
           const card = document.createElement('div');
           card.className = 'update-card';
           card.innerHTML = `
             <h3>${patch.version} - ${patch.date}</h3>
             <p>${patch.keyChanges}</p>
-            <a href="patches/${slug}.html">Read Full Patch Notes</a>
+            <a href="patches.html?v=${slug}">Read Full Patch Notes</a>
           `;
           latestDiv.appendChild(card);
         });
 
-        // Populate full patch history table
+        // Full table
         patches.forEach(patch => {
-          const slug = patch.version
-            .toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/\./g, '-')
-            .replace(/[^a-z0-9-]/g, '');
-
+          const slug = patch.version.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-').replace(/[^a-z0-9-]/g, '');
           const row = document.createElement('tr');
           row.innerHTML = `
             <td>${patch.version}</td>
             <td>${patch.date}</td>
             <td>${patch.keyChanges}</td>
-            <td><a href="patches/${slug}.html">View Full Notes</a></td>
+            <td><a href="patches.html?v=${slug}">View Full Notes</a></td>
           `;
           tableBody.appendChild(row);
         });
-
-        // Optional: message if no latest updates
-        if (patches.filter(p => p.isLatest).length === 0) {
-          latestDiv.innerHTML = '<p>No latest updates marked yet.</p>';
-        }
       })
-      .catch(error => {
-        console.error('Error loading patches:', error);
-        latestDiv.innerHTML = `
-          <p style="color:red; text-align:center;">
-            Error loading patch notes: ${error.message}<br>
-            Check that patches.json exists and is valid.
-          </p>
-        `;
+      .catch(err => {
+        console.error(err);
+        if (latestDiv) latestDiv.innerHTML = '<p style="color:red;">Error loading patches.</p>';
       });
   }
 
-  // Handle individual patch detail pages (patches/XXXX.html)
-  if (window.location.pathname.includes('/patches/')) {
-    const pathParts = window.location.pathname.split('/');
-    const filename = pathParts[pathParts.length - 1].replace('.html', '');
-    
-    // Reconstruct the original version from the slug (e.g., cold-snap-1-7-0 → Cold Snap 1.7.0)
-    const versionFromSlug = filename
-      .replace(/-/g, ' ')           // hyphens → spaces
-      .replace(/\s+/g, ' ')
-      .trim()
-      .replace(/\s+/g, ' ');        // normalize spaces
+  // Patch detail page (patches.html?v=...)
+  if (patchContent) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('v');
 
-    fetch('../patches.json')
-      .then(res => {
-        if (!res.ok) throw new Error('Could not load patches.json');
-        return res.json();
-      })
-      .then(patches => {
-        // Find the patch by comparing normalized versions
-        const patch = patches.find(p => {
-          const normalizedVersion = p.version
-            .toLowerCase()
-            .replace(/\s+/g, ' ')
-            .trim();
-          return normalizedVersion === versionFromSlug.toLowerCase();
+    if (slug) {
+      fetch('patches.json')
+        .then(res => res.json())
+        .then(patches => {
+          const patch = patches.find(p => {
+            const pSlug = p.version.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '-').replace(/[^a-z0-9-]/g, '');
+            return pSlug === slug;
+          });
+
+          if (patch) {
+            document.title = `Arc Raiders Patch Notes - ${patch.version}`;
+            patchContent.querySelector('h2').textContent = `${patch.version} - ${patch.date}`;
+            patchContent.querySelector('.meta').textContent = `Released: ${patch.date}`;
+            patchContent.querySelector('.patch-content').innerHTML = patch.fullNotes || '<p>No detailed notes yet.</p>';
+            patchContent.querySelector('.button').href = patch.link;
+          } else {
+            patchContent.innerHTML = '<p>Patch not found.</p>';
+          }
+        })
+        .catch(() => {
+          patchContent.innerHTML = '<p>Error loading patch details.</p>';
         });
-
-        if (patch) {
-          document.title = `Arc Raiders Patch Notes - ${patch.version}`;
-          document.querySelector('h2').textContent = `${patch.version} - ${patch.date}`;
-          document.querySelector('.meta').textContent = `Released: ${patch.date}`;
-          document.querySelector('.patch-content').innerHTML = patch.fullNotes || '<p>No detailed notes available yet.</p>';
-          document.querySelector('.button').href = patch.link;
-        } else {
-          document.querySelector('.patch-content').innerHTML = '<p>Patch not found. Check the URL or patches.json.</p>';
-        }
-      })
-      .catch(err => {
-        console.error('Error loading patch details:', err);
-        document.querySelector('.patch-content').innerHTML = '<p>Error loading patch details.</p>';
-      });
+    } else {
+      patchContent.innerHTML = '<p>No patch selected. Go back to <a href="index.html">Home</a>.</p>';
+    }
   }
 });
