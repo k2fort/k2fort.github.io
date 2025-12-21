@@ -131,3 +131,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+const toggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+if (localStorage.getItem('theme') === 'light') {
+  body.classList.add('light-mode');
+  toggle.textContent = '☀️';
+}
+
+toggle.addEventListener('click', () => {
+  body.classList.toggle('light-mode');
+  const isLight = body.classList.contains('light-mode');
+  toggle.textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+});
