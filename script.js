@@ -29,17 +29,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // Full table with links to individual pages
-      patches.forEach(patch => {
-        const slug = patch.version.replace(/\./g, '-'); // e.g., 1.7.2 → 1-7-2
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${patch.version}</td>
-          <td>${patch.date}</td>
-          <td>${patch.keyChanges}</td>
-          <td><a href="patches/${slug}.html">View Full Notes</a></td>
-        `;
-        tableBody.appendChild(row);
-      });
+patches.forEach(patch => {
+  // Clean slug: lowercase, replace spaces and dots with hyphens, remove extra spaces
+  const slug = patch.version
+    .toLowerCase()
+    .replace(/\s+/g, '-')        // spaces → hyphen
+    .replace(/\./g, '-')         // dots → hyphen
+    .replace(/[^a-z0-9-]/g, ''); // remove any other special chars
+
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${patch.version}</td>
+    <td>${patch.date}</td>
+    <td>${patch.keyChanges}</td>
+    <td><a href="patches/${slug}.html">View Full Notes</a></td>
+  `;
+  tableBody.appendChild(row);
+});
     })
     .catch(error => {
       console.error('Error:', error);
@@ -65,3 +71,4 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 });
+
