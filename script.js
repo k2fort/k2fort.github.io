@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tableBody = document.getElementById('patch-table-body');
   const latestNewsDiv = document.getElementById('latest-news');
   const newsTableBody = document.getElementById('news-table-body');
+  const searchInput = document.getElementById('searchInput');
 
   if (latestDiv && tableBody) { // We're on index.html
     // Load patches
@@ -81,6 +82,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       })
       .catch(err => console.error('News error:', err));
+
+    // Search functionality (works on both patches and news)
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const value = e.target.value.toLowerCase();
+
+        // Filter patch cards
+        document.querySelectorAll('.update-card').forEach(card => {
+          const text = card.textContent.toLowerCase();
+          card.style.display = text.includes(value) ? 'block' : 'none';
+        });
+
+        // Filter news cards
+        document.querySelectorAll('.news-card').forEach(card => {
+          const text = card.textContent.toLowerCase();
+          card.style.display = text.includes(value) ? 'block' : 'none';
+        });
+
+        // Optional: Filter table rows (patches)
+        document.querySelectorAll('#patch-table-body tr').forEach(row => {
+          const text = row.textContent.toLowerCase();
+          row.style.display = text.includes(value) ? '' : 'none';
+        });
+
+        // Optional: Filter news table rows
+        document.querySelectorAll('#news-table-body tr').forEach(row => {
+          const text = row.textContent.toLowerCase();
+          row.style.display = text.includes(value) ? '' : 'none';
+        });
+      });
+    }
   }
 
   // Patch detail page (patches.html?v=...)
@@ -130,37 +162,4 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(() => newsContent.innerHTML = '<p>Error loading news.</p>');
     }
   }
-});
-const toggle = document.getElementById('theme-toggle');
-const body = document.body;
-
-if (localStorage.getItem('theme') === 'light') {
-  body.classList.add('light-mode');
-  toggle.textContent = '☀️';
-}
-
-toggle.addEventListener('click', () => {
-  body.classList.toggle('light-mode');
-  const isLight = body.classList.contains('light-mode');
-  toggle.textContent = isLight ? '☀️' : '🌙';
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
-});
-// Search functionality
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('input', (e) => {
-  const value = e.target.value.toLowerCase();
-
-  // Search patches
-  document.querySelectorAll('.update-card').forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(value) ? 'block' : 'none';
-  });
-
-  // Search news cards
-  document.querySelectorAll('.news-card').forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(value) ? 'block' : 'none';
-  });
-
-  // Optional: hide table rows if you want search to filter tables too
 });
