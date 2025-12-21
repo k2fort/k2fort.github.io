@@ -1,68 +1,67 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Get the elements we need
   const latestDiv = document.getElementById('latest-updates');
   const tableBody = document.getElementById('patch-table-body');
 
-  // Safety check: make sure the HTML elements exist
   if (!latestDiv || !tableBody) {
-    console.error('Could not find #latest-updates or #patch-table-body. Check your HTML IDs!');
-    if (latestDiv) {
-      latestDiv.innerHTML = '<p style="color:red;">Error: Could not find update section. Check HTML.</p>';
-    }
+    console.error('Missing HTML elements!');
     return;
   }
 
-  // Load patches from patches.json
   fetch('patches.json')
     .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to load patches.json - Status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error('patches.json not found');
       return response.json();
     })
     .then(patches => {
-      // Clear existing content (in case of reload)
       latestDiv.innerHTML = '';
       tableBody.innerHTML = '';
 
-      // Show latest updates (only patches marked as "isLatest": true)
-      patches
-        .filter(patch => patch.isLatest)
-        .forEach(patch => {
-          const card = document.createElement('div');
-          card.className = 'update-card';
-          card.innerHTML = `
-            <h3>${patch.version} - ${patch.date}</h3>
-            <p>${patch.keyChanges}</p>
-            <a href="${patch.link}" target="_blank">Read full notes</a>
-          `;
-          latestDiv.appendChild(card);
-        });
+      // Latest updates
+      patches.filter(p => p.isLatest).forEach(patch => {
+        const card = document.createElement('div');
+        card.className = 'update-card';
+        card.innerHTML = `
+          <h3>${patch.version} - ${patch.date}</h3>
+          <p>${patch.keyChanges}</p>
+          <a href="patches/${patch.version.replace(/\./g, '-')}.html" target="_blank">Read Full Patch Notes</a>
+        `;
+        latestDiv.appendChild(card);
+      });
 
-      // Fill the full patch history table
+      // Full table with links to individual pages
       patches.forEach(patch => {
+        const slug = patch.version.replace(/\./g, '-'); // e.g., 1.7.2 → 1-7-2
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${patch.version}</td>
           <td>${patch.date}</td>
           <td>${patch.keyChanges}</td>
-          <td><a href="${patch.link}" target="_blank">View</a></td>
+          <td><a href="patches/${slug}.html">View Full Notes</a></td>
         `;
         tableBody.appendChild(row);
       });
-
-      // Optional: Show a message if no latest updates exist
-      if (patches.filter(p => p.isLatest).length === 0) {
-        latestDiv.innerHTML = '<p>No latest updates marked yet. Check patches.json.</p>';
-      }
     })
     .catch(error => {
-      console.error('Error loading patches:', error);
-      latestDiv.innerHTML = `
-        <p style="color:red; text-align:center;">
-          Error loading patch notes: ${error.message}<br>
-          Make sure patches.json is in the same folder and has valid JSON.
-        </p>
-      `;
+      console.error('Error:', error);
+      latestDiv.innerHTML = `<p style="color:red;">Error loading patches: ${error.message}</p>`;
     });
+
+  // Automatically generate individual patch pages if they don't exist
+  if (window.location.pathname.includes('/patches/')) {
+    const version = window.location.pathname.split('/').pop().replace('.html', '').replace(/-/g, '.');
+    fetch('../patches.json')
+      .then(res => res.json())
+      .then(patches => {
+        const patch = patches.find(p => p.version === version);
+        if (patch) {
+          document.title = `Arc Raiders Patch Notes - ${patch.version}`;
+          document.querySelector('h2').textContent = `${patch.version} - ${patch.date}`;
+          document.querySelector('.meta').textContent = `Released: ${patch.date}`;
+          document.querySelector('.patch-content').innerHTML = patch.fullNotes || '<p>No detailed notes yet.</p>';
+          document.querySelector('.button').href = patch.link;
+        } else {
+          document.querySelector('.patch-content').innerHTML = '<p>Patch not found.</p>';
+        }
+      });
+  }
 });
