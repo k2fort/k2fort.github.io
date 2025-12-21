@@ -1,0 +1,23 @@
+[
+  {
+    "version": "Hotfix 1.7.2",
+    "date": "2025-12-18",
+    "keyChanges": "Blueprint drop rates adjusted, Hidden Bunker re-enabled, interact spam fix, quest item spawns fixed.",
+    "link": "https://arcraiders.com/news/hotfix-dec-18",
+    "isLatest": true
+  },
+  {
+    "version": "Cold Snap 1.7.0",
+    "date": "2025-12-16",
+    "keyChanges": "New Cold Snap condition, Flickering Flames event, skill tree resets, weapon buffs, 100+ fixes.",
+    "link": "https://arcraiders.com/news/cold-snap-patch-notes",
+    "isLatest": true
+  },
+  {
+    "version": "1.6.0",
+    "date": "2025-12-11",
+    "keyChanges": "Map exploits fixed, collision gaps, store rotation.",
+    "link": "https://steamcommunity.com/games/1808500/announcements/detail/527614009105449110",
+    "isLatest": false
+  }
+]
