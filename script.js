@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <a href="${patch.link}" target="_blank">Read full notes</a>
         `;
         latestDiv.appendChild(card);
-      }
+      })
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', (e) => {
         const value = e.target.value.toLowerCase();
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = card.textContent.toLowerCase();
         card.style.display = text.includes(value) ? 'block' : 'none';
   });
-}););
+});
 
       // Table
       patches.forEach(patch => {
@@ -51,4 +51,5 @@ document.addEventListener('DOMContentLoaded', () => {
       latestDiv.innerHTML = '<p style="color:red;">Error loading patch notes. Check console!</p>';
     });
 });
+
 
