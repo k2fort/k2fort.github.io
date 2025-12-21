@@ -141,6 +141,16 @@ header .container {
   cursor: pointer;
   color: #00d4ff;
 }
+body.light-mode {
+  background: #f5f5f5;
+  color: #333;
+}
+body.light-mode header, body.light-mode .update-card, body.light-mode .news-card, 
+body.light-mode table, body.light-mode .patch-detail, body.light-mode .news-detail {
+  background: #fff;
+  color: #333;
+}
+body.light-mode a { color: #0066cc; }
 
 
 
