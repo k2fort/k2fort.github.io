@@ -1,9 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const latestDiv = document.getElementById('latest-updates');
+  const tableBody = document.getElementById('patch-table-body');
+
+  // Safety check
+  if (!latestDiv || !tableBody) {
+    console.error('Could not find #latest-updates or #patch-table-body. Check your HTML IDs!');
+    return;
+  }
+
   fetch('patches.json')
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) throw new Error('patches.json not found');
+      return response.json();
+    })
     .then(patches => {
-      // Latest updates section
-      const latestDiv = document.getElementById('latest-updates');
+      // Latest updates
       patches.filter(p => p.isLatest).forEach(patch => {
         const card = document.createElement('div');
         card.className = 'update-card';
@@ -15,8 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         latestDiv.appendChild(card);
       });
 
-      // Full patch table
-      const tableBody = document.getElementById('patch-table-body');
+      // Table
       patches.forEach(patch => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -28,5 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.appendChild(row);
       });
     })
-    .catch(error => console.error('Error loading patches:', error));
+    .catch(error => {
+      console.error('Error loading patches:', error);
+      latestDiv.innerHTML = '<p style="color:red;">Error loading patch notes. Check console!</p>';
+    });
 });
