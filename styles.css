@@ -151,6 +151,18 @@ body.light-mode table, body.light-mode .patch-detail, body.light-mode .news-deta
   color: #333;
 }
 body.light-mode a { color: #0066cc; }
+.comments-section {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: #1a1a2e;
+  border-radius: 8px;
+  border: 1px solid #4a4a6a;
+}
+
+.comments-section h3 {
+  margin-bottom: 1rem;
+  color: #00d4ff;
+}
 
 
 
