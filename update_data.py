@@ -59,7 +59,7 @@ with sync_playwright() as p:
         print(f"Found item: {title} ({link})")
 
         # Check duplicate
-        if not any(n['title'] == title or n.get('link') == link for n in news):
+      #  if not any(n['title'] == title or n.get('link') == link for n in news):
             # Fetch full content (use requests for simplicity)
             full_content = '<p>Full content not available.</p>'
             try:
