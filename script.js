@@ -4,21 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
   if (localStorage.getItem('theme') === 'light') {
     body.classList.add('light-mode');
-    themeToggle.textContent = '🌞';
+    if (themeToggle) themeToggle.textContent = '🌞';
   } else {
     body.classList.remove('light-mode');
-    themeToggle.textContent = '🌙';
+    if (themeToggle) themeToggle.textContent = '🌙';
   }
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
       body.classList.toggle('light-mode');
-      if (body.classList.contains('light-mode')) {
-        themeToggle.textContent = '🌞';
-        localStorage.setItem('theme', 'light');
-      } else {
-        themeToggle.textContent = '🌙';
-        localStorage.setItem('theme', 'dark');
-      }
+      const isLight = body.classList.contains('light-mode');
+      themeToggle.textContent = isLight ? '🌞' : '🌙';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
   }
 
@@ -36,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return new Date(dateStr);
   }
 
-  // Check if item is recent
+  // Check if item is recent (within 7 days)
   function isNew(dateStr) {
     const itemDate = parseDate(dateStr);
     const weekAgo = new Date();
@@ -84,7 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           tableBody.appendChild(row);
         });
-      });
+      })
+      .catch(err => console.error('Patches load error:', err));
 
     // Load news
     fetch('news.json')
@@ -119,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           newsTableBody.appendChild(row);
         });
-      });
+      })
+      .catch(err => console.error('News load error:', err));
 
     // Search
     if (searchInput) {
@@ -152,7 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             patchContent.innerHTML = '<p>Patch not found.</p>';
           }
-        });
+        })
+        .catch(err => console.error('Patch detail error:', err));
     }
   }
 
@@ -175,11 +174,12 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             newsContent.innerHTML = '<p>News item not found.</p>';
           }
-        });
+        })
+        .catch(err => console.error('News detail error:', err));
     }
   }
 
-  // Load community profiles from GitHub Issues
+  // Community profiles
   if (document.getElementById('profiles-container')) {
     const profilesContainer = document.getElementById('profiles-container');
     const repo = 'k2fort/k2fort.github.io';
@@ -197,9 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
           const username = issue.user.login;
           const avatar = issue.user.avatar_url;
           const body = issue.body || '';
-          const ignMatch = body.match(/IGN:\s*(.+)/i);
-          const discordMatch = body.match(/Discord:\s*(.+)/i);
-          const bioMatch = body.match(/Bio:\s*(.+)/i);
+          const ignMatch = body.match(/IGN:\\s*(.+)/i);
+          const discordMatch = body.match(/Discord:\\s*(.+)/i);
+          const bioMatch = body.match(/Bio:\\s*(.+)/i);
           const ign = ignMatch ? ignMatch[1].trim() : 'Not provided';
           const discord = discordMatch ? discordMatch[1].trim() : 'Not provided';
           const bio = bioMatch ? bioMatch[1].trim() : 'No bio provided';
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => {
         profilesContainer.innerHTML = '<p>Error loading profiles.</p>';
-        console.error('Error:', err);
+        console.error('Profiles error:', err);
       });
   }
 
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const issueBody = `IGN: ${ign}\nDiscord: ${discord}\nBio: ${bio}`;
+      const issueBody = `IGN: ${ign}\\nDiscord: ${discord}\\nBio: ${bio}`;
       const issueTitle = `Profile Submission - ${ign}`;
       const repo = 'k2fort/k2fort.github.io';
       const url = `https://github.com/${repo}/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=profile`;
@@ -252,89 +252,90 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Event Timers Page with limit on upcoming
-if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
-  const activeContainer = document.getElementById('active-events');
-  const upcomingContainer = document.getElementById('upcoming-events');
-  const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
-  const PROXY_URL = 'https://api.allorigins.win/raw?url=';
-  const MAX_UPCOMING = 9; // Limit upcoming to 9
+  // Event Timers Page with limit on upcoming (max 9)
+  if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
+    const activeContainer = document.getElementById('active-events');
+    const upcomingContainer = document.getElementById('upcoming-events');
+    const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
+    const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+    const MAX_UPCOMING = 9;
 
-  function fetchEvents() {
-    activeContainer.innerHTML = '<p>Loading events...</p>';
-    upcomingContainer.innerHTML = '';
+    function fetchEvents() {
+      activeContainer.innerHTML = '<p>Loading events...</p>';
+      upcomingContainer.innerHTML = '';
 
-    fetch(PROXY_URL + encodeURIComponent(API_URL))
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
-        console.log('API Response:', data);
-        activeContainer.innerHTML = '';
-        upcomingContainer.innerHTML = '';
+      fetch(PROXY_URL + encodeURIComponent(API_URL))
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          console.log('API Response:', data);
+          activeContainer.innerHTML = '';
+          upcomingContainer.innerHTML = '';
 
-        const now = new Date();
-        const currentHour = now.getHours();
-        const currentMinute = now.getMinutes();
-        const currentTime = currentHour * 60 + currentMinute;
+          const now = new Date();
+          const currentHour = now.getHours();
+          const currentMinute = now.getMinutes();
+          const currentTime = currentHour * 60 + currentMinute;
 
-        const upcomingList = []; // To collect and sort upcoming
+          const upcomingList = [];
 
-        data.data.forEach(event => {
-          event.times.forEach(time => {
-            const startParts = time.start.split(':');
-            const endParts = time.end.split(':');
-            const startTime = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
-            const endTime = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
+          data.data.forEach(event => {
+            event.times.forEach(time => {
+              const startParts = time.start.split(':');
+              const endParts = time.end.split(':');
+              const startTime = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
+              const endTime = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
 
-            const endTimeAdjusted = endTime < startTime ? endTime + 1440 : endTime;
-            const startTimeAdjusted = startTime < currentTime ? startTime + 1440 : startTime;
+              const endTimeAdjusted = endTime < startTime ? endTime + 1440 : endTime;
+              const startTimeAdjusted = startTime < currentTime ? startTime + 1440 : startTime;
 
-            const isActive = currentTime >= startTime && currentTime <= endTimeAdjusted;
+              const isActive = currentTime >= startTime && currentTime <= endTimeAdjusted;
 
-            const remainingMinutes = endTimeAdjusted - currentTime;
-            const remaining = isActive ? `${Math.floor(remainingMinutes / 60)}h ${remainingMinutes % 60}m` : '';
+              const remainingMinutes = endTimeAdjusted - currentTime;
+              const remaining = isActive ? `${Math.floor(remainingMinutes / 60)}h ${remainingMinutes % 60}m` : '';
 
-            const card = document.createElement('div');
-            card.className = 'event-card' + (isActive ? ' active' : '');
-            card.innerHTML = `
-              <h4>${event.name}</h4>
-              <p class="status">${isActive ? 'ACTIVE NOW' : 'SCHEDULED'}</p>
-              <p class="map">${event.map.toUpperCase()}</p>
-              <p class="time">${time.start} - ${time.end}${isActive ? ` (Ends in ${remaining})` : ''}</p>
-            `;
+              const card = document.createElement('div');
+              card.className = 'event-card' + (isActive ? ' active' : '');
+              card.innerHTML = `
+                <h4>${event.name}</h4>
+                <p class="status">${isActive ? 'ACTIVE NOW' : 'SCHEDULED'}</p>
+                <p class="map">${event.map.toUpperCase()}</p>
+                <p class="time">${time.start} - ${time.end}${isActive ? ` (Ends in ${remaining})` : ''}</p>
+              `;
 
-            if (isActive) {
-              activeContainer.appendChild(card);
-            } else if (startTimeAdjusted > currentTime) { // Upcoming
-              upcomingList.push({ card, startTime: startTimeAdjusted });
-            }
+              if (isActive) {
+                activeContainer.appendChild(card);
+              } else if (startTimeAdjusted > currentTime) {
+                upcomingList.push({ card, startTime: startTimeAdjusted });
+              }
+            });
           });
+
+          // Sort upcoming by start time and limit to 9
+          upcomingList.sort((a, b) => a.startTime - b.startTime);
+          const limitedUpcoming = upcomingList.slice(0, MAX_UPCOMING);
+
+          limitedUpcoming.forEach(item => upcomingContainer.appendChild(item.card));
+
+          if (activeContainer.innerHTML === '') {
+            activeContainer.innerHTML = '<p>No active events right now.</p>';
+          }
+          if (upcomingContainer.innerHTML === '') {
+            upcomingContainer.innerHTML = '<p>No upcoming events.</p>';
+          } else if (upcomingList.length > MAX_UPCOMING) {
+            upcomingContainer.innerHTML += `<p style="text-align:center; color:#94a3b8; margin-top:1rem;">+ ${upcomingList.length - MAX_UPCOMING} more upcoming events...</p>`;
+          }
+        })
+        .catch(err => {
+          console.error('Event fetch error:', err);
+          activeContainer.innerHTML = `<p>Error loading events: ${err.message}. Try refreshing.</p>`;
+          upcomingContainer.innerHTML = '';
         });
+    }
 
-        // Sort upcoming by start time and limit to 9
-        upcomingList.sort((a, b) => a.startTime - b.startTime);
-        const limitedUpcoming = upcomingList.slice(0, MAX_UPCOMING);
-
-        limitedUpcoming.forEach(item => upcomingContainer.appendChild(item.card));
-
-        if (activeContainer.innerHTML === '') {
-          activeContainer.innerHTML = '<p>No active events right now.</p>';
-        }
-        if (upcomingContainer.innerHTML === '') {
-          upcomingContainer.innerHTML = '<p>No upcoming events.</p>';
-        } else if (upcomingList.length > MAX_UPCOMING) {
-          upcomingContainer.innerHTML += `<p style="text-align:center; color:#94a3b8;">+ ${upcomingList.length - MAX_UPCOMING} more upcoming events...</p>`;
-        }
-      })
-      .catch(err => {
-        console.error('Event fetch error:', err);
-        activeContainer.innerHTML = `<p>Error loading events: ${err.message}. Try refreshing.</p>`;
-        upcomingContainer.innerHTML = '';
-      });
+    fetchEvents();
+    setInterval(fetchEvents, 60000); // Refresh every minute
   }
-
-  fetchEvents();
-  setInterval(fetchEvents, 60000); // Refresh every minute
-}
+});
