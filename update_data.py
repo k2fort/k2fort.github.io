@@ -15,54 +15,68 @@ news = load_json('news.json')
 # Official news page
 NEWS_URL = 'https://arcraiders.com/news'
 
-api_data = None  # Define here (top level)
-
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page()
-
-    # Intercept network responses
-    def handle_response(response):
-        global api_data  # Use global instead of nonlocal
-        if 'news' in response.url and response.status == 200:
-            try:
-                api_data = response.json()
-                print("Captured API response from:", response.url)
-            except Exception as e:
-                print("Failed to parse API response:", e)
-
-    page.on("response", handle_response)
-
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Wait for API call
-    page.wait_for_timeout(10000)  # Wait 10s for API
+    # Wait for news cards to load (broad selector)
+    try:
+        page.wait_for_selector('div, article, section', timeout=60000)  # Wait for ANY content
+        page.wait_for_timeout(10000)  # Extra wait for JS
+        print("Page loaded successfully")
+    except Exception as e:
+        print(f"Timeout waiting for content: {e}")
+        browser.close()
+        exit(1)
 
-    if api_data:
-        print("API Data found:", api_data)
-        # Process the real API data (adjust keys based on real response)
-        for item in api_data.get('items', api_data.get('data', [])):
-            title = item.get('title') or item.get('name') or 'Unknown Title'
-            date_str = item.get('date') or item.get('published') or datetime.now().strftime('%Y-%m-%d')
-            summary = item.get('excerpt') or item.get('summary') or item.get('description') or 'No summary'
-            link = item.get('url') or item.get('slug') or ''
-            if link and not link.startswith('http'):
-                link = f"https://arcraiders.com{link}"
+    # Get all potential news items
+    news_items = page.query_selector_all('div[class*="news"], article, div[class*="post"], div[class*="card"]')
 
-            full_content = item.get('content') or '<p>Full content not available.</p>'
+    print(f"Found {len(news_items)} potential news items")
 
-            if not any(n['title'] == title or n.get('link') == link for n in news):
-                news.append({
-                    "title": title,
-                    "date": date_str,
-                    "summary": summary,
-                    "link": link,
-                    "isLatest": True,
-                    "fullContent": full_content
-                })
-                print(f"Added new news: {title} ({date_str})")
-    else:
-        print("No API response captured. Site may not use API for news.")
+    for i, item in enumerate(news_items):
+        # Title
+        title_element = item.query_selector('h3, h2, a, span[class*="title"]')
+        title = title_element.inner_text().strip() if title_element else f"Title {i}"
+
+        # Link
+        link_element = item.query_selector('a[href]')
+        link = link_element.get_attribute('href') if link_element else ''
+        if link and not link.startswith('http'):
+            link = f"https://arcraiders.com{link}"
+
+        # Date
+        date_element = item.query_selector('time, span[class*="date"], div[class*="date"]')
+        date_str = date_element.inner_text().strip() if date_element else datetime.now().strftime('%Y-%m-%d')
+
+        # Summary
+        summary_element = item.query_selector('p, div[class*="excerpt"], div[class*="summary"]')
+        summary = summary_element.inner_text().strip() if summary_element else ''
+
+        print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
+
+        # Force add all items (no duplicate check for now)
+        full_content = '<p>Full content not available.</p>'
+        if link:
+            try:
+                full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+                full_soup = BeautifulSoup(full_response.text, 'html.parser')
+                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
+                if content_div:
+                    full_content = str(content_div)
+            except Exception as e:
+                print(f"Error fetching full content for {title}: {e}")
+
+        news.append({
+            "title": title,
+            "date": date_str,
+            "summary": summary,
+            "link": link,
+            "isLatest": True,
+            "fullContent": full_content
+        })
+        print(f"Added news: {title} ({date_str})")
 
     browser.close()
 
