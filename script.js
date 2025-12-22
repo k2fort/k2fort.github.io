@@ -240,7 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Pre-fill issue body
       const issueBody = `IGN: ${ign}\nDiscord: ${discord}\nBio: ${bio}`;
       const issueTitle = `Profile Submission - ${ign}`;
       const repo = 'k2fort/k2fort.github.io';
@@ -252,68 +251,69 @@ document.addEventListener('DOMContentLoaded', () => {
       profileForm.reset();
     });
   }
-});
-// Event Timers Page
-if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
-  const activeContainer = document.getElementById('active-events');
-  const upcomingContainer = document.getElementById('upcoming-events');
-  const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
 
-  function fetchEvents() {
-    activeContainer.innerHTML = '<p>Loading events...</p>';
-    upcomingContainer.innerHTML = '';
+  // Event Timers Page with CORS proxy
+  if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
+    const activeContainer = document.getElementById('active-events');
+    const upcomingContainer = document.getElementById('upcoming-events');
+    const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
+    const PROXY_URL = 'https://cors-anywhere.herokuapp.com/'; // Free CORS proxy
 
-    fetch(API_URL)
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
-        activeContainer.innerHTML = '';
-        upcomingContainer.innerHTML = '';
+    function fetchEvents() {
+      activeContainer.innerHTML = '<p>Loading events...</p>';
+      upcomingContainer.innerHTML = '';
 
-        // Active events
-        if (data.active && data.active.length > 0) {
-          data.active.forEach(event => {
-            const card = document.createElement('div');
-            card.className = 'event-card active';
-            card.innerHTML = `
-              <h4>${event.event_type}</h4>
-              <p class="status">ACTIVE NOW</p>
-              <p class="map">${event.map.toUpperCase()}</p>
-              <p class="time">Ends in: ${event.time_remaining}</p>
-            `;
-            activeContainer.appendChild(card);
-          });
-        } else {
-          activeContainer.innerHTML = '<p>No active events right now.</p>';
-        }
+      fetch(PROXY_URL + API_URL)
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          activeContainer.innerHTML = '';
+          upcomingContainer.innerHTML = '';
 
-        // Upcoming events
-        if (data.upcoming && data.upcoming.length > 0) {
-          data.upcoming.forEach(event => {
-            const card = document.createElement('div');
-            card.className = 'event-card';
-            card.innerHTML = `
-              <h4>${event.event_type}</h4>
-              <p class="status">UPCOMING</p>
-              <p class="map">${event.map.toUpperCase()}</p>
-              <p class="time">Starts in: ${event.time_until_start}</p>
-            `;
-            upcomingContainer.appendChild(card);
-          });
-        } else {
-          upcomingContainer.innerHTML = '<p>No upcoming events.</p>';
-        }
-      })
-      .catch(err => {
-        console.error('Event fetch error:', err);
-        activeContainer.innerHTML = `<p>Error loading events: ${err.message}. API may be down or blocked. Try refreshing.</p>`;
-        upcomingContainer.innerHTML = '';
-      });
+          // Active events
+          if (data.active && data.active.length > 0) {
+            data.active.forEach(event => {
+              const card = document.createElement('div');
+              card.className = 'event-card active';
+              card.innerHTML = `
+                <h4>${event.event_type}</h4>
+                <p class="status">ACTIVE NOW</p>
+                <p class="map">${event.map.toUpperCase()}</p>
+                <p class="time">Ends in: ${event.time_remaining}</p>
+              `;
+              activeContainer.appendChild(card);
+            });
+          } else {
+            activeContainer.innerHTML = '<p>No active events right now.</p>';
+          }
+
+          // Upcoming events
+          if (data.upcoming && data.upcoming.length > 0) {
+            data.upcoming.forEach(event => {
+              const card = document.createElement('div');
+              card.className = 'event-card';
+              card.innerHTML = `
+                <h4>${event.event_type}</h4>
+                <p class="status">UPCOMING</p>
+                <p class="map">${event.map.toUpperCase()}</p>
+                <p class="time">Starts in: ${event.time_until_start}</p>
+              `;
+              upcomingContainer.appendChild(card);
+            });
+          } else {
+            upcomingContainer.innerHTML = '<p>No upcoming events.</p>';
+          }
+        })
+        .catch(err => {
+          console.error('Event fetch error:', err);
+          activeContainer.innerHTML = `<p>Error loading events: ${err.message}. API may be down or blocked. Try refreshing.</p>`;
+          upcomingContainer.innerHTML = '';
+        });
+    }
+
+    fetchEvents();
+    setInterval(fetchEvents, 30000); // Refresh every 30 seconds
   }
-
-  fetchEvents();
-  setInterval(fetchEvents, 30000); // Refresh every 30 seconds
-}
-
+});
