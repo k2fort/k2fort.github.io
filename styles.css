@@ -351,3 +351,53 @@ body.light-mode .social-btn:hover { background: #0066cc; color: #fff; }
 }
 
 .profile-form textarea { resize: vertical; }
+/* Event Timers Page */
+.event-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.event-timers h3 {
+  color: #00d4ff;
+  margin: 2rem 0 1rem;
+  text-align: center;
+}
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.event-card {
+  background: #1e293b;
+  border: 2px solid #00d4ff33;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.event-card.active {
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.event-card h4 {
+  color: #00d4ff;
+  margin-bottom: 0.5rem;
+}
+
+.event-card .status {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.event-card .time {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.event-card .map {
+  color: #94a3b8;
+}
