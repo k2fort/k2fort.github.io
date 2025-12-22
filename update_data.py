@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
-# Load existing news (but ignore for duplicate check)
+# Load existing news (not used for duplicate check)
 def load_json(file_path):
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -20,17 +20,10 @@ with sync_playwright() as p:
     page = browser.new_page()
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Scroll multiple times to load all dynamic content
+    # Scroll to load all content
     for _ in range(10):
         page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
         page.wait_for_timeout(5000)
-
-    # Wait for real news titles
-    try:
-        page.wait_for_selector('h3:has-text("Cold Snap"), h3:has-text("Hotfix"), h3:has-text("Update")', timeout=60000)
-        print("Real news titles loaded successfully")
-    except Exception as e:
-        print(f"Timeout waiting for real news titles: {e}")
 
     # Get all potential news cards
     news_items = page.query_selector_all('div[class*="news"], article, div[class*="card"], div[class*="post"]')
@@ -56,13 +49,13 @@ with sync_playwright() as p:
         summary_element = item.query_selector('p, div[class*="excerpt"], div[class*="summary"]')
         summary = summary_element.inner_text().strip() if summary_element else ''
 
-        print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
+        print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}'")
 
-        # Skip if invalid (empty title/link/summary)
-        if not title or not link or not summary:
+        # Skip invalid items
+        if not title or not link:
             continue
 
-        # Force add all valid items (no duplicate check for now)
+        # Force add all valid items
         full_content = '<p>Full content not available.</p>'
         if link:
             try:
