@@ -323,3 +323,31 @@ body.light-mode .social-btn:hover { background: #0066cc; color: #fff; }
   margin: 0.3rem 0;
   color: #94a3b8;
 }
+/* Profile Submission Form */
+.profile-form {
+  background: #1e293b;
+  border: 1px solid #00d4ff33;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.profile-form label {
+  display: block;
+  margin: 1rem 0 0.5rem;
+  color: #00d4ff;
+  font-weight: bold;
+}
+
+.profile-form input, .profile-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  background: #111827;
+  color: #e2e8f0;
+  border: 1px solid #00d4ff33;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.profile-form textarea { resize: vertical; }
