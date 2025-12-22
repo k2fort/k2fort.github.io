@@ -17,22 +17,24 @@ news = load_json('news.json')
 # Official news page
 NEWS_URL = 'https://arcraiders.com/news'
 
-# Use Playwright to load JS
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page()
-    page.goto(NEWS_URL, wait_until='networkidle')
+    page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
+
+    # Wait for news cards to appear (adjust selector if needed)
+    page.wait_for_selector('div[class*="news-card"], article, div[class*="post"]', timeout=30000)  # Wait up to 30s
     html = page.content()
     browser.close()
 
-soup = BeautifulSoup(html, 'html.parser')
-
 # Debug: Print HTML snippet
 print("News Page HTML (first 2000 chars):")
-print(soup.prettify()[:2000])
+print(html[:2000])
 
-# Broader selectors to catch items
-news_items = soup.find_all(['div', 'article'], class_=['news-item', 'post', 'card', 'news-card', 'entry', 'post-card'])
+soup = BeautifulSoup(html, 'html.parser')
+
+# Broader selectors to catch rendered items
+news_items = soup.find_all(['div', 'article'], class_=['news-card', 'post', 'card', 'news-item', 'entry', 'post-card'])
 
 print(f"Found {len(news_items)} potential news items")
 
@@ -64,7 +66,7 @@ for item in news_items:
         full_content = '<p>Full content not available.</p>'
         if link:
             try:
-                full_response = requests.get(link, headers={'User-Agent': HEADERS['User-Agent']}, timeout=15)
+                full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
                 full_soup = BeautifulSoup(full_response.text, 'html.parser')
                 content_div = full_soup.find('div', class_=['news-content', 'post-content', 'entry-content']) or full_soup.find('article')
                 if content_div:
