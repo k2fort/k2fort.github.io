@@ -252,18 +252,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Event Timers Page with CORS proxy
+  // Event Timers Page with reliable CORS proxy
   if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
     const activeContainer = document.getElementById('active-events');
     const upcomingContainer = document.getElementById('upcoming-events');
     const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
-    const PROXY_URL = 'https://cors-anywhere.herokuapp.com/'; // Free CORS proxy
+    const PROXY_URL = 'https://api.allorigins.win/raw?url='; // Reliable free proxy
 
-    function fetchEvents() {
+    function fetchEvents(attempt = 1, maxAttempts = 3) {
       activeContainer.innerHTML = '<p>Loading events...</p>';
       upcomingContainer.innerHTML = '';
 
-      fetch(PROXY_URL + API_URL)
+      fetch(PROXY_URL + encodeURIComponent(API_URL))
         .then(res => {
           if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
           return res.json();
@@ -308,8 +308,13 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => {
           console.error('Event fetch error:', err);
-          activeContainer.innerHTML = `<p>Error loading events: ${err.message}. API may be down or blocked. Try refreshing.</p>`;
-          upcomingContainer.innerHTML = '';
+          if (attempt < maxAttempts) {
+            activeContainer.innerHTML = `<p>Retrying (${attempt}/${maxAttempts})...</p>`;
+            setTimeout(() => fetchEvents(attempt + 1), 2000);
+          } else {
+            activeContainer.innerHTML = `<p>Error loading events: ${err.message}. API may be down or blocked. Try refreshing or check console.</p>`;
+            upcomingContainer.innerHTML = '';
+          }
         });
     }
 
