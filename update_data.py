@@ -1,21 +1,21 @@
-import json
-import os
-from datetime import datetime
-from playwright.sync_api import sync_playwright
+    import json
+    import os
+    from datetime import datetime
+    from playwright.sync_api import sync_playwright
 
-# Load existing news
-def load_json(file_path):
+    # Load existing news
+    def load_json(file_path):
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     return []
 
-news = load_json('news.json')
+    news = load_json('news.json')
 
-# Official news page
-NEWS_URL = 'https://arcraiders.com/news'
+    # Official news page
+    NEWS_URL = 'https://arcraiders.com/news'
 
-with sync_playwright() as p:
+    with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page()
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
@@ -59,7 +59,7 @@ with sync_playwright() as p:
         print(f"Found item: {title} ({link})")
 
         # Check duplicate
-      #  if not any(n['title'] == title or n.get('link') == link for n in news):
+        #  if not any(n['title'] == title or n.get('link') == link for n in news):
             # Fetch full content (use requests for simplicity)
             full_content = '<p>Full content not available.</p>'
             try:
@@ -83,8 +83,8 @@ with sync_playwright() as p:
 
     browser.close()
 
-# Save updated news.json
-with open('news.json', 'w', encoding='utf-8') as f:
+    # Save updated news.json
+    with open('news.json', 'w', encoding='utf-8') as f:
     json.dump(news, f, indent=2, ensure_ascii=False)
 
-print("News update complete. Changes saved.")
+    print("News update complete. Changes saved.")
