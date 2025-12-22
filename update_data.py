@@ -21,9 +21,9 @@ with sync_playwright() as p:
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
     # Scroll multiple times to load all dynamic content
-    for _ in range(5):  # Scroll 5 times to load all
+    for _ in range(5):
         page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-        page.wait_for_timeout(3000)  # Wait 3s for load
+        page.wait_for_timeout(3000)
 
     # Wait for real news titles
     try:
@@ -50,39 +50,39 @@ with sync_playwright() as p:
 
         # Date
         date_element = item.query_selector('time, span[class*="date"], div[class*="date"]')
-        date_str = date_element.inner_text().strip() if date_element else ''
+        date_str = date_element.inner_text().strip() if date_element else datetime.now().strftime('%Y-%m-%d')
 
         # Summary
         summary_element = item.query_selector('p, div[class*="excerpt"], div[class*="summary"]')
         summary = summary_element.inner_text().strip() if summary_element else ''
 
         # Skip placeholders
-        if not title or "Title" in title or not link or not summary:
+        if "Title" in title or not link or not summary:
             continue
 
         print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
 
-        if not any(n['title'] == title or n.get('link') == link for n in news):
-            full_content = '<p>Full content not available.</p>'
-            if link:
-                try:
-                    full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
-                    full_soup = BeautifulSoup(full_response.text, 'html.parser')
-                    content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
-                    if content_div:
-                        full_content = str(content_div)
-                except Exception as e:
-                    print(f"Error fetching full content for {title}: {e}")
+        # Force add all items (no duplicate check for now)
+        full_content = '<p>Full content not available.</p>'
+        if link:
+            try:
+                full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+                full_soup = BeautifulSoup(full_response.text, 'html.parser')
+                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
+                if content_div:
+                    full_content = str(content_div)
+            except Exception as e:
+                print(f"Error fetching full content for {title}: {e}")
 
-            news.append({
-                "title": title,
-                "date": date_str,
-                "summary": summary,
-                "link": link,
-                "isLatest": True,
-                "fullContent": full_content
-            })
-            print(f"Added news: {title} ({date_str})")
+        news.append({
+            "title": title,
+            "date": date_str,
+            "summary": summary,
+            "link": link,
+            "isLatest": True,
+            "fullContent": full_content
+        })
+        print(f"Added news: {title} ({date_str})")
 
     browser.close()
 
