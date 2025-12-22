@@ -58,11 +58,11 @@ with sync_playwright() as p:
 
         print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
 
-        # Skip if invalid
+        # Skip if invalid (empty title/link/summary)
         if not title or not link or not summary:
             continue
 
-        # Force add all valid items (no duplicate check)
+        # Force add all valid items (no duplicate check for now)
         full_content = '<p>Full content not available.</p>'
         if link:
             try:
