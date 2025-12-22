@@ -2,12 +2,16 @@
 
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background: #0a0e14; /* Darker, more industrial */
-  color: #e2e8f0; /* Softer white-gray for readability */
+  background: #0a0e14; /* Deep industrial dark */
+  color: #e2e8f0; /* Soft light gray */
   line-height: 1.6;
 }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
 
 header {
   background: #111827; /* Deep slate */
@@ -22,14 +26,42 @@ header .container {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  position: relative;
 }
 
-h1 { font-size: 2rem; color: #00d4ff; text-shadow: 0 0 10px #00d4ff; }
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px #00d4ff);
+}
+
+h1 {
+  font-size: 2rem;
+  color: #00d4ff;
+  text-shadow: 0 0 10px #00d4ff;
+}
+
+nav {
+  flex: 2;
+  text-align: center;
+}
 
 nav ul {
-  list-style: none;
   display: flex;
+  justify-content: center;
   gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 nav a {
@@ -42,6 +74,20 @@ nav a {
 nav a:hover {
   color: #ffffff;
   text-shadow: 0 0 8px #00d4ff;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #00d4ff;
+  transition: transform 0.3s;
+  margin-left: auto; /* Pushes to right */
+}
+
+#theme-toggle:hover {
+  transform: scale(1.2);
 }
 
 main { padding: 2rem 0; }
@@ -64,7 +110,7 @@ h2 {
 
 .update-card, .news-card {
   background: #1e293b; /* Metallic slate */
-  border: 1px solid #00d4ff33; /* Subtle cyan border */
+  border: 1px solid #00d4ff33;
   border-radius: 12px;
   padding: 1.5rem;
   transition: all 0.3s ease;
@@ -144,7 +190,7 @@ footer {
 .back-link { display: block; margin-top: 2rem; color: #00d4ff; }
 
 .new-badge {
-  background: #ef4444; /* Red/orange for energy */
+  background: #ef4444; /* Red/orange energy */
   color: #fff;
   font-size: 0.7rem;
   padding: 0.2rem 0.5rem;
@@ -153,19 +199,7 @@ footer {
   font-weight: bold;
 }
 
-/* Theme toggle */
-#theme-toggle {
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: #00d4ff;
-  transition: transform 0.3s;
-}
-
-#theme-toggle:hover { transform: scale(1.2); }
-
-/* Light mode (optional - toned down for game feel) */
+/* Light mode (toned down) */
 body.light-mode {
   background: #f8fafc;
   color: #1e293b;
@@ -179,15 +213,19 @@ body.light-mode .new-badge { background: #dc2626; }
 
 /* Responsive */
 @media (max-width: 768px) {
-  header .container { flex-direction: column; text-align: center; }
+  header .container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
   .logo-wrapper { margin: 1rem 0; }
-  nav ul { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+  nav ul {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  #theme-toggle {
+    margin-top: 1rem;
+    margin-left: 0;
+  }
 }
-.logo {
-  height: 100px;
-  width: auto;
-  border-radius: 50%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px #00d4ff);
-}
-
