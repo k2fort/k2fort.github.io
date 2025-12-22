@@ -1,43 +1,43 @@
-    import requests
-    from bs4 import BeautifulSoup
-    import json
-    import os
-    from datetime import datetime
+import requests
+from bs4 import BeautifulSoup
+import json
+import os
+from datetime import datetime
 
-    # Headers to mimic browser
-    HEADERS = {
+# Headers to mimic browser
+HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Language': 'en-US,en;q=0.5',
-    }
+}
 
-    # Load existing news
-    def load_json(file_path):
+# Load existing news
+def load_json(file_path):
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     return []
 
-    news = load_json('news.json')
+news = load_json('news.json')
 
-    # Official news page
-    NEWS_URL = 'https://arcraiders.com/news'
+# Official news page
+NEWS_URL = 'https://arcraiders.com/news'
 
-    try:
+try:
     response = requests.get(NEWS_URL, headers=HEADERS, timeout=15)
     response.raise_for_status()
-    except Exception as e:
+except Exception as e:
     print(f"Error fetching news list: {e}")
     exit(1)
 
-    soup = BeautifulSoup(response.text, 'html.parser')
+soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Broader selectors to catch news cards
-    news_items = soup.find_all(['div', 'article'], class_=['news-item', 'post', 'card', 'news-card', 'entry', 'post-card'])
+# Broader selectors to catch news cards
+news_items = soup.find_all(['div', 'article'], class_=['news-item', 'post', 'card', 'news-card', 'entry', 'post-card'])
 
-    print(f"Found {len(news_items)} potential news items")
+print(f"Found {len(news_items)} potential news items")
 
-    for item in news_items:
+for item in news_items:
     # Title
     title_tag = item.find(['h1', 'h2', 'h3', 'h4', 'a'], class_=['title', 'news-title', 'post-title', 'card-title'])
     title = title_tag.text.strip() if title_tag else ''
@@ -85,7 +85,7 @@
         })
         print(f"Added new news: {title} ({date_str})")
 
-    with open('news.json', 'w', encoding='utf-8') as f:
+with open('news.json', 'w', encoding='utf-8') as f:
     json.dump(news, f, indent=2, ensure_ascii=False)
 
-    print("News update complete. Changes saved.")
+print("News update complete. Changes saved.")
