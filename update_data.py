@@ -1,5 +1,3 @@
-import requests
-from bs4 import BeautifulSoup
 import json
 import os
 from datetime import datetime
@@ -22,78 +20,70 @@ with sync_playwright() as p:
     page = browser.new_page()
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Wait for any content to load (e.g., header or a known element)
+    # Wait for news cards to appear (adjust selector if needed)
     try:
-        page.wait_for_selector('header, div, article, h1, h2, h3', timeout=60000)  # Wait for ANY content
-        print("Page loaded successfully")
+        page.wait_for_selector('div[class*="news-card"], div[class*="post-card"], article, div[class*="card"]', timeout=60000)
+        print("News cards loaded successfully")
     except Exception as e:
-        print(f"Timeout waiting for content: {e}")
+        print(f"Timeout waiting for news cards: {e}")
+        browser.close()
+        exit(1)
 
-    # Extra wait for dynamic content
-    page.wait_for_timeout(5000)  # Wait 5 seconds for JS to render
+    # Get all rendered news cards
+    news_items = page.query_selector_all('div[class*="news-card"], div[class*="post-card"], article, div[class*="card"]')
 
-    html = page.content()
-    browser.close()
+    print(f"Found {len(news_items)} potential news items")
 
-# Debug: Print HTML snippet
-print("News Page HTML (first 2000 chars):")
-print(html[:2000])
+    for item in news_items:
+        # Title
+        title_element = item.query_selector('h3, h2, a[class*="title"], span[class*="title"]')
+        title = title_element.inner_text().strip() if title_element else ''
 
-soup = BeautifulSoup(html, 'html.parser')
+        # Link
+        link_element = item.query_selector('a[href]')
+        link = link_element.get_attribute('href') if link_element else ''
+        if link and not link.startswith('http'):
+            link = f"https://arcraiders.com{link}"
 
-# Very broad selectors to catch any news-like items
-news_items = soup.find_all(['div', 'article', 'section'], class_=['news', 'post', 'card', 'item', 'entry', 'content', 'feed'])
+        # Date
+        date_element = item.query_selector('time, span[class*="date"], div[class*="date"]')
+        date_str = date_element.inner_text().strip() if date_element else datetime.now().strftime('%Y-%m-%d')
 
-print(f"Found {len(news_items)} potential news items")
+        # Summary
+        summary_element = item.query_selector('p[class*="excerpt"], p, div[class*="summary"]')
+        summary = summary_element.inner_text().strip() if summary_element else ''
 
-for item in news_items:
-    # Title (try any heading)
-    title_tag = item.find(['h1', 'h2', 'h3', 'h4', 'h5', 'a'])
-    title = title_tag.text.strip() if title_tag else ''
+        if not title or not link:
+            continue
 
-    # Link
-    link_tag = title_tag.find('a') if title_tag else item.find('a', href=True)
-    link = link_tag['href'] if link_tag else ''
-    if link and not link.startswith('http'):
-        link = f"https://arcraiders.com{link}"
+        print(f"Found item: {title} ({link})")
 
-    # Date
-    date_tag = item.find('time') or item.find(['span', 'div'], class_=['date', 'time', 'published'])
-    date_str = date_tag.text.strip() if date_tag else datetime.now().strftime('%Y-%m-%d')
-
-    # Summary
-    summary_tag = item.find('p') or item.find('div', class_=['excerpt', 'summary'])
-    summary = summary_tag.text.strip() if summary_tag else ''
-
-    if not title or not link:
-        continue
-
-    print(f"Found item: {title} ({link})")  # Debug
-
-    if not any(n['title'] == title or n.get('link') == link for n in news):
-        full_content = '<p>Full content not available.</p>'
-        if link:
+        # Check duplicate
+        if not any(n['title'] == title or n.get('link') == link for n in news):
+            # Fetch full content (use requests for simplicity)
+            full_content = '<p>Full content not available.</p>'
             try:
                 full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
                 full_soup = BeautifulSoup(full_response.text, 'html.parser')
-                content_div = full_soup.find('div', class_=['news-content', 'post-content', 'entry-content']) or full_soup.find('article')
+                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
                 if content_div:
-                    for tag in content_div.find_all(['script', 'style']):
-                        tag.decompose()
                     full_content = str(content_div)
             except Exception as e:
                 print(f"Error fetching full content for {title}: {e}")
 
-        news.append({
-            "title": title,
-            "date": date_str,
-            "summary": summary,
-            "link": link,
-            "isLatest": True,
-            "fullContent": full_content
-        })
-        print(f"Added new news: {title} ({date_str})")
+            news.append({
+                "title": title,
+                "date": date_str,
+                "summary": summary,
+                "link": link,
+                "isLatest": True,
+                "fullContent": full_content
+            })
+            print(f"Added new news: {title} ({date_str})")
 
+    browser.close()
+
+# Save updated news.json
 with open('news.json', 'w', encoding='utf-8') as f:
     json.dump(news, f, indent=2, ensure_ascii=False)
 
