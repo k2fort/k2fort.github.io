@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput');
 
   if (latestDiv && tableBody) {
-    // Load patches
     fetch('patches.json')
       .then(res => res.json())
       .then(patches => {
@@ -83,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => console.error('Patches load error:', err));
 
-    // Load news
     fetch('news.json')
       .then(res => res.json())
       .then(news => {
@@ -119,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => console.error('News load error:', err));
 
-    // Search
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         const value = e.target.value.toLowerCase();
@@ -252,16 +249,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Event Timers Page with reliable proxy and retry
+  // Event Timers Page with beautiful design
   if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
+    const loading = document.getElementById('loading');
+    const eventTimers = document.getElementById('event-timers');
     const activeContainer = document.getElementById('active-events');
     const upcomingContainer = document.getElementById('upcoming-events');
     const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
-    const PROXY_URL = 'https://corsproxy.io/?' + encodeURIComponent(API_URL); // Reliable proxy
+    const PROXY_URL = 'https://corsproxy.io/?' + encodeURIComponent(API_URL);
 
-    function fetchEvents(attempt = 1, maxAttempts = 3) {
-      activeContainer.innerHTML = `<p>Loading events... (Attempt ${attempt}/${maxAttempts})</p>`;
-      upcomingContainer.innerHTML = '';
+    function fetchEvents() {
+      loading.style.display = 'flex';
+      eventTimers.style.display = 'none';
 
       fetch(PROXY_URL)
         .then(res => {
@@ -270,6 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
           console.log('API Response:', data);
+          loading.style.display = 'none';
+          eventTimers.style.display = 'block';
+
           activeContainer.innerHTML = '';
           upcomingContainer.innerHTML = '';
 
@@ -312,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           });
 
-          // Sort upcoming by start time and limit to 9
+          // Sort upcoming and limit to 9
           upcomingList.sort((a, b) => a.startTime - b.startTime);
           const limitedUpcoming = upcomingList.slice(0, 9);
 
@@ -329,13 +331,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => {
           console.error('Event fetch error:', err);
-          if (attempt < maxAttempts) {
-            activeContainer.innerHTML = `<p>Retrying (${attempt}/${maxAttempts})...</p>`;
-            setTimeout(() => fetchEvents(attempt + 1), 2000);
-          } else {
-            activeContainer.innerHTML = `<p>Error loading events: ${err.message}. API may be down or blocked. Try refreshing or check console.</p>`;
-            upcomingContainer.innerHTML = '';
-          }
+          loading.style.display = 'none';
+          activeContainer.innerHTML = `<p>Error loading events: ${err.message}. Try refreshing.</p>`;
+          upcomingContainer.innerHTML = '';
         });
     }
 
