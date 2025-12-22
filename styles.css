@@ -401,3 +401,103 @@ body.light-mode .social-btn:hover { background: #0066cc; color: #fff; }
 .event-card .map {
   color: #94a3b8;
 }
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #00d4ff33;
+  border-top: 6px solid #00d4ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Event Cards - Beautiful Design */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.event-card {
+  background: linear-gradient(135deg, #1e293b 0%, #111827 100%);
+  border: 2px solid #00d4ff33;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.15);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.event-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.event-card:hover::before {
+  opacity: 1;
+}
+
+.event-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 212, 255, 0.4);
+  border-color: #00d4ff;
+}
+
+.event-card h4 {
+  color: #00d4ff;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+}
+
+.event-card .status {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.event-card .active .status {
+  color: #00ff9d;
+}
+
+.event-card .map {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.event-card .time {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  color: #e2e8f0;
+}
+
+/* Event Intro */
+.event-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.event-intro h2 {
+  color: #00d4ff;
+  text-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+}
