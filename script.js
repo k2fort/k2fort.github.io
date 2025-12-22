@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return new Date(dateStr);
   }
 
-  // Check if item is recent (within 7 days)
+  // Check if item is recent
   function isNew(dateStr) {
     const itemDate = parseDate(dateStr);
     const weekAgo = new Date();
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput');
 
   if (latestDiv && tableBody) {
-    // Load and sort patches
+    // Load patches
     fetch('patches.json')
       .then(res => res.json())
       .then(patches => {
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
 
-    // Load and sort news
+    // Load news
     fetch('news.json')
       .then(res => res.json())
       .then(news => {
@@ -183,31 +183,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('profiles-container')) {
     const profilesContainer = document.getElementById('profiles-container');
     const repo = 'k2fort/k2fort.github.io';
-    const label = 'profile'; // Label for profile issues
+    const label = 'profile';
 
     fetch(`https://api.github.com/repos/${repo}/issues?labels=${label}&state=open`)
       .then(res => res.json())
       .then(issues => {
         profilesContainer.innerHTML = '';
         if (issues.length === 0) {
-          profilesContainer.innerHTML = '<p>No player profiles yet. Add yours by commenting on the pinned "Add Your Profile" issue!</p>';
+          profilesContainer.innerHTML = '<p>No player profiles yet. Submit yours above!</p>';
           return;
         }
-
         issues.forEach(issue => {
           const username = issue.user.login;
           const avatar = issue.user.avatar_url;
           const body = issue.body || '';
-
-          // Parse IGN, Discord, Bio from issue body (simple regex)
           const ignMatch = body.match(/IGN:\s*(.+)/i);
           const discordMatch = body.match(/Discord:\s*(.+)/i);
           const bioMatch = body.match(/Bio:\s*(.+)/i);
-
           const ign = ignMatch ? ignMatch[1].trim() : 'Not provided';
           const discord = discordMatch ? discordMatch[1].trim() : 'Not provided';
           const bio = bioMatch ? bioMatch[1].trim() : 'No bio provided';
-
           const card = document.createElement('div');
           card.className = 'profile-card';
           card.innerHTML = `
@@ -217,15 +212,44 @@ document.addEventListener('DOMContentLoaded', () => {
               <p><strong>IGN:</strong> ${ign}</p>
               <p><strong>Discord:</strong> ${discord}</p>
               <p>${bio}</p>
-              <a href="${issue.html_url}" target="_blank" class="button">View Profile Discussion</a>
+              <a href="${issue.html_url}" target="_blank" class="button">View Discussion</a>
             </div>
           `;
           profilesContainer.appendChild(card);
         });
       })
       .catch(err => {
-        profilesContainer.innerHTML = '<p>Error loading profiles. Try again later.</p>';
-        console.error('Error fetching profiles:', err);
+        profilesContainer.innerHTML = '<p>Error loading profiles.</p>';
+        console.error('Error:', err);
       });
+  }
+
+  // Profile submission form
+  const profileForm = document.getElementById('profile-form');
+  if (profileForm) {
+    profileForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const ign = document.getElementById('ign').value.trim();
+      const discord = document.getElementById('discord').value.trim();
+      const bio = document.getElementById('bio').value.trim();
+      const message = document.getElementById('form-message');
+
+      if (!ign || !discord || !bio) {
+        message.textContent = 'Please fill all fields.';
+        message.style.color = '#ef4444';
+        return;
+      }
+
+      // Pre-fill issue body
+      const issueBody = `IGN: ${ign}\nDiscord: ${discord}\nBio: ${bio}`;
+      const issueTitle = `Profile Submission - ${ign}`;
+      const repo = 'k2fort/k2fort.github.io';
+      const url = `https://github.com/${repo}/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=profile`;
+
+      window.open(url, '_blank');
+      message.textContent = 'Redirecting to GitHub... Submit the issue there to add your profile!';
+      message.style.color = '#00d4ff';
+      profileForm.reset();
+    });
   }
 });
