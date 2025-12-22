@@ -253,3 +253,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+// Event Timers Page
+if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
+  const activeContainer = document.getElementById('active-events');
+  const upcomingContainer = document.getElementById('upcoming-events');
+  const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
+
+  function fetchEvents() {
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        activeContainer.innerHTML = '';
+        upcomingContainer.innerHTML = '';
+
+        // Active events
+        data.active.forEach(event => {
+          const card = document.createElement('div');
+          card.className = 'event-card active';
+          card.innerHTML = `
+            <h4>${event.event_type}</h4>
+            <p class="status">ACTIVE NOW</p>
+            <p class="map">${event.map.toUpperCase()}</p>
+            <p class="time">Ends in: ${event.time_remaining}</p>
+          `;
+          activeContainer.appendChild(card);
+        });
+
+        // Upcoming events
+        data.upcoming.forEach(event => {
+          const card = document.createElement('div');
+          card.className = 'event-card';
+          card.innerHTML = `
+            <h4>${event.event_type}</h4>
+            <p class="status">UPCOMING</p>
+            <p class="map">${event.map.toUpperCase()}</p>
+            <p class="time">Starts in: ${event.time_until_start}</p>
+          `;
+          upcomingContainer.appendChild(card);
+        });
+      })
+      .catch(err => {
+        activeContainer.innerHTML = '<p>Error loading events. Try again later.</p>';
+        console.error('Error:', err);
+      });
+  }
+
+  fetchEvents();
+  setInterval(fetchEvents, 30000); // Refresh every 30 seconds
+}
