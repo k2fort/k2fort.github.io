@@ -53,7 +53,7 @@ h1 {
 .nav-buttons {
   display: flex;
   align-items: center;
-  gap: 0.6rem; /* Tighter spacing */
+  gap: 0.6rem;
   justify-content: flex-end;
   flex: 2;
 }
@@ -62,7 +62,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem; /* More compact padding */
+  padding: 0.5rem 1rem;
   background: #1e293b;
   color: #00d4ff;
   text-decoration: none;
@@ -71,8 +71,8 @@ h1 {
   border: 1px solid #00d4ff33;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);
-  font-size: 0.95rem; /* Slightly smaller text */
-  min-width: 90px; /* Keeps buttons readable */
+  font-size: 0.95rem;
+  min-width: 90px;
 }
 
 .nav-btn:hover {
@@ -216,6 +216,37 @@ footer {
   font-weight: bold;
 }
 
+/* Social sharing buttons */
+.social-share {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #1e293b;
+  color: #00d4ff;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid #00d4ff33;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.social-btn:hover {
+  background: #00d4ff;
+  color: #000;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.social-btn i { font-size: 1.1rem; }
+
 /* Light mode */
 body.light-mode {
   background: #f8fafc;
@@ -227,6 +258,8 @@ body.light-mode .update-card, body.light-mode .news-card, body.light-mode table 
 body.light-mode a { color: #0066cc; }
 body.light-mode .button { background: #0066cc; color: #fff; }
 body.light-mode .new-badge { background: #dc2626; }
+body.light-mode .social-btn { background: #f1f5f9; border-color: #0066cc66; color: #0066cc; }
+body.light-mode .social-btn:hover { background: #0066cc; color: #fff; }
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -249,4 +282,5 @@ body.light-mode .new-badge { background: #dc2626; }
     margin-top: 1rem;
     margin-left: 0;
   }
+  .social-share { justify-content: center; }
 }
