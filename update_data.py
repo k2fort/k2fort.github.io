@@ -2,85 +2,127 @@ import json
 import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
+import requests
+from bs4 import BeautifulSoup
 
-# Load existing news (ignored for now)
+# Load existing data
 def load_json(file_path):
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     return []
 
-news = load_json('news.json')
-
 # Official news page
 NEWS_URL = 'https://arcraiders.com/news'
+
+news = []
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page()
+    
+    print(f"Navigating to {NEWS_URL}...")
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
     # Scroll to load all content
-    for _ in range(10):
+    print("Scrolling to load dynamic content...")
+    for _ in range(5):
         page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-        page.wait_for_timeout(5000)
+        page.wait_for_timeout(2000)
 
-    # Get all potential news cards
-    news_items = page.query_selector_all('div[class*="news"], article, div[class*="card"], div[class*="post"]')
+    # Target the specific news article card containers
+    # The site uses class names like: news-article-card_container__xsniv
+    news_cards = page.query_selector_all('a[class*="news-article-card_container"]')
+    
+    print(f"Found {len(news_cards)} news article cards")
 
-    print(f"Found {len(news_items)} potential news items")
+    for i, card in enumerate(news_cards):
+        try:
+            # Get the link directly from the card (it's an <a> tag)
+            link = card.get_attribute('href') or ''
+            if link and not link.startswith('http'):
+                link = f"https://arcraiders.com{link}"
 
-    for i, item in enumerate(news_items):
-        # Title
-        title_element = item.query_selector('h3, h2, a, span[class*="title"]')
-        title = title_element.inner_text().strip() if title_element else ''
+            # Title - look for the title div inside the card
+            title_element = card.query_selector('div[class*="news-article-card_title"]')
+            title = title_element.inner_text().strip() if title_element else ''
 
-        # Link
-        link_element = item.query_selector('a[href]')
-        link = link_element.get_attribute('href') if link_element else ''
-        if link and not link.startswith('http'):
-            link = f"https://arcraiders.com{link}"
+            # Date - look for the date div inside the card
+            date_element = card.query_selector('div[class*="news-article-card_date"]')
+            date_str = date_element.inner_text().strip() if date_element else ''
+            
+            # Parse date to standard format
+            if date_str:
+                try:
+                    parsed_date = datetime.strptime(date_str, '%B %d, %Y')
+                    date_str = parsed_date.strftime('%Y-%m-%d')
+                except:
+                    date_str = datetime.now().strftime('%Y-%m-%d')
 
-        # Date
-        date_element = item.query_selector('time, span[class*="date"], div[class*="date"]')
-        date_str = date_element.inner_text().strip() if date_element else datetime.now().strftime('%Y-%m-%d')
+            # Tags/Category
+            tags_element = card.query_selector('div[class*="news-article-card_tags"]')
+            tags = tags_element.inner_text().strip() if tags_element else ''
 
-        # Summary
-        summary_element = item.query_selector('p, div[class*="excerpt"], div[class*="summary"]')
-        summary = summary_element.inner_text().strip() if summary_element else ''
+            # Image
+            img_element = card.query_selector('img')
+            image = img_element.get_attribute('src') if img_element else ''
 
-        print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
+            print(f"Item {i}: Title='{title}', Date='{date_str}', Link='{link}'")
 
-        # Skip invalid items
-        if not title or not link or not summary:
+            # Skip if missing essential data
+            if not title or not link:
+                print(f"  Skipping - missing title or link")
+                continue
+
+            # Fetch full article content
+            full_content = ''
+            summary = ''
+            try:
+                print(f"  Fetching full content from {link}...")
+                article_page = browser.new_page()
+                article_page.goto(link, wait_until='networkidle', timeout=30000)
+                
+                # Get the article content
+                content_element = article_page.query_selector('div[class*="article-content"], div[class*="content"], article')
+                if content_element:
+                    full_content = content_element.inner_html()
+                    # Get first paragraph as summary
+                    first_p = content_element.query_selector('p')
+                    if first_p:
+                        summary = first_p.inner_text().strip()[:200]
+                
+                article_page.close()
+            except Exception as e:
+                print(f"  Error fetching full content: {e}")
+                full_content = '<p>Full content not available.</p>'
+
+            news.append({
+                "title": title,
+                "date": date_str,
+                "summary": summary or title,
+                "link": link,
+                "image": image,
+                "tags": tags,
+                "isLatest": i == 0,
+                "fullContent": full_content
+            })
+            print(f"  Added: {title}")
+
+        except Exception as e:
+            print(f"Error processing item {i}: {e}")
             continue
 
-        # Force add all valid items (no duplicate check)
-        full_content = '<p>Full content not available.</p>'
-        if link:
-            try:
-                full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
-                full_soup = BeautifulSoup(full_response.text, 'html.parser')
-                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
-                if content_div:
-                    full_content = str(content_div)
-            except Exception as e:
-                print(f"Error fetching full content for {title}: {e}")
-
-        news.append({
-            "title": title,
-            "date": date_str,
-            "summary": summary,
-            "link": link,
-            "isLatest": True,
-            "fullContent": full_content
-        })
-        print(f"Added news: {title} ({date_str})")
-
     browser.close()
+
+# Sort by date (newest first)
+news.sort(key=lambda x: x.get('date', ''), reverse=True)
+
+# Mark only the first as latest
+for i, item in enumerate(news):
+    item['isLatest'] = i == 0
 
 # Save updated news.json
 with open('news.json', 'w', encoding='utf-8') as f:
     json.dump(news, f, indent=2, ensure_ascii=False)
 
-print("News update complete. Changes saved.")
+print(f"\nNews update complete! Saved {len(news)} articles to news.json")
