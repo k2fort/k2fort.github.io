@@ -1,5 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Helper function to create clean slugs
+  // Theme handling
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+
+  // Load saved theme
+  if (localStorage.getItem('theme') === 'light') {
+    body.classList.add('light-mode');
+    themeToggle.textContent = '🌞';
+  } else {
+    body.classList.remove('light-mode');
+    themeToggle.textContent = '🌙';
+  }
+
+  // Toggle theme
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-mode');
+      if (body.classList.contains('light-mode')) {
+        themeToggle.textContent = '🌞';
+        localStorage.setItem('theme', 'light');
+      } else {
+        themeToggle.textContent = '🌙';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  }
+
+  // Helper to create slugs
   function createSlug(text) {
     return text
       .toLowerCase()
@@ -8,114 +35,119 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/[^a-z0-9-]/g, '');
   }
 
-  // Main page (index.html)
+  // Parse date helper (YYYY-MM-DD)
+  function parseDate(dateStr) {
+    return new Date(dateStr);
+  }
+
+  // Check if item is recent (within 7 days)
+  function isNew(dateStr) {
+    const itemDate = parseDate(dateStr);
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    return itemDate > weekAgo;
+  }
+
+  // Main index page
   const latestDiv = document.getElementById('latest-updates');
   const tableBody = document.getElementById('patch-table-body');
   const latestNewsDiv = document.getElementById('latest-news');
   const newsTableBody = document.getElementById('news-table-body');
   const searchInput = document.getElementById('searchInput');
 
-  if (latestDiv && tableBody) { // We're on index.html
-    // Load patches
+  if (latestDiv && tableBody) {
+    // Load and sort patches
     fetch('patches.json')
       .then(res => res.json())
       .then(patches => {
+        patches.sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
         latestDiv.innerHTML = '';
         tableBody.innerHTML = '';
 
-        patches.filter(p => p.isLatest).forEach(patch => {
-          const slug = createSlug(patch.version);
+        // Show only the latest patch in "Latest Updates"
+        if (patches.length > 0) {
+          const latest = patches[0];
+          const slug = createSlug(latest.version);
+          const badge = isNew(latest.date) ? '<span class="new-badge">NEW</span>' : '';
           const card = document.createElement('div');
           card.className = 'update-card';
           card.innerHTML = `
-            <h3>${patch.version} - ${patch.date}</h3>
-            <p>${patch.keyChanges}</p>
+            <h3>${latest.version} ${badge} - ${latest.date}</h3>
+            <p>${latest.keyChanges}</p>
             <a href="patches.html?v=${slug}">Read Full Patch Notes</a>
           `;
           latestDiv.appendChild(card);
-        });
+        }
 
+        // Full table
         patches.forEach(patch => {
           const slug = createSlug(patch.version);
+          const badge = isNew(patch.date) ? '<span class="new-badge">NEW</span>' : '';
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${patch.version}</td>
+            <td>${patch.version} ${badge}</td>
             <td>${patch.date}</td>
             <td>${patch.keyChanges}</td>
             <td><a href="patches.html?v=${slug}">View Full Notes</a></td>
           `;
           tableBody.appendChild(row);
         });
-      })
-      .catch(err => console.error('Patches error:', err));
+      });
 
-    // Load news
+    // Load and sort news
     fetch('news.json')
       .then(res => res.json())
       .then(news => {
+        news.sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
         if (latestNewsDiv) latestNewsDiv.innerHTML = '';
         if (newsTableBody) newsTableBody.innerHTML = '';
 
-        news.filter(n => n.isLatest).forEach(item => {
-          const slug = createSlug(item.title);
+        // Show only latest news in card
+        if (news.length > 0) {
+          const latest = news[0];
+          const slug = createSlug(latest.title);
+          const badge = isNew(latest.date) ? '<span class="new-badge">NEW</span>' : '';
           const card = document.createElement('div');
           card.className = 'news-card';
           card.innerHTML = `
-            <h3>${item.title}</h3>
-            <p>${item.date}</p>
-            <p>${item.summary}</p>
+            <h3>${latest.title} ${badge}</h3>
+            <p>${latest.date}</p>
+            <p>${latest.summary}</p>
             <a href="news.html?id=${slug}">Read Full News</a>
           `;
           latestNewsDiv.appendChild(card);
-        });
+        }
 
+        // Full news table
         news.forEach(item => {
           const slug = createSlug(item.title);
+          const badge = isNew(item.date) ? '<span class="new-badge">NEW</span>' : '';
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${item.title}</td>
+            <td>${item.title} ${badge}</td>
             <td>${item.date}</td>
             <td>${item.summary}</td>
             <td><a href="news.html?id=${slug}">Read More</a></td>
           `;
           newsTableBody.appendChild(row);
         });
-      })
-      .catch(err => console.error('News error:', err));
+      });
 
-    // Search functionality (works on both patches and news)
+    // Search
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         const value = e.target.value.toLowerCase();
-
-        // Filter patch cards
-        document.querySelectorAll('.update-card').forEach(card => {
-          const text = card.textContent.toLowerCase();
-          card.style.display = text.includes(value) ? 'block' : 'none';
-        });
-
-        // Filter news cards
-        document.querySelectorAll('.news-card').forEach(card => {
-          const text = card.textContent.toLowerCase();
-          card.style.display = text.includes(value) ? 'block' : 'none';
-        });
-
-        // Optional: Filter table rows (patches)
-        document.querySelectorAll('#patch-table-body tr').forEach(row => {
-          const text = row.textContent.toLowerCase();
-          row.style.display = text.includes(value) ? '' : 'none';
-        });
-
-        // Optional: Filter news table rows
-        document.querySelectorAll('#news-table-body tr').forEach(row => {
-          const text = row.textContent.toLowerCase();
-          row.style.display = text.includes(value) ? '' : 'none';
+        document.querySelectorAll('.update-card, .news-card, #patch-table-body tr, #news-table-body tr').forEach(el => {
+          const text = el.textContent.toLowerCase();
+          el.style.display = text.includes(value) ? '' : 'none';
         });
       });
     }
   }
 
-  // Patch detail page (patches.html?v=...)
+  // Patch detail page
   const patchContent = document.getElementById('patch-content');
   if (patchContent) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -126,20 +158,19 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(patches => {
           const patch = patches.find(p => createSlug(p.version) === slug);
           if (patch) {
-            document.title = `Arc Raiders Patch Notes - ${patch.version}`;
+            document.title = `Arc Raiders | ${patch.version}`;
             patchContent.querySelector('h2').textContent = `${patch.version} - ${patch.date}`;
             patchContent.querySelector('.meta').textContent = `Released: ${patch.date}`;
-            patchContent.querySelector('.patch-content').innerHTML = patch.fullNotes || '<p>No detailed notes yet.</p>';
+            patchContent.querySelector('.patch-content').innerHTML = patch.fullNotes || '<p>No detailed notes available.</p>';
             patchContent.querySelector('.button').href = patch.link;
           } else {
             patchContent.innerHTML = '<p>Patch not found.</p>';
           }
-        })
-        .catch(() => patchContent.innerHTML = '<p>Error loading patch.</p>');
+        });
     }
   }
 
-  // News detail page (news.html?id=...)
+  // News detail page
   const newsContent = document.getElementById('news-content');
   if (newsContent) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -150,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(news => {
           const item = news.find(n => createSlug(n.title) === slug);
           if (item) {
-            document.title = `Arc Raiders News - ${item.title}`;
+            document.title = `Arc Raiders News | ${item.title}`;
             newsContent.querySelector('h2').textContent = item.title;
             newsContent.querySelector('.meta').textContent = `Posted: ${item.date}`;
             newsContent.querySelector('.news-content').innerHTML = item.fullContent || '<p>No details available.</p>';
@@ -158,8 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             newsContent.innerHTML = '<p>News item not found.</p>';
           }
-        })
-        .catch(() => newsContent.innerHTML = '<p>Error loading news.</p>');
+        });
     }
   }
 });
