@@ -6,6 +6,7 @@
   <title>Arc Raiders Live Event Timers</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
   <script>
@@ -26,9 +27,9 @@
         <a href="index.html" class="nav-btn">Home</a>
         <a href="index.html#patches" class="nav-btn">All Patches</a>
         <a href="index.html#news" class="nav-btn">News</a>
+        <a href="index.html#about" class="nav-btn">About</a>
         <a href="community.html" class="nav-btn">Community</a>
         <a href="events.html" class="nav-btn active">Event Timers</a>
-        <a href="index.html#about" class="nav-btn">About</a>
       </nav>
       <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
     </div>
@@ -40,7 +41,7 @@
       <p>Times shown in your local timezone. Data from MetaForge API. Refreshes every 30 seconds.</p>
     </section>
 
-    <div id="loading" class="loading-spinner" style="display: flex; justify-content: center; margin: 3rem 0;">
+    <div id="loading" class="loading-spinner">
       <div class="spinner"></div>
     </div>
 
@@ -52,7 +53,7 @@
       <div id="upcoming-events" class="event-grid"></div>
     </section>
   </main>
-<br>
+
   <footer>
     <div class="container">
       <p>© 2025 Arc Raiders Patch Notes | Data from <a href="https://metaforge.app/arc-raiders" target="_blank">MetaForge</a></p>
