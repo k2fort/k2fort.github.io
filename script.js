@@ -198,3 +198,42 @@ window.addEventListener('scroll', () => {
   backToTop.classList.toggle('show', window.scrollY > 300);
 });
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Load community profiles from GitHub Issues (example - replace with your logic)
+if (document.getElementById('profiles-container')) {
+  const profilesContainer = document.getElementById('profiles-container');
+
+  // Example profiles (you can fetch from GitHub API or hardcode initially)
+  const sampleProfiles = [
+    {
+      username: "RaiderPro42",
+      ign: "xRaiderx",
+      discord: "RaiderPro#1234",
+      bio: "Level 50 Raider main. Love the Cold Snap update!",
+      avatar: "https://github.com/avatars/u/123456789" // Replace with real GitHub avatars
+    },
+    {
+      username: "FrostyGunner",
+      ign: "FrostByte",
+      discord: "Frosty#5678",
+      bio: "Sniper specialist. Looking for squadmates!",
+      avatar: "https://github.com/avatars/u/987654321"
+    }
+  ];
+
+  profilesContainer.innerHTML = '';
+  sampleProfiles.forEach(profile => {
+    const card = document.createElement('div');
+    card.className = 'profile-card';
+    card.innerHTML = `
+      <img src="${profile.avatar}" alt="${profile.username}" class="profile-avatar">
+      <div class="profile-info">
+        <h4>${profile.username}</h4>
+        <p><strong>IGN:</strong> ${profile.ign}</p>
+        <p><strong>Discord:</strong> ${profile.discord}</p>
+        <p>${profile.bio}</p>
+      </div>
+    `;
+    profilesContainer.appendChild(card);
+  });
+}
