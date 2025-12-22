@@ -229,3 +229,59 @@ body.light-mode .new-badge { background: #dc2626; }
     margin-left: 0;
   }
 }
+/* Professional nav buttons */
+.nav-buttons {
+  display: flex;
+  gap: 1rem; /* Space between buttons */
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  background: #1e293b; /* Metallic slate background */
+  color: #00d4ff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  border: 1px solid #00d4ff33; /* Subtle cyan border */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);
+  font-size: 1rem;
+}
+
+.nav-btn:hover {
+  background: #00d4ff;
+  color: #000;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+  transform: translateY(-2px);
+  border-color: #00d4ff;
+}
+
+.nav-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 212, 255, 0.2);
+}
+
+/* Active state (optional - if you want to highlight current page) */
+.nav-btn.active {
+  background: #00d4ff;
+  color: #000;
+  border-color: #00d4ff;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .nav-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+  }
+  .nav-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
