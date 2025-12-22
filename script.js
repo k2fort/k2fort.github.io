@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Theme handling
   const themeToggle = document.getElementById('theme-toggle');
   const body = document.body;
-
-  // Load saved theme
   if (localStorage.getItem('theme') === 'light') {
     body.classList.add('light-mode');
     themeToggle.textContent = '🌞';
@@ -11,8 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     body.classList.remove('light-mode');
     themeToggle.textContent = '🌙';
   }
-
-  // Toggle theme
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
       body.classList.toggle('light-mode');
@@ -35,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/[^a-z0-9-]/g, '');
   }
 
-  // Parse date helper (YYYY-MM-DD)
+  // Parse date helper
   function parseDate(dateStr) {
     return new Date(dateStr);
   }
@@ -61,11 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(patches => {
         patches.sort((a, b) => parseDate(b.date) - parseDate(a.date));
-
         latestDiv.innerHTML = '';
         tableBody.innerHTML = '';
-
-        // Show only the latest patch in "Latest Updates"
         if (patches.length > 0) {
           const latest = patches[0];
           const slug = createSlug(latest.version);
@@ -79,8 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           latestDiv.appendChild(card);
         }
-
-        // Full table
         patches.forEach(patch => {
           const slug = createSlug(patch.version);
           const badge = isNew(patch.date) ? '<span class="new-badge">NEW</span>' : '';
@@ -100,11 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(news => {
         news.sort((a, b) => parseDate(b.date) - parseDate(a.date));
-
         if (latestNewsDiv) latestNewsDiv.innerHTML = '';
         if (newsTableBody) newsTableBody.innerHTML = '';
-
-        // Show only latest news in card
         if (news.length > 0) {
           const latest = news[0];
           const slug = createSlug(latest.title);
@@ -119,8 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           latestNewsDiv.appendChild(card);
         }
-
-        // Full news table
         news.forEach(item => {
           const slug = createSlug(item.title);
           const badge = isNew(item.date) ? '<span class="new-badge">NEW</span>' : '';
@@ -192,48 +178,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
   }
+
+  // Load community profiles from GitHub Issues
+  if (document.getElementById('profiles-container')) {
+    const profilesContainer = document.getElementById('profiles-container');
+    const repo = 'k2fort/k2fort.github.io';
+    const label = 'profile'; // Label for profile issues
+
+    fetch(`https://api.github.com/repos/${repo}/issues?labels=${label}&state=open`)
+      .then(res => res.json())
+      .then(issues => {
+        profilesContainer.innerHTML = '';
+        if (issues.length === 0) {
+          profilesContainer.innerHTML = '<p>No player profiles yet. Add yours by commenting on the pinned "Add Your Profile" issue!</p>';
+          return;
+        }
+
+        issues.forEach(issue => {
+          const username = issue.user.login;
+          const avatar = issue.user.avatar_url;
+          const body = issue.body || '';
+
+          // Parse IGN, Discord, Bio from issue body (simple regex)
+          const ignMatch = body.match(/IGN:\s*(.+)/i);
+          const discordMatch = body.match(/Discord:\s*(.+)/i);
+          const bioMatch = body.match(/Bio:\s*(.+)/i);
+
+          const ign = ignMatch ? ignMatch[1].trim() : 'Not provided';
+          const discord = discordMatch ? discordMatch[1].trim() : 'Not provided';
+          const bio = bioMatch ? bioMatch[1].trim() : 'No bio provided';
+
+          const card = document.createElement('div');
+          card.className = 'profile-card';
+          card.innerHTML = `
+            <img src="${avatar}" alt="${username}" class="profile-avatar">
+            <div class="profile-info">
+              <h4>${username}</h4>
+              <p><strong>IGN:</strong> ${ign}</p>
+              <p><strong>Discord:</strong> ${discord}</p>
+              <p>${bio}</p>
+              <a href="${issue.html_url}" target="_blank" class="button">View Profile Discussion</a>
+            </div>
+          `;
+          profilesContainer.appendChild(card);
+        });
+      })
+      .catch(err => {
+        profilesContainer.innerHTML = '<p>Error loading profiles. Try again later.</p>';
+        console.error('Error fetching profiles:', err);
+      });
+  }
 });
-const backToTop = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  backToTop.classList.toggle('show', window.scrollY > 300);
-});
-backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-// Load community profiles from GitHub Issues (example - replace with your logic)
-if (document.getElementById('profiles-container')) {
-  const profilesContainer = document.getElementById('profiles-container');
-
-  // Example profiles (you can fetch from GitHub API or hardcode initially)
-  const sampleProfiles = [
-    {
-      username: "RaiderPro42",
-      ign: "xRaiderx",
-      discord: "RaiderPro#1234",
-      bio: "Level 50 Raider main. Love the Cold Snap update!",
-      avatar: "https://github.com/avatars/u/123456789" // Replace with real GitHub avatars
-    },
-    {
-      username: "FrostyGunner",
-      ign: "FrostByte",
-      discord: "Frosty#5678",
-      bio: "Sniper specialist. Looking for squadmates!",
-      avatar: "https://github.com/avatars/u/987654321"
-    }
-  ];
-
-  profilesContainer.innerHTML = '';
-  sampleProfiles.forEach(profile => {
-    const card = document.createElement('div');
-    card.className = 'profile-card';
-    card.innerHTML = `
-      <img src="${profile.avatar}" alt="${profile.username}" class="profile-avatar">
-      <div class="profile-info">
-        <h4>${profile.username}</h4>
-        <p><strong>IGN:</strong> ${profile.ign}</p>
-        <p><strong>Discord:</strong> ${profile.discord}</p>
-        <p>${profile.bio}</p>
-      </div>
-    `;
-    profilesContainer.appendChild(card);
-  });
-}
