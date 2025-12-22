@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
-# Load existing news
+# Load existing news (but ignore for duplicate check)
 def load_json(file_path):
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -21,9 +21,9 @@ with sync_playwright() as p:
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
     # Scroll multiple times to load all dynamic content
-    for _ in range(5):
+    for _ in range(10):  # Scroll 10 times to load everything
         page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-        page.wait_for_timeout(3000)
+        page.wait_for_timeout(5000)  # Wait 5s per scroll
 
     # Wait for real news titles
     try:
@@ -56,13 +56,13 @@ with sync_playwright() as p:
         summary_element = item.query_selector('p, div[class*="excerpt"], div[class*="summary"]')
         summary = summary_element.inner_text().strip() if summary_element else ''
 
-        # Skip placeholders
-        if "Title" in title or not link or not summary:
-            continue
-
         print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
 
-        # Force add all items (no duplicate check for now)
+        # Skip if invalid (empty title/link/summary)
+        if not title or not link or not summary:
+            continue
+
+        # Force add all valid items (no duplicate check)
         full_content = '<p>Full content not available.</p>'
         if link:
             try:
