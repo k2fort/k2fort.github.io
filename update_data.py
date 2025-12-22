@@ -4,7 +4,7 @@ import json
 import os
 from datetime import datetime
 
-# Headers to mimic browser and avoid blocks
+# Headers to mimic browser
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -32,26 +32,26 @@ except requests.exceptions.RequestException as e:
 
 soup = BeautifulSoup(response.text, 'html.parser')
 
-# Real selectors from current site structure
-news_items = soup.find_all('div', class_='news-card')  # Main card wrapper
+# Correct selectors (inspected today)
+news_items = soup.find_all('div', class_='news-item')  # Wrapper for each news card
 
 for item in news_items:
     # Title
-    title_tag = item.find('h3', class_='news-title')
+    title_tag = item.find('h3')
     title = title_tag.text.strip() if title_tag else ''
 
     # Link
-    link_tag = title_tag.find('a') if title_tag else item.find('a')
+    link_tag = item.find('a', href=True)
     link = link_tag['href'] if link_tag else ''
     if link and not link.startswith('http'):
         link = f"https://arcraiders.com{link}"
 
     # Date
-    date_tag = item.find('span', class_='news-date')
+    date_tag = item.find('time') or item.find('span', class_='date')
     date_str = date_tag.text.strip() if date_tag else datetime.now().strftime('%Y-%m-%d')
 
     # Summary
-    summary_tag = item.find('p', class_='news-excerpt')
+    summary_tag = item.find('p')
     summary = summary_tag.text.strip() if summary_tag else ''
 
     # Skip if no title/link
@@ -66,8 +66,11 @@ for item in news_items:
             try:
                 full_response = requests.get(link, headers=HEADERS, timeout=15)
                 full_soup = BeautifulSoup(full_response.text, 'html.parser')
-                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article', class_='post-content')
+                content_div = full_soup.find('div', class_='news-content') or full_soup.find('div', class_='post-content') or full_soup.find('article')
                 if content_div:
+                    # Remove script/style tags
+                    for tag in content_div.find_all(['script', 'style']):
+                        tag.decompose()
                     full_content = str(content_div)
                 else:
                     full_content = '<p>Content scraped, but structure unknown.</p>'
