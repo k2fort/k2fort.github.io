@@ -15,7 +15,7 @@ news = load_json('news.json')
 # Official news page
 NEWS_URL = 'https://arcraiders.com/news'
 
-api_data = None  # Define outside
+api_data = None  # Define outside the function
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
@@ -23,7 +23,7 @@ with sync_playwright() as p:
 
     # Intercept network responses
     def handle_response(response):
-        nonlocal api_data  # Now it works
+        nonlocal api_data
         if 'news' in response.url and response.status == 200:
             try:
                 api_data = response.json()
