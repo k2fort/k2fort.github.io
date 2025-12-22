@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return new Date(dateStr);
   }
 
-  // Check if item is recent (within 7 days)
+  // Check if item is recent
   function isNew(dateStr) {
     const itemDate = parseDate(dateStr);
     const weekAgo = new Date();
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Community profiles
+  // Load community profiles from GitHub Issues
   if (document.getElementById('profiles-container')) {
     const profilesContainer = document.getElementById('profiles-container');
     const repo = 'k2fort/k2fort.github.io';
@@ -197,9 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
           const username = issue.user.login;
           const avatar = issue.user.avatar_url;
           const body = issue.body || '';
-          const ignMatch = body.match(/IGN:\\s*(.+)/i);
-          const discordMatch = body.match(/Discord:\\s*(.+)/i);
-          const bioMatch = body.match(/Bio:\\s*(.+)/i);
+          const ignMatch = body.match(/IGN:\s*(.+)/i);
+          const discordMatch = body.match(/Discord:\s*(.+)/i);
+          const bioMatch = body.match(/Bio:\s*(.+)/i);
           const ign = ignMatch ? ignMatch[1].trim() : 'Not provided';
           const discord = discordMatch ? discordMatch[1].trim() : 'Not provided';
           const bio = bioMatch ? bioMatch[1].trim() : 'No bio provided';
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => {
         profilesContainer.innerHTML = '<p>Error loading profiles.</p>';
-        console.error('Profiles error:', err);
+        console.error('Error:', err);
       });
   }
 
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const issueBody = `IGN: ${ign}\\nDiscord: ${discord}\\nBio: ${bio}`;
+      const issueBody = `IGN: ${ign}\nDiscord: ${discord}\nBio: ${bio}`;
       const issueTitle = `Profile Submission - ${ign}`;
       const repo = 'k2fort/k2fort.github.io';
       const url = `https://github.com/${repo}/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=profile`;
@@ -252,19 +252,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Event Timers Page with limit on upcoming (max 9)
+  // Event Timers Page with reliable proxy and retry
   if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
     const activeContainer = document.getElementById('active-events');
     const upcomingContainer = document.getElementById('upcoming-events');
     const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
-    const PROXY_URL = 'https://api.allorigins.win/raw?url=';
-    const MAX_UPCOMING = 9;
+    const PROXY_URL = 'https://corsproxy.io/?' + encodeURIComponent(API_URL); // Reliable proxy
 
-    function fetchEvents() {
-      activeContainer.innerHTML = '<p>Loading events...</p>';
+    function fetchEvents(attempt = 1, maxAttempts = 3) {
+      activeContainer.innerHTML = `<p>Loading events... (Attempt ${attempt}/${maxAttempts})</p>`;
       upcomingContainer.innerHTML = '';
 
-      fetch(PROXY_URL + encodeURIComponent(API_URL))
+      fetch(PROXY_URL)
         .then(res => {
           if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
           return res.json();
@@ -315,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // Sort upcoming by start time and limit to 9
           upcomingList.sort((a, b) => a.startTime - b.startTime);
-          const limitedUpcoming = upcomingList.slice(0, MAX_UPCOMING);
+          const limitedUpcoming = upcomingList.slice(0, 9);
 
           limitedUpcoming.forEach(item => upcomingContainer.appendChild(item.card));
 
@@ -324,18 +323,23 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           if (upcomingContainer.innerHTML === '') {
             upcomingContainer.innerHTML = '<p>No upcoming events.</p>';
-          } else if (upcomingList.length > MAX_UPCOMING) {
-            upcomingContainer.innerHTML += `<p style="text-align:center; color:#94a3b8; margin-top:1rem;">+ ${upcomingList.length - MAX_UPCOMING} more upcoming events...</p>`;
+          } else if (upcomingList.length > 9) {
+            upcomingContainer.innerHTML += `<p style="text-align:center; color:#94a3b8; margin-top:1rem;">+ ${upcomingList.length - 9} more upcoming events...</p>`;
           }
         })
         .catch(err => {
           console.error('Event fetch error:', err);
-          activeContainer.innerHTML = `<p>Error loading events: ${err.message}. Try refreshing.</p>`;
-          upcomingContainer.innerHTML = '';
+          if (attempt < maxAttempts) {
+            activeContainer.innerHTML = `<p>Retrying (${attempt}/${maxAttempts})...</p>`;
+            setTimeout(() => fetchEvents(attempt + 1), 2000);
+          } else {
+            activeContainer.innerHTML = `<p>Error loading events: ${err.message}. API may be down or blocked. Try refreshing or check console.</p>`;
+            upcomingContainer.innerHTML = '';
+          }
         });
     }
 
     fetchEvents();
-    setInterval(fetchEvents, 60000); // Refresh every minute
+    setInterval(fetchEvents, 60000);
   }
 });
