@@ -284,3 +284,42 @@ body.light-mode .social-btn:hover { background: #0066cc; color: #fff; }
   }
   .social-share { justify-content: center; }
 }
+/* Community Page */
+.community-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.profiles-list {
+  margin-top: 2rem;
+}
+
+.profile-card {
+  background: #1e293b;
+  border: 1px solid #00d4ff33;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #00d4ff;
+}
+
+.profile-info h4 {
+  color: #00d4ff;
+  margin-bottom: 0.5rem;
+}
+
+.profile-info p {
+  margin: 0.3rem 0;
+  color: #94a3b8;
+}
