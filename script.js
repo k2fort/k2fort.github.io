@@ -252,73 +252,74 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Event Timers Page with reliable CORS proxy
-  if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
-    const activeContainer = document.getElementById('active-events');
-    const upcomingContainer = document.getElementById('upcoming-events');
-    const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
-    const PROXY_URL = 'https://api.allorigins.win/raw?url='; // Reliable free proxy
+// Event Timers Page with updated API parsing
+if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
+  const activeContainer = document.getElementById('active-events');
+  const upcomingContainer = document.getElementById('upcoming-events');
+  const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
+  const PROXY_URL = 'https://api.allorigins.win/raw?url='; // Reliable proxy
 
-    function fetchEvents(attempt = 1, maxAttempts = 3) {
-      activeContainer.innerHTML = '<p>Loading events...</p>';
-      upcomingContainer.innerHTML = '';
+  function fetchEvents() {
+    activeContainer.innerHTML = '<p>Loading events...</p>';
+    upcomingContainer.innerHTML = '';
 
-      fetch(PROXY_URL + encodeURIComponent(API_URL))
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          activeContainer.innerHTML = '';
-          upcomingContainer.innerHTML = '';
+    fetch(PROXY_URL + encodeURIComponent(API_URL))
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        activeContainer.innerHTML = '';
+        upcomingContainer.innerHTML = '';
 
-          // Active events
-          if (data.active && data.active.length > 0) {
-            data.active.forEach(event => {
-              const card = document.createElement('div');
-              card.className = 'event-card active';
-              card.innerHTML = `
-                <h4>${event.event_type}</h4>
-                <p class="status">ACTIVE NOW</p>
-                <p class="map">${event.map.toUpperCase()}</p>
-                <p class="time">Ends in: ${event.time_remaining}</p>
-              `;
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const currentTime = currentHour * 60 + currentMinute;
+
+        data.data.forEach(event => {
+          event.times.forEach(time => {
+            const startParts = time.start.split(':');
+            const endParts = time.end.split(':');
+            const startTime = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
+            const endTime = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
+
+            // Handle overnight events
+            const endTimeAdjusted = endTime < startTime ? endTime + 1440 : endTime;
+
+            const isActive = currentTime >= startTime && currentTime <= endTimeAdjusted;
+
+            const card = document.createElement('div');
+            card.className = 'event-card' + (isActive ? ' active' : '');
+            card.innerHTML = `
+              <h4>${event.name}</h4>
+              <p class="status">${isActive ? 'ACTIVE NOW' : 'SCHEDULED'}</p>
+              <p class="map">${event.map.toUpperCase()}</p>
+              <p class="time">${time.start} - ${time.end}</p>
+            `;
+
+            if (isActive) {
               activeContainer.appendChild(card);
-            });
-          } else {
-            activeContainer.innerHTML = '<p>No active events right now.</p>';
-          }
-
-          // Upcoming events
-          if (data.upcoming && data.upcoming.length > 0) {
-            data.upcoming.forEach(event => {
-              const card = document.createElement('div');
-              card.className = 'event-card';
-              card.innerHTML = `
-                <h4>${event.event_type}</h4>
-                <p class="status">UPCOMING</p>
-                <p class="map">${event.map.toUpperCase()}</p>
-                <p class="time">Starts in: ${event.time_until_start}</p>
-              `;
+            } else {
               upcomingContainer.appendChild(card);
-            });
-          } else {
-            upcomingContainer.innerHTML = '<p>No upcoming events.</p>';
-          }
-        })
-        .catch(err => {
-          console.error('Event fetch error:', err);
-          if (attempt < maxAttempts) {
-            activeContainer.innerHTML = `<p>Retrying (${attempt}/${maxAttempts})...</p>`;
-            setTimeout(() => fetchEvents(attempt + 1), 2000);
-          } else {
-            activeContainer.innerHTML = `<p>Error loading events: ${err.message}. API may be down or blocked. Try refreshing or check console.</p>`;
-            upcomingContainer.innerHTML = '';
-          }
+            }
+          });
         });
-    }
 
-    fetchEvents();
-    setInterval(fetchEvents, 30000); // Refresh every 30 seconds
+        if (activeContainer.innerHTML === '') {
+          activeContainer.innerHTML = '<p>No active events right now.</p>';
+        }
+        if (upcomingContainer.innerHTML === '') {
+          upcomingContainer.innerHTML = '<p>No upcoming events.</p>';
+        }
+      })
+      .catch(err => {
+        console.error('Event fetch error:', err);
+        activeContainer.innerHTML = `<p>Error loading events: ${err.message}. Try refreshing.</p>`;
+        upcomingContainer.innerHTML = '';
+      });
   }
-});
+
+  fetchEvents();
+  setInterval(fetchEvents, 60000); // Refresh every minute
+}
