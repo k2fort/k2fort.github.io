@@ -1,7 +1,174 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d1117; color: #e6e6e6; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+header {
+  background: #1a1a2e;
+  padding: 1.5rem 0;
+  border-bottom: 2px solid #4a4a6a;
+}
+header .container { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  flex-wrap: wrap; 
+  gap: 1rem; 
+}
+h1 { font-size: 2rem; }
+nav ul { 
+  list-style: none; 
+  display: flex; 
+  gap: 2rem; 
+}
+nav a { 
+  color: #00d4ff; 
+  text-decoration: none; 
+  font-weight: bold; 
+}
+nav a:hover { text-decoration: underline; }
+main { padding: 2rem 0; }
+h2 { 
+  text-align: center; 
+  color: #00d4ff; 
+  margin-bottom: 1.5rem; 
+  font-size: 2rem; 
+}
+.latest { margin-bottom: 3rem; }
+#latest-updates { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  gap: 1.5rem; 
+}
+.update-card {
+  background: #1a1a2e;
+  border: 1px solid #4a4a6a;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s;
+}
+.update-card:hover { transform: translateY(-5px); }
+.update-card h3 { color: #00d4ff; margin-bottom: 0.5rem; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1a1a2e;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+th, td { 
+  padding: 1rem; 
+  text-align: left; 
+  border-bottom: 1px solid #4a4a6a; 
+}
+th { background: #0d1117; }
+a { color: #00d4ff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+footer {
+  background: #1a1a2e;
+  padding: 1.5rem 0;
+  text-align: center;
+  border-top: 2px solid #4a4a6a;
+}
+.patch-detail, .news-detail {
+  background: #1a1a2e;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #4a4a6a;
+}
+.patch-detail h2, .news-detail h2 { text-align: left; }
+.meta { 
+  color: #aaa; 
+  font-size: 0.9rem; 
+  margin-bottom: 1rem; 
+}
+.news-content p, .news-content ul, .patch-content p, .patch-content ul { 
+  line-height: 1.7; 
+}
+.button {
+  display: inline-block;
+  background: #00d4ff;
+  color: #000;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+.button:hover { background: #00aaff; }
+.back-link {
+  display: block;
+  margin-top: 2rem;
+  color: #00d4ff;
+}
+.latest-news { margin-bottom: 3rem; }
+#latest-news { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  gap: 1.5rem; 
+}
+.news-card {
+  background: #1a1a2e;
+  border: 1px solid #4a4a6a;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s;
+}
+.news-card:hover { transform: translateY(-5px); }
+.news-card h3 { color: #00d4ff; margin-bottom: 0.5rem; }
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.logo {
+  height: 100px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: contain;
+}
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #00d4ff;
+}
+body.light-mode {
+  background: #f5f5f5;
+  color: #333;
+}
+body.light-mode header, 
+body.light-mode .update-card, 
+body.light-mode .news-card,
+body.light-mode table, 
+body.light-mode .patch-detail, 
+body.light-mode .news-detail,
+body.light-mode .comments-section,
+body.light-mode footer {
+  background: #fff;
+  color: #333;
+  border-color: #ccc;
+}
+body.light-mode th { background: #eee; }
+body.light-mode a { color: #0066cc; }
+body.light-mode .button { background: #0066cc; color: #fff; }
+body.light-mode .button:hover { background: #0055aa; }
+.comments-section {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: #1a1a2e;
+  border-radius: 8px;
+  border: 1px solid #4a4a6a;
+}
+.comments-section h3 {
+  margin-bottom: 1rem;
+  color: #00d4ff;
+}
+
+/* New additions from the latest updates */
 tr:hover {
   background: rgba(0, 212, 255, 0.1);
 }
-
 .new-badge {
   background: #00d4ff;
   color: #000;
@@ -11,12 +178,10 @@ tr:hover {
   margin-left: 0.5rem;
   font-weight: bold;
 }
-
 body.light-mode .new-badge {
   background: #0066cc;
   color: #fff;
 }
-
 @media (max-width: 768px) {
   header .container {
     flex-direction: column;
