@@ -18,66 +18,50 @@ NEWS_URL = 'https://arcraiders.com/news'
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page()
+
+    # Intercept network requests
+    api_data = None
+    def handle_response(response):
+        nonlocal api_data
+        if 'news' in response.url and response.status == 200:
+            try:
+                api_data = response.json()
+                print("Captured API response from:", response.url)
+            except:
+                print("Failed to parse API response")
+
+    page.on("response", handle_response)
+
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Scroll the page to load all dynamic content
-    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-    page.wait_for_timeout(5000)  # Wait 5s for load
+    # Wait for API call (or page to load)
+    page.wait_for_timeout(10000)  # Wait 10s for API calls
 
-    # Wait for a real news title (e.g., containing "Cold Snap" or "Hotfix")
-    try:
-        page.wait_for_selector('h3:has-text("Cold Snap")', timeout=60000)
-        print("Real news content loaded")
-    except Exception as e:
-        print(f"Timeout waiting for real news: {e}")
+    if api_data:
+        print("API Data found:", api_data)
+        # Process the real API data (adjust keys based on real response)
+        for item in api_data.get('items', api_data.get('data', [])):
+            title = item.get('title') or item.get('name') or 'Unknown Title'
+            date_str = item.get('date') or item.get('published') or datetime.now().strftime('%Y-%m-%d')
+            summary = item.get('excerpt') or item.get('summary') or item.get('description') or 'No summary'
+            link = item.get('url') or item.get('slug') or ''
+            if link and not link.startswith('http'):
+                link = f"https://arcraiders.com{link}"
 
-    # Get all rendered news cards
-    news_items = page.query_selector_all('div[class*="news-card"], div[class*="post-card"], article, div[class*="card"]')
+            full_content = item.get('content') or '<p>Full content not available.</p>'
 
-    print(f"Found {len(news_items)} potential news items")
-
-    for i, item in enumerate(news_items):
-        # Title
-        title_element = item.query_selector('h3, h2, a[class*="title"], span[class*="title"], .title')
-        title = title_element.inner_text().strip() if title_element else f"Title {i}"
-
-        # Link
-        link_element = item.query_selector('a[href]')
-        link = link_element.get_attribute('href') if link_element else ''
-        if link and not link.startswith('http'):
-            link = f"https://arcraiders.com{link}"
-
-        # Date
-        date_element = item.query_selector('time, span[class*="date"], div[class*="date"]')
-        date_str = date_element.inner_text().strip() if date_element else datetime.now().strftime('%Y-%m-%d')
-
-        # Summary
-        summary_element = item.query_selector('p[class*="excerpt"], p, div[class*="summary"]')
-        summary = summary_element.inner_text().strip() if summary_element else ''
-
-        print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
-
-        # Force add all items (no duplicate check for now)
-        full_content = '<p>Full content not available.</p>'
-        if link:
-            try:
-                full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
-                full_soup = BeautifulSoup(full_response.text, 'html.parser')
-                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
-                if content_div:
-                    full_content = str(content_div)
-            except Exception as e:
-                print(f"Error fetching full content for {title}: {e}")
-
-        news.append({
-            "title": title,
-            "date": date_str,
-            "summary": summary,
-            "link": link,
-            "isLatest": True,
-            "fullContent": full_content
-        })
-        print(f"Added news: {title} ({date_str})")
+            if not any(n['title'] == title or n.get('link') == link for n in news):
+                news.append({
+                    "title": title,
+                    "date": date_str,
+                    "summary": summary,
+                    "link": link,
+                    "isLatest": True,
+                    "fullContent": full_content
+                })
+                print(f"Added new news: {title} ({date_str})")
+    else:
+        print("No API response captured. Site may not use API for news.")
 
     browser.close()
 
