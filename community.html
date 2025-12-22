@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arc Raiders Community - Player Profiles</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZXL0TEFZ57');
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo-wrapper">
+        <img src="logo.png" alt="Arc Raiders Patch Notes Logo" class="logo">
+        <h1>Arc Raiders Community</h1>
+      </div>
+      <nav class="nav-buttons">
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="index.html#patches" class="nav-btn">All Patches</a>
+        <a href="index.html#news" class="nav-btn">News</a>
+        <a href="index.html#about" class="nav-btn">About</a>
+      </nav>
+      <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="community-intro">
+      <h2>Player Profiles</h2>
+      <p>Share your IGN, Discord, and bio! Profiles are powered by GitHub Issues — sign in with GitHub to add/edit yours.</p>
+      <a href="https://github.com/login" class="button" target="_blank">Sign in with GitHub</a>
+    </section>
+
+    <section class="profiles-list">
+      <h3>Community Members</h3>
+      <div id="profiles-container">
+        <!-- Profiles will load here via JS -->
+      </div>
+    </section>
+
+    <div class="comments-section">
+      <h3>Community Discussion</h3>
+      <div id="utterances-comments"></div>
+      <script src="https://utteranc.es/client.js"
+              repo="k2fort/k2fort.github.io"
+              issue-term="community-profiles"
+              label="profiles"
+              theme="github-dark"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Arc Raiders Patch Notes | Built for the community</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
