@@ -33,14 +33,18 @@
       <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
     </div>
   </header>
-<br>
+
   <main class="container">
     <section class="event-intro">
       <h2>Live Event Timers</h2>
-      <p>Times shown in your local timezone (Asia/Jerusalem). Data from MetaForge API. Refreshes every 60 seconds.</p>
+      <p>Times shown in your local timezone. Data from MetaForge API. Refreshes every 30 seconds.</p>
     </section>
 
-    <section class="event-timers">
+    <div id="loading" class="loading-spinner" style="display: flex; justify-content: center; margin: 3rem 0;">
+      <div class="spinner"></div>
+    </div>
+
+    <section class="event-timers" id="event-timers" style="display: none;">
       <h3>Active Events</h3>
       <div id="active-events" class="event-grid"></div>
 
