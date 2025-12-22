@@ -57,15 +57,19 @@ with sync_playwright() as p:
 
         # Force add all valid items
         full_content = '<p>Full content not available.</p>'
-        if link:
-            try:
-                full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
-                full_soup = BeautifulSoup(full_response.text, 'html.parser')
-                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
-                if content_div:
-                    full_content = str(content_div)
-            except Exception as e:
-                print(f"Error fetching full content for {title}: {e}")
+if link:
+    try:
+        full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+        full_soup = BeautifulSoup(full_response.text, 'html.parser')
+        content_div = full_soup.find('div', class_='news-content') or full_soup.find('article', class_='post-content') or full_soup.find('div', class_='entry-content') or full_soup.find('div', class_='content') or full_soup.find('article')
+        if content_div:
+            for tag in content_div.find_all(['script', 'style', 'nav']):
+                tag.decompose()
+            full_content = str(content_div)
+        else:
+            print(f"No content div found for {title}")
+    except Exception as e:
+        print(f"Error fetching full content for {title}: {e}")
 
         news.append({
             "title": title,
