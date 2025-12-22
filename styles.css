@@ -183,3 +183,11 @@ body.light-mode .new-badge { background: #dc2626; }
   .logo-wrapper { margin: 1rem 0; }
   nav ul { flex-wrap: wrap; justify-content: center; gap: 1rem; }
 }
+.logo {
+  height: 100px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px #00d4ff);
+}
+
