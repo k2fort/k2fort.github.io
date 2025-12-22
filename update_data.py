@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
-# Load existing news (but ignore for duplicate check)
+# Load existing news
 def load_json(file_path):
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -50,7 +50,7 @@ with sync_playwright() as p:
 
         # Date
         date_element = item.query_selector('time, span[class*="date"], div[class*="date"]')
-        date_str = date_element.inner_text().strip() if date_element else datetime.now().strftime('%Y-%m-%d')
+        date_str = date_element.inner_text().strip() if date_element else ''
 
         # Summary
         summary_element = item.query_selector('p, div[class*="excerpt"], div[class*="summary"]')
@@ -62,27 +62,28 @@ with sync_playwright() as p:
         if not title or not link or not summary:
             continue
 
-        # Force add all valid items (no duplicate check)
-        full_content = '<p>Full content not available.</p>'
-        if link:
-            try:
-                full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
-                full_soup = BeautifulSoup(full_response.text, 'html.parser')
-                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
-                if content_div:
-                    full_content = str(content_div)
-            except Exception as e:
-                print(f"Error fetching full content for {title}: {e}")
+        # Add if not duplicate
+        if not any(n['title'] == title or n.get('link') == link for n in news):
+            full_content = '<p>Full content not available.</p>'
+            if link:
+                try:
+                    full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+                    full_soup = BeautifulSoup(full_response.text, 'html.parser')
+                    content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
+                    if content_div:
+                        full_content = str(content_div)
+                except Exception as e:
+                    print(f"Error fetching full content for {title}: {e}")
 
-        news.append({
-            "title": title,
-            "date": date_str,
-            "summary": summary,
-            "link": link,
-            "isLatest": True,
-            "fullContent": full_content
-        })
-        print(f"Added news: {title} ({date_str})")
+            news.append({
+                "title": title,
+                "date": date_str,
+                "summary": summary,
+                "link": link,
+                "isLatest": True,
+                "fullContent": full_content
+            })
+            print(f"Added news: {title} ({date_str})")
 
     browser.close()
 
