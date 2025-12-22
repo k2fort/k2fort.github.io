@@ -22,8 +22,16 @@ with sync_playwright() as p:
     page = browser.new_page()
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Wait for news cards to appear (adjust selector if needed)
-    page.wait_for_selector('div[class*="news-card"], article, div[class*="post"]', timeout=30000)  # Wait up to 30s
+    # Wait for any content to load (e.g., header or a known element)
+    try:
+        page.wait_for_selector('header, div, article, h1, h2, h3', timeout=60000)  # Wait for ANY content
+        print("Page loaded successfully")
+    except Exception as e:
+        print(f"Timeout waiting for content: {e}")
+
+    # Extra wait for dynamic content
+    page.wait_for_timeout(5000)  # Wait 5 seconds for JS to render
+
     html = page.content()
     browser.close()
 
@@ -33,14 +41,14 @@ print(html[:2000])
 
 soup = BeautifulSoup(html, 'html.parser')
 
-# Broader selectors to catch rendered items
-news_items = soup.find_all(['div', 'article'], class_=['news-card', 'post', 'card', 'news-item', 'entry', 'post-card'])
+# Very broad selectors to catch any news-like items
+news_items = soup.find_all(['div', 'article', 'section'], class_=['news', 'post', 'card', 'item', 'entry', 'content', 'feed'])
 
 print(f"Found {len(news_items)} potential news items")
 
 for item in news_items:
-    # Title
-    title_tag = item.find(['h1', 'h2', 'h3', 'h4', 'a'], class_=['title', 'news-title', 'post-title', 'card-title'])
+    # Title (try any heading)
+    title_tag = item.find(['h1', 'h2', 'h3', 'h4', 'h5', 'a'])
     title = title_tag.text.strip() if title_tag else ''
 
     # Link
@@ -50,11 +58,11 @@ for item in news_items:
         link = f"https://arcraiders.com{link}"
 
     # Date
-    date_tag = item.find('time') or item.find(['span', 'div'], class_=['date', 'news-date', 'post-date'])
+    date_tag = item.find('time') or item.find(['span', 'div'], class_=['date', 'time', 'published'])
     date_str = date_tag.text.strip() if date_tag else datetime.now().strftime('%Y-%m-%d')
 
     # Summary
-    summary_tag = item.find('p', class_=['excerpt', 'news-excerpt', 'post-excerpt']) or item.find('p')
+    summary_tag = item.find('p') or item.find('div', class_=['excerpt', 'summary'])
     summary = summary_tag.text.strip() if summary_tag else ''
 
     if not title or not link:
