@@ -252,74 +252,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-// Event Timers Page with updated API parsing
-if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
-  const activeContainer = document.getElementById('active-events');
-  const upcomingContainer = document.getElementById('upcoming-events');
-  const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
-  const PROXY_URL = 'https://api.allorigins.win/raw?url='; // Reliable proxy
+  // Event Timers Page with reliable proxy and debug
+  if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
+    const activeContainer = document.getElementById('active-events');
+    const upcomingContainer = document.getElementById('upcoming-events');
+    const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
+    const PROXY_URL = 'https://corsproxy.io/?' + encodeURIComponent(API_URL); // New reliable proxy
 
-  function fetchEvents() {
-    activeContainer.innerHTML = '<p>Loading events...</p>';
-    upcomingContainer.innerHTML = '';
+    function fetchEvents() {
+      activeContainer.innerHTML = '<p>Loading events...</p>';
+      upcomingContainer.innerHTML = '';
 
-    fetch(PROXY_URL + encodeURIComponent(API_URL))
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
-        activeContainer.innerHTML = '';
-        upcomingContainer.innerHTML = '';
+      fetch(PROXY_URL)
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          console.log('API Response:', data); // Log full response for debug
+          activeContainer.innerHTML = '';
+          upcomingContainer.innerHTML = '';
 
-        const now = new Date();
-        const currentHour = now.getHours();
-        const currentMinute = now.getMinutes();
-        const currentTime = currentHour * 60 + currentMinute;
+          // Check if data is an array or object
+          const events = Array.isArray(data) ? data : data.data || [];
 
-        data.data.forEach(event => {
-          event.times.forEach(time => {
-            const startParts = time.start.split(':');
-            const endParts = time.end.split(':');
-            const startTime = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
-            const endTime = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
+          if (events.length === 0) {
+            activeContainer.innerHTML = '<p>No events available at this time. Check back later!</p>';
+            return;
+          }
 
-            // Handle overnight events
-            const endTimeAdjusted = endTime < startTime ? endTime + 1440 : endTime;
-
-            const isActive = currentTime >= startTime && currentTime <= endTimeAdjusted;
-
+          events.forEach(event => {
             const card = document.createElement('div');
-            card.className = 'event-card' + (isActive ? ' active' : '');
+            card.className = 'event-card';
             card.innerHTML = `
-              <h4>${event.name}</h4>
-              <p class="status">${isActive ? 'ACTIVE NOW' : 'SCHEDULED'}</p>
-              <p class="map">${event.map.toUpperCase()}</p>
-              <p class="time">${time.start} - ${time.end}</p>
+              <h4>${event.event_type || event.name || 'Unknown Event'}</h4>
+              <p class="map">${event.map || 'Unknown Map'}</p>
+              <p class="time">Time: ${event.time_remaining || event.time_until_start || 'N/A'}</p>
             `;
-
-            if (isActive) {
-              activeContainer.appendChild(card);
-            } else {
-              upcomingContainer.appendChild(card);
-            }
+            activeContainer.appendChild(card);
           });
+        })
+        .catch(err => {
+          console.error('Event fetch error:', err);
+          activeContainer.innerHTML = `<p>Error loading events: ${err.message}. API may be down or blocked. Try refreshing.</p>`;
+          upcomingContainer.innerHTML = '';
         });
+    }
 
-        if (activeContainer.innerHTML === '') {
-          activeContainer.innerHTML = '<p>No active events right now.</p>';
-        }
-        if (upcomingContainer.innerHTML === '') {
-          upcomingContainer.innerHTML = '<p>No upcoming events.</p>';
-        }
-      })
-      .catch(err => {
-        console.error('Event fetch error:', err);
-        activeContainer.innerHTML = `<p>Error loading events: ${err.message}. Try refreshing.</p>`;
-        upcomingContainer.innerHTML = '';
-      });
+    fetchEvents();
+    setInterval(fetchEvents, 60000); // Refresh every minute
   }
-
-  fetchEvents();
-  setInterval(fetchEvents, 60000); // Refresh every minute
-}
+});
