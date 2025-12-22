@@ -20,18 +20,20 @@ with sync_playwright() as p:
     page = browser.new_page()
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Wait for news cards to load (broad selector)
+    # Wait for real news titles to appear (look for "Cold Snap" or similar)
     try:
-        page.wait_for_selector('div, article, section', timeout=60000)  # Wait for ANY content
-        page.wait_for_timeout(10000)  # Extra wait for JS
-        print("Page loaded successfully")
+        page.wait_for_selector('h3:has-text("Cold Snap"), h3:has-text("Hotfix"), h3:has-text("Update")', timeout=60000)
+        print("Real news titles loaded successfully")
     except Exception as e:
-        print(f"Timeout waiting for content: {e}")
-        browser.close()
-        exit(1)
+        print(f"Timeout waiting for real news titles: {e}")
+        # Continue anyway to see what we get
 
-    # Get all potential news items
-    news_items = page.query_selector_all('div[class*="news"], article, div[class*="post"], div[class*="card"]')
+    # Scroll to load more content
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    page.wait_for_timeout(5000)
+
+    # Get all potential news cards
+    news_items = page.query_selector_all('div[class*="news"], article, div[class*="card"], div[class*="post"]')
 
     print(f"Found {len(news_items)} potential news items")
 
@@ -56,27 +58,28 @@ with sync_playwright() as p:
 
         print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
 
-        # Force add all items (no duplicate check for now)
-        full_content = '<p>Full content not available.</p>'
-        if link:
-            try:
-                full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
-                full_soup = BeautifulSoup(full_response.text, 'html.parser')
-                content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
-                if content_div:
-                    full_content = str(content_div)
-            except Exception as e:
-                print(f"Error fetching full content for {title}: {e}")
+        # Add if not duplicate
+        if not any(n['title'] == title or n.get('link') == link for n in news):
+            full_content = '<p>Full content not available.</p>'
+            if link:
+                try:
+                    full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
+                    full_soup = BeautifulSoup(full_response.text, 'html.parser')
+                    content_div = full_soup.find('div', class_='news-content') or full_soup.find('article')
+                    if content_div:
+                        full_content = str(content_div)
+                except Exception as e:
+                    print(f"Error fetching full content for {title}: {e}")
 
-        news.append({
-            "title": title,
-            "date": date_str,
-            "summary": summary,
-            "link": link,
-            "isLatest": True,
-            "fullContent": full_content
-        })
-        print(f"Added news: {title} ({date_str})")
+            news.append({
+                "title": title,
+                "date": date_str,
+                "summary": summary,
+                "link": link,
+                "isLatest": True,
+                "fullContent": full_content
+            })
+            print(f"Added news: {title} ({date_str})")
 
     browser.close()
 
