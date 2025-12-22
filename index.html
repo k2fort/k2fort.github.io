@@ -6,39 +6,38 @@
   <title>Arc Raiders Patch Notes & News</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
- <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-ZXL0TEFZ57');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZXL0TEFZ57');
+  </script>
 </head>
 <body>
   <header>
-  <div class="container">
-    <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
-    <div class="logo-wrapper">
-      <img src="logo.png" alt="Arc Raiders Patch Notes Logo" class="logo">
-      <h1>Arc Raiders Patch Notes</h1>
+    <div class="container">
+      <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
+      <div class="logo-wrapper">
+        <img src="logo.png" alt="Arc Raiders Patch Notes Logo" class="logo">
+        <h1>Arc Raiders Patch Notes</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#patches">All Patches</a></li>
+          <li><a href="index.html#news">News</a></li>
+          <li><a href="index.html#about">About</a></li>
+        </ul>
+      </nav>
     </div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="#patches">All Patches</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#about">About</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+  </header>
 
   <main class="container">
     <section class="latest">
       <h2>Latest Updates</h2>
-      <input type="text" id="searchInput" placeholder="Search patches..." style="width:100%; padding:0.8rem; margin:1rem 0; font-size:1rem;">
+      <input type="text" id="searchInput" placeholder="Search patches & news..." style="width:100%; padding:0.8rem; margin:1rem 0; font-size:1rem;">
       <div id="latest-updates"></div>
     </section>
 
@@ -58,48 +57,37 @@
     </section>
 
     <section class="latest-news">
-  <h2>Latest News</h2>
-  <div id="latest-news"></div>
-</section>
+      <h2>Latest News</h2>
+      <div id="latest-news"></div>
+    </section>
 
     <section id="news-archive">
-  <h2>All News</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Date</th>
-        <th>Summary</th>
-        <th>Link</th>
-      </tr>
-    </thead>
-    <tbody id="news-table-body"></tbody>
-  </table>
-</section>
+      <h2>All News</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Summary</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody id="news-table-body"></tbody>
+      </table>
+    </section>
 
     <section id="about">
       <h2>About</h2>
-      <p>© 2025 Arc Raiders Patch Notes | Community-driven site for Arc Raiders players | Not affiliated with Embark | <a href="sitemap.xml">Sitemap</a></p>
+      <p>© 2025 Arc Raiders Patch Notes | Community-driven site for Arc Raiders players | Not affiliated with Embark | <a href="sitemap.xml">Sitemap</a> | <a href="rss.xml">RSS Feed</a></p>
     </section>
   </main>
 
   <footer>
     <div class="container">
       <p>© 2025 Arc Raiders Patch Notes | Built with love for the community</p>
-      <p><a href="rss.xml">RSS Feed</a></p>
     </div>
   </footer>
 
-  <script src="patches.json" type="application/json"></script>
   <script src="script.js"></script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
