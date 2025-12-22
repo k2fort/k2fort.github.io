@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
-# Load existing news
+# Load existing news (but we won't use it for duplicate check)
 def load_json(file_path):
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -20,7 +20,6 @@ with sync_playwright() as p:
     page = browser.new_page()
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Wait for news cards to load (common selector for dynamic content)
     try:
         page.wait_for_selector('div[class*="news"], article, div[class*="card"], div[class*="post"]', timeout=60000)
         print("News cards loaded successfully")
@@ -34,10 +33,10 @@ with sync_playwright() as p:
 
     print(f"Found {len(news_items)} potential news items")
 
-    for item in news_items:
+    for i, item in enumerate(news_items):
         # Title
-        title_element = item.query_selector('h3, h2, a[class*="title"], span[class*="title"]')
-        title = title_element.inner_text().strip() if title_element else ''
+        title_element = item.query_selector('h3, h2, a[class*="title"], span[class*="title"], .title')
+        title = title_element.inner_text().strip() if title_element else f"Title {i}"
 
         # Link
         link_element = item.query_selector('a[href]')
@@ -53,14 +52,11 @@ with sync_playwright() as p:
         summary_element = item.query_selector('p[class*="excerpt"], p, div[class*="summary"]')
         summary = summary_element.inner_text().strip() if summary_element else ''
 
-        if not title or not link:
-            continue
+        print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
 
-        print(f"Found item: {title} ({link})")
-
-        if not any(n['title'] == title or n.get('link') == link for n in news):
-            # Fetch full content
-            full_content = '<p>Full content not available.</p>'
+        # Force add all items (no duplicate check for now)
+        full_content = '<p>Full content not available.</p>'
+        if link:
             try:
                 full_response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15)
                 full_soup = BeautifulSoup(full_response.text, 'html.parser')
@@ -70,15 +66,15 @@ with sync_playwright() as p:
             except Exception as e:
                 print(f"Error fetching full content for {title}: {e}")
 
-            news.append({
-                "title": title,
-                "date": date_str,
-                "summary": summary,
-                "link": link,
-                "isLatest": True,
-                "fullContent": full_content
-            })
-            print(f"Added new news: {title} ({date_str})")
+        news.append({
+            "title": title,
+            "date": date_str,
+            "summary": summary,
+            "link": link,
+            "isLatest": True,
+            "fullContent": full_content
+        })
+        print(f"Added news: {title} ({date_str})")
 
     browser.close()
 
