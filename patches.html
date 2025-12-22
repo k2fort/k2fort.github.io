@@ -7,19 +7,22 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-ZXL0TEFZ57');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZXL0TEFZ57');
+  </script>
 </head>
 <body>
   <header>
     <div class="container">
-      <h1>Arc Raiders Patch Notes</h1>
+      <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
+      <div class="logo-wrapper">
+        <img src="logo.png" alt="Arc Raiders Patch Notes Logo" class="logo">
+        <h1>Arc Raiders Patch Notes</h1>
+      </div>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -30,25 +33,28 @@
       </nav>
     </div>
   </header>
-<br>
+
   <main class="container">
     <article class="patch-detail" id="patch-content">
       <h2>Loading patch...</h2>
       <p class="meta"></p>
       <div class="patch-content"></div>
       <a href="#" class="button">View Official Notes</a>
-      <a href="index.html" class="back-link">← Back to All Patches</a>
+      <a href="index.html#patches" class="back-link">← Back to All Patches</a>
     </article>
-    <script src="https://utteranc.es/client.js"
-        repo="k2fort/k2fort.github.io"
-        issue-term="pathname"
-        label="comments"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+    <div class="comments-section">
+      <script src="https://utteranc.es/client.js"
+          repo="k2fort/k2fort.github.io"
+          issue-term="pathname"
+          label="comments"
+          theme="github-dark"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </div>
   </main>
-<br>
+
   <footer>
     <div class="container">
       <p>© 2025 Arc Raiders Patch Notes | Built for the community</p>
