@@ -26,30 +26,43 @@
         <a href="index.html" class="nav-btn">Home</a>
         <a href="index.html#patches" class="nav-btn">All Patches</a>
         <a href="index.html#news" class="nav-btn">News</a>
-        <a href="community.html" class="nav-btn">Community</a>
         <a href="index.html#about" class="nav-btn">About</a>
+        <a href="community.html" class="nav-btn active">Community</a>
       </nav>
       <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
     </div>
   </header>
 <br>
   <main class="container">
-    <div class="comments-section">
     <section class="community-intro">
       <h2>Player Profiles</h2>
-      <p>Share your IGN, Discord, and bio! Profiles are powered by GitHub Issues — sign in with GitHub to add/edit yours.</p>
-      <a href="https://github.com/login" class="button" target="_blank">Sign in with GitHub</a>
+      <p>Join the community! Fill out the form below to add your profile. It will appear after approval (or auto if no moderation).</p>
     </section>
+
+    <section class="profile-form">
+      <h3>Add Your Profile</h3>
+      <form id="profile-form">
+        <label for="ign">In-Game Name (IGN):</label>
+        <input type="text" id="ign" name="ign" required placeholder="Your IGN">
+
+        <label for="discord">Discord Tag:</label>
+        <input type="text" id="discord" name="discord" required placeholder="Username#1234">
+
+        <label for="bio">Bio (tell us about yourself):</label>
+        <textarea id="bio" name="bio" rows="4" required placeholder="e.g., Level 50 Raider main, looking for squad!"></textarea>
+
+        <button type="submit" class="button">Submit Profile</button>
+      </form>
+      <p id="form-message" style="margin-top: 1rem; color: #00d4ff;"></p>
+    </section>
+
     <section class="profiles-list">
       <h3>Community Members</h3>
       <div id="profiles-container">
-        <!-- Profiles will load here via JS -->
+        <!-- Profiles load here -->
       </div>
     </section>
 
-    
-      
-    </div>
   </main>
 
   <footer>
