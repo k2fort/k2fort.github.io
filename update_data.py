@@ -32,7 +32,7 @@ except requests.exceptions.RequestException as e:
 
 soup = BeautifulSoup(response.text, 'html.parser')
 
-# Real selectors from arcraiders.com/news (inspected today)
+# Real selectors from current site structure
 news_items = soup.find_all('div', class_='news-card')  # Main card wrapper
 
 for item in news_items:
