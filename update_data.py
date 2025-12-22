@@ -15,27 +15,28 @@ news = load_json('news.json')
 # Official news page
 NEWS_URL = 'https://arcraiders.com/news'
 
+api_data = None  # Define outside
+
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page()
 
-    # Intercept network requests
-    api_data = None
+    # Intercept network responses
     def handle_response(response):
-        nonlocal api_data
+        nonlocal api_data  # Now it works
         if 'news' in response.url and response.status == 200:
             try:
                 api_data = response.json()
                 print("Captured API response from:", response.url)
-            except:
-                print("Failed to parse API response")
+            except Exception as e:
+                print("Failed to parse API response:", e)
 
     page.on("response", handle_response)
 
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Wait for API call (or page to load)
-    page.wait_for_timeout(10000)  # Wait 10s for API calls
+    # Wait for API call
+    page.wait_for_timeout(10000)  # Wait 10s for API
 
     if api_data:
         print("API Data found:", api_data)
