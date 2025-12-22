@@ -20,17 +20,17 @@ with sync_playwright() as p:
     page = browser.new_page()
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
-    # Wait for real news titles to appear (look for "Cold Snap" or similar)
+    # Scroll multiple times to load all dynamic content
+    for _ in range(5):  # Scroll 5 times to load all
+        page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+        page.wait_for_timeout(3000)  # Wait 3s for load
+
+    # Wait for real news titles
     try:
         page.wait_for_selector('h3:has-text("Cold Snap"), h3:has-text("Hotfix"), h3:has-text("Update")', timeout=60000)
         print("Real news titles loaded successfully")
     except Exception as e:
         print(f"Timeout waiting for real news titles: {e}")
-        # Continue anyway to see what we get
-
-    # Scroll to load more content
-    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-    page.wait_for_timeout(5000)
 
     # Get all potential news cards
     news_items = page.query_selector_all('div[class*="news"], article, div[class*="card"], div[class*="post"]')
@@ -40,7 +40,7 @@ with sync_playwright() as p:
     for i, item in enumerate(news_items):
         # Title
         title_element = item.query_selector('h3, h2, a, span[class*="title"]')
-        title = title_element.inner_text().strip() if title_element else f"Title {i}"
+        title = title_element.inner_text().strip() if title_element else ''
 
         # Link
         link_element = item.query_selector('a[href]')
@@ -50,15 +50,18 @@ with sync_playwright() as p:
 
         # Date
         date_element = item.query_selector('time, span[class*="date"], div[class*="date"]')
-        date_str = date_element.inner_text().strip() if date_element else datetime.now().strftime('%Y-%m-%d')
+        date_str = date_element.inner_text().strip() if date_element else ''
 
         # Summary
         summary_element = item.query_selector('p, div[class*="excerpt"], div[class*="summary"]')
         summary = summary_element.inner_text().strip() if summary_element else ''
 
+        # Skip placeholders
+        if not title or "Title" in title or not link or not summary:
+            continue
+
         print(f"Item {i}: Title='{title}', Link='{link}', Date='{date_str}', Summary='{summary[:50]}...'")
 
-        # Add if not duplicate
         if not any(n['title'] == title or n.get('link') == link for n in news):
             full_content = '<p>Full content not available.</p>'
             if link:
