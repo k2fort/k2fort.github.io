@@ -249,26 +249,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Event Timers Page with beautiful design
+  // Event Timers Page with beautiful icons and real-time countdown
   if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
     const loading = document.getElementById('loading');
     const eventTimers = document.getElementById('event-timers');
     const activeContainer = document.getElementById('active-events');
     const upcomingContainer = document.getElementById('upcoming-events');
     const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
-    const PROXY_URL = 'https://corsproxy.io/?' + encodeURIComponent(API_URL);
+    const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+
+    // Map icons (Font Awesome classes)
+    const mapIcons = {
+      'Dam': 'fa-water',
+      'Blue Gate': 'fa-gate',
+      'Spaceport': 'fa-rocket',
+      'Buried City': 'fa-city',
+      'Stella Montis': 'fa-mountain',
+      'Buried City': 'fa-city',
+      'Blue Gate': 'fa-gate',
+      'Dam': 'fa-water'
+      // Add more maps as needed
+    };
 
     function fetchEvents() {
       loading.style.display = 'flex';
       eventTimers.style.display = 'none';
 
-      fetch(PROXY_URL)
+      fetch(PROXY_URL + encodeURIComponent(API_URL))
         .then(res => {
           if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
           return res.json();
         })
         .then(data => {
-          console.log('API Response:', data);
           loading.style.display = 'none';
           eventTimers.style.display = 'block';
 
@@ -297,10 +309,12 @@ document.addEventListener('DOMContentLoaded', () => {
               const remainingMinutes = endTimeAdjusted - currentTime;
               const remaining = isActive ? `${Math.floor(remainingMinutes / 60)}h ${remainingMinutes % 60}m` : '';
 
+              const iconClass = mapIcons[event.map] || 'fa-question-circle';
+
               const card = document.createElement('div');
               card.className = 'event-card' + (isActive ? ' active' : '');
               card.innerHTML = `
-                <h4>${event.name}</h4>
+                <h4><i class="fas ${iconClass}"></i> ${event.name}</h4>
                 <p class="status">${isActive ? 'ACTIVE NOW' : 'SCHEDULED'}</p>
                 <p class="map">${event.map.toUpperCase()}</p>
                 <p class="time">${time.start} - ${time.end}${isActive ? ` (Ends in ${remaining})` : ''}</p>
@@ -330,7 +344,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         })
         .catch(err => {
-          console.error('Event fetch error:', err);
           loading.style.display = 'none';
           activeContainer.innerHTML = `<p>Error loading events: ${err.message}. Try refreshing.</p>`;
           upcomingContainer.innerHTML = '';
@@ -338,6 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     fetchEvents();
-    setInterval(fetchEvents, 60000);
+    setInterval(fetchEvents, 30000); // Refresh every 30 seconds
   }
 });
