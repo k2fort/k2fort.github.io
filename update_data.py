@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
-# Load existing news (but we won't use it for duplicate check)
+# Load existing news
 def load_json(file_path):
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -20,16 +20,19 @@ with sync_playwright() as p:
     page = browser.new_page()
     page.goto(NEWS_URL, wait_until='networkidle', timeout=60000)
 
+    # Scroll the page to load all dynamic content
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    page.wait_for_timeout(5000)  # Wait 5s for load
+
+    # Wait for a real news title (e.g., containing "Cold Snap" or "Hotfix")
     try:
-        page.wait_for_selector('div[class*="news"], article, div[class*="card"], div[class*="post"]', timeout=60000)
-        print("News cards loaded successfully")
+        page.wait_for_selector('h3:has-text("Cold Snap")', timeout=60000)
+        print("Real news content loaded")
     except Exception as e:
-        print(f"Timeout waiting for news cards: {e}")
-        browser.close()
-        exit(1)
+        print(f"Timeout waiting for real news: {e}")
 
     # Get all rendered news cards
-    news_items = page.query_selector_all('div[class*="news"], article, div[class*="card"], div[class*="post"]')
+    news_items = page.query_selector_all('div[class*="news-card"], div[class*="post-card"], article, div[class*="card"]')
 
     print(f"Found {len(news_items)} potential news items")
 
