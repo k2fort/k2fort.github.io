@@ -1,0 +1,25 @@
+name: Update News
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  scrape-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Scraper Deps
+        run: |
+          pip install playwright beautifulsoup4
+          playwright install --with-deps chromium
+      - name: Run News Scraper
+        run: python update_news.py
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update: News"
+          file_pattern: "news.json"
