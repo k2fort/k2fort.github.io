@@ -4,100 +4,128 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
   <meta name="theme-color" content="#0a0e27">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Arc Raiders Patch Notes & News</title>
-  <meta name="description" content="Latest Arc Raiders patch notes, updates, news and community hub. Stay updated with all game changes and events.">
-  
+  <title>Community | Arc Raiders Hub</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
-  <link rel="apple-touch-icon" href="logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-ZXL0TEFZ57');
-  </script>
-  
-  <!-- Prevent text size adjustment on mobile -->
-  <style>
-    html {
-      -webkit-text-size-adjust: 100%;
-      -moz-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-    
-    /* Improve tap targets on mobile */
-    @media (max-width: 768px) {
-      a, button, input, select, textarea {
-        -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
-      }
-    }
-  </style>
 </head>
-<body>
+<body class="dark-mode">
   <header>
-    <div class="container">
+    <div class="container header-content">
       <div class="logo-wrapper">
-        <img src="logo.png" alt="Arc Raiders Patch Notes Logo" class="logo">
-        <h1>Arc Raiders Community</h1>
+        <img src="logo.png" alt="Arc Raiders Hub Logo" class="logo">
+        <h1>Arc Raiders Hub</h1>
       </div>
       <nav class="nav-buttons">
         <a href="index.html" class="nav-btn">Home</a>
-        <a href="index.html#patches" class="nav-btn">Patches</a>
-        <a href="index.html#news" class="nav-btn">News</a>
-        <a href="community.html" class="nav-btn active">Community</a>
         <a href="events.html" class="nav-btn">Event Timers</a>
-        <a href="index.html#about" class="nav-btn">About</a>
+        <a href="community.html" class="nav-btn active">Community</a>
       </nav>
       <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
     </div>
   </header>
-<br>
+
   <main class="container">
-    <section class="community-intro">
-      <h2>Player Profiles</h2>
-      <p>Join the community! Fill out the form below to add your profile. It will appear after approval (or auto if no moderation).</p>
+    <section class="community-intro" style="margin-top: 2rem;">
+      <h2><i class="fas fa-users"></i> Player Profiles</h2>
+      <p>Connect with other Raiders in the Rust Belt. Add your profile below to find a squad!</p>
     </section>
 
-    <section class="profile-form">
+    <section class="profile-form" style="background: var(--bg-secondary, #16213e); padding: 2rem; border-radius: 8px; margin-bottom: 3rem;">
       <h3>Add Your Profile</h3>
       <form id="profile-form">
-        <label for="ign">In-Game Name (IGN):</label>
-        <input type="text" id="ign" name="ign" required placeholder="Your IGN">
+        <div style="margin-bottom: 1rem;">
+          <label for="ign">In-Game Name (IGN):</label>
+          <input type="text" id="ign" name="ign" required placeholder="Your Raider Name" style="width:100%; padding:0.8rem; margin-top:0.5rem;">
+        </div>
 
-        <label for="discord">Discord Tag:</label>
-        <input type="text" id="discord" name="discord" required placeholder="Username#1234">
+        <div style="margin-bottom: 1rem;">
+          <label for="discord">Discord Tag:</label>
+          <input type="text" id="discord" name="discord" required placeholder="Username" style="width:100%; padding:0.8rem; margin-top:0.5rem;">
+        </div>
 
-        <label for="bio">Bio (tell us about yourself):</label>
-        <textarea id="bio" name="bio" rows="4" required placeholder="e.g., Level 50 Raider main, looking for squad!"></textarea>
+        <div style="margin-bottom: 1rem;">
+          <label for="bio">Bio / Playstyle:</label>
+          <textarea id="bio" name="bio" rows="3" required placeholder="e.g. Medic main, looking for Buried City runs." style="width:100%; padding:0.8rem; margin-top:0.5rem;"></textarea>
+        </div>
 
-        <button type="submit" class="button">Submit Profile</button>
+        <button type="submit" class="nav-btn" style="background:#00d4ff; color:#0a0e27; font-weight:bold; border:none; width:100%; cursor:pointer;">
+          <i class="fab fa-github"></i> Submit via GitHub
+        </button>
       </form>
-      <p id="form-message" style="margin-top: 1rem; color: #00d4ff;"></p>
+      <p id="form-message" style="margin-top: 1rem; font-size: 0.9rem; color: #00d4ff;">
+        Note: Clicking submit will open a GitHub Issue. Simply click "Submit new issue" on the next page to finish.
+      </p>
     </section>
 
     <section class="profiles-list">
       <h3>Community Members</h3>
-      <div id="profiles-container">
-        <!-- Profiles load here -->
+      <div id="profiles-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
+        <p>Loading active Raiders...</p>
       </div>
     </section>
-
   </main>
 
   <footer>
     <div class="container">
-      <p>© 2025 Arc Raiders Patch Notes | Built for the community</p>
+      <div class="footer-content">
+        <div class="footer-socials">
+          <a href="https://discord.gg/arcraiders" target="_blank"><i class="fab fa-discord"></i></a>
+          <a href="https://twitter.com/arcraidersgame" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>© 2025 Arc Raiders Hub | Community-driven Profile System</p>
+      </div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // 1. Handle Form Submission (Redirect to GitHub Issue)
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const ign = document.getElementById('ign').value;
+      const discord = document.getElementById('discord').value;
+      const bio = document.getElementById('bio').value;
+
+      // Construct GitHub Issue URL
+      // Change 'YOUR_USERNAME/YOUR_REPO' to your actual GitHub info
+      const repoPath = "k2fort/k2fort.github.io"; 
+      const title = encodeURIComponent(`Profile: ${ign}`);
+      const body = encodeURIComponent(`### IGN\n${ign}\n\n### Discord\n${discord}\n\n### Bio\n${bio}`);
+      
+      const githubUrl = `https://github.com/${repoPath}/issues/new?title=${title}&body=${body}&labels=profile-submission`;
+      
+      window.open(githubUrl, '_blank');
+    });
+
+    // 2. Load Existing Profiles from JSON
+    async function loadProfiles() {
+      const container = document.getElementById('profiles-container');
+      try {
+        const response = await fetch('profiles.json');
+        if (!response.ok) throw new Error();
+        const profiles = await response.json();
+        
+        container.innerHTML = '';
+        profiles.forEach(p => {
+          container.innerHTML += `
+            <div class="profile-card" style="background: #16213e; padding: 1.5rem; border-top: 4px solid #00d4ff; border-radius: 4px;">
+              <h4 style="margin: 0; color: #00d4ff;">${p.ign}</h4>
+              <p style="font-size: 0.8rem; color: #aaa; margin: 0.5rem 0;"><i class="fab fa-discord"></i> ${p.discord}</p>
+              <p style="font-size: 0.9rem; margin-top: 1rem;">${p.bio}</p>
+            </div>`;
+        });
+      } catch (err) {
+        container.innerHTML = '<p>No profiles found yet. Be the first to join!</p>';
+      }
+    }
+
+    loadProfiles();
+
+    // Theme Toggle
+    document.getElementById('theme-toggle').onclick = () => {
+      document.body.classList.toggle('light-mode');
+    };
+  </script>
 </body>
 </html>
