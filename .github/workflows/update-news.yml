@@ -1,4 +1,6 @@
 name: Update News & Updates
+permissions:
+  contents: write
 on:
   schedule:
     - cron: '0 0 * * *' # Runs daily at midnight
