@@ -1,4 +1,6 @@
 name: Update Events
+permissions:
+  contents: write
 on:
   schedule:
     - cron: '0 * * * *' # Runs every hour
