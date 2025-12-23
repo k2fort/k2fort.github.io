@@ -1,3 +1,4 @@
+<!-- news.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +11,16 @@
 <body class="dark-mode">
   <header>
     <div class="container header-content">
+      <div class="logo-wrapper">
+        <img src="logo.png" alt="Arc Raiders Hub Logo" class="logo">
+        <h1>SPERANZA HUB</h1>
+      </div>
       <nav class="nav-buttons">
-        <a href="index.html" class="nav-btn">← Back Home</a>
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="events.html" class="nav-btn">Event Timers</a>
+        <a href="community.html" class="nav-btn">Community</a>
       </nav>
+      <button id="theme-toggle">🌙</button>
     </div>
   </header>
 
@@ -36,6 +44,8 @@
       <p>© 2025 Speranza HUB - Arc Raiders News & Updates | Community-driven site for Arc Raiders players | Not affiliated with Embark | <a href="sitemap.xml">Sitemap</a> | <a href="rss.xml">RSS Feed</a> | <a href="index.html">Return to Home</a></p>
     </div>
   </footer>
+
+  <script src="script.js"></script>
 
   <script>
     async function loadArticle() {
