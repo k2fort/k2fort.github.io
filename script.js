@@ -1,4 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Mobile Navigation Toggle
+  const createMobileToggle = () => {
+    const logoWrapper = document.querySelector('.logo-wrapper');
+    if (logoWrapper && !document.querySelector('.mobile-nav-toggle')) {
+      const mobileToggle = document.createElement('button');
+      mobileToggle.className = 'mobile-nav-toggle';
+      mobileToggle.innerHTML = '☰';
+      mobileToggle.setAttribute('aria-label', 'Toggle navigation menu');
+      
+      logoWrapper.appendChild(mobileToggle);
+      
+      const navButtons = document.querySelector('.nav-buttons');
+      mobileToggle.addEventListener('click', () => {
+        navButtons.classList.toggle('active');
+        mobileToggle.innerHTML = navButtons.classList.contains('active') ? '✕' : '☰';
+      });
+
+      // Close menu when clicking nav links
+      document.querySelectorAll('.nav-btn').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            navButtons.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+          }
+        });
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && 
+            !e.target.closest('.nav-buttons') && 
+            !e.target.closest('.mobile-nav-toggle')) {
+          navButtons.classList.remove('active');
+          mobileToggle.innerHTML = '☰';
+        }
+      });
+    }
+  };
+
+  createMobileToggle();
+
   // Theme handling
   const themeToggle = document.getElementById('theme-toggle');
   const body = document.body;
