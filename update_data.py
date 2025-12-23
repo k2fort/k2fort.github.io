@@ -204,3 +204,26 @@ def update_events():
 
 # Call this at the end of your script
 update_events()
+# --- Add this to the very end of update_data.py ---
+import requests
+
+def update_event_timers():
+    print(f"\n{'='*60}")
+    print("Fetching Live Event Timers from MetaForge...")
+    try:
+        # Using the correct metaforge.app endpoint
+        response = requests.get('https://metaforge.app/api/arc-raiders/event-timers', timeout=15)
+        
+        if response.status_code == 200:
+            events_data = response.json()
+            with open('events.json', 'w', encoding='utf-8') as f:
+                json.dump(events_data, f, indent=2)
+            print(f"Success: {len(events_data)} events saved to events.json")
+        else:
+            print(f"Failed to fetch events: HTTP {response.status_code}")
+    except Exception as e:
+        print(f"Error updating events.json: {e}")
+    print(f"{'='*60}\n")
+
+# Run the event update
+update_event_timers()
