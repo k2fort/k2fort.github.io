@@ -1,7 +1,11 @@
-/* --- 1. YOUR ORIGINAL STYLES (Keep everything) --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* --- 1. CORE & VARIABLES --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
   --primary: #00d4ff;
@@ -20,84 +24,200 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   background: var(--bg-dark);
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
 }
 
+/* --- 2. ANIMATED BACKGROUND --- */
 body::before {
-  content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.15) 0%, transparent 50%);
-  z-index: -1; animation: gradientShift 15s ease infinite;
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(167, 139, 250, 0.1) 0%, transparent 50%);
+  z-index: -1;
+  animation: gradientShift 15s ease infinite;
 }
 
-@keyframes gradientShift { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+@keyframes gradientShift {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
 
-.container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 
+/* --- 3. HEADER & NAVIGATION --- */
 header {
   background: rgba(26, 31, 58, 0.7);
   backdrop-filter: blur(20px);
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 1000;
+  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-header .container { display: flex; justify-content: space-between; align-items: center; }
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.logo-wrapper { display: flex; align-items: center; gap: 1.5rem; }
-.logo { height: 80px; transition: 0.4s; }
-h1 { font-size: 2.2rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
 
-.nav-buttons { display: flex; gap: 0.8rem; }
-.nav-btn { padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.05); color: var(--text); text-decoration: none; border-radius: 12px; border: 1px solid var(--border); transition: 0.3s; }
-.nav-btn:hover, .nav-btn.active { background: var(--primary); color: #000; }
+.logo {
+  height: 60px;
+  width: auto;
+  filter: drop-shadow(0 0 15px var(--primary));
+  transition: all 0.4s ease;
+}
 
-/* --- FOOTER (Restored) --- */
-footer {
-  background: rgba(26, 31, 58, 0.7);
+h1 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.nav-btn {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: 0.3s ease;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+/* --- 4. MOBILE TOGGLE (New) --- */
+.mobile-nav-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
+  color: var(--primary);
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+/* --- 5. CONTENT GRIDS --- */
+main { padding: 3rem 0; }
+
+.event-grid, #latest-updates, #latest-news, .news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.update-card, .news-card, .event-card, .profile-card {
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(20px);
-  padding: 2rem 0;
-  text-align: center;
-  border-top: 1px solid var(--border);
-  margin-top: 4rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
-footer p { color: var(--text-muted); }
 
-/* --- 2. MOBILE OVERRIDES (Added at the bottom to fix view) --- */
-.mobile-nav-toggle { display: none; }
+.update-card:hover, .news-card:hover, .event-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.06);
+}
 
+/* --- 6. FOOTER (Restored) --- */
+footer {
+  background: rgba(26, 31, 58, 0.85);
+  backdrop-filter: blur(20px);
+  padding: 3rem 0;
+  margin-top: 4rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+footer p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* --- 7. MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-  .mobile-nav-toggle { 
-    display: block; background: none; border: 1px solid var(--primary); 
-    color: var(--primary); font-size: 1.5rem; padding: 0.5rem; border-radius: 8px;
+  .mobile-nav-toggle { display: block; }
+
+  header .container {
+    justify-content: space-between;
   }
 
-  header .container { flex-direction: row; justify-content: space-between; }
-  .logo { height: 50px; }
-  h1 { font-size: 1.4rem; }
+  h1 { font-size: 1.3rem; }
+  .logo { height: 45px; }
 
   .nav-buttons {
-    position: fixed; top: 0; right: -100%; width: 250px; height: 100vh;
-    background: var(--bg-card); flex-direction: column; padding: 5rem 2rem;
-    transition: 0.4s; box-shadow: -5px 0 15px rgba(0,0,0,0.5); z-index: 999;
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden by default */
+    width: 280px;
+    height: 100vh;
+    background: var(--bg-card);
+    flex-direction: column;
+    padding: 6rem 2rem;
+    gap: 1.5rem;
+    transition: 0.4s ease;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 1050;
   }
 
-  .nav-buttons.active { right: 0; }
-  .nav-btn { width: 100%; text-align: center; }
-
-  /* Force stack for all grids */
-  #latest-updates, #latest-news, .event-grid, .news-grid {
-    grid-template-columns: 1fr !important;
-    display: flex; flex-direction: column; gap: 1.5rem;
+  .nav-buttons.active {
+    right: 0;
   }
 
-  .update-card, .news-card, .event-card { width: 100%; }
-  
-  /* Table Scroll Fix */
-  .patch-history, .table-container { overflow-x: auto; }
-  table { min-width: 600px; }
+  .nav-btn {
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .event-grid, #latest-updates, #latest-news, .news-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .container { padding: 0 1.5rem; }
 }
