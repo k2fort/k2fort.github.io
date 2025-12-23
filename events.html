@@ -2,89 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
-  <meta name="theme-color" content="#0a0e27">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Arc Raiders Patch Notes & News</title>
-  <meta name="description" content="Latest Arc Raiders patch notes, updates, news and community hub. Stay updated with all game changes and events.">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arc Raiders Live Events</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
-  <link rel="apple-touch-icon" href="logo.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-ZXL0TEFZ57');
-  </script>
-  
-  <!-- Prevent text size adjustment on mobile -->
-  <style>
-    html {
-      -webkit-text-size-adjust: 100%;
-      -moz-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-    
-    /* Improve tap targets on mobile */
-    @media (max-width: 768px) {
-      a, button, input, select, textarea {
-        -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
-      }
-    }
-  </style>
 </head>
 <body>
   <header>
-    <div class="container">
-      <div class="logo-wrapper">
-        <img src="logo.png" alt="Arc Raiders Patch Notes Logo" class="logo">
-        <h1>Arc Raiders Live Events</h1>
-      </div>
+    <div class="container header-content">
       <nav class="nav-buttons">
-        <a href="index.html" class="nav-btn">Home</a>
-        <a href="index.html#patches" class="nav-btn">Patches</a>
-        <a href="index.html#news" class="nav-btn">News</a>
+        <a href="index.html" class="nav-btn active">Home</a>
+        <a href="events.html" class="nav-btn">Event Timers</a>
         <a href="community.html" class="nav-btn">Community</a>
-        <a href="events.html" class="nav-btn active">Event Timers</a>
-        <a href="index.html#about" class="nav-btn">About</a>
       </nav>
-      <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
     </div>
   </header>
 
   <main class="container">
-    <section class="event-intro">
-      <h2>Live Event Timers</h2>
-      <p>Times shown in your local timezone. Data from MetaForge API. Refreshes every 30 seconds.</p>
-    </section>
-
-    <div id="loading" class="loading-spinner">
-      <div class="spinner"></div>
-    </div>
-
-    <section class="event-timers" id="event-timers" style="display: none;">
-      <h3>Active Events</h3>
-      <div id="active-events" class="event-grid"></div>
-
-      <h3>Upcoming Events</h3>
-      <div id="upcoming-events" class="event-grid"></div>
+    <section>
+      <h2>Active Map Conditions</h2>
+      <div id="active-events" class="event-grid" style="display:grid; gap:1rem;">
+        <p>Syncing with Rust Belt satellites...</p>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>© 2025 Arc Raiders Patch Notes | Data from <a href="https://metaforge.app/arc-raiders" target="_blank">MetaForge</a></p>
-    </div>
-  </footer>
+  <script>
+    async function updateTimers() {
+      try {
+        const response = await fetch('https://metaforge.app/api/arc-raiders/event-timers');
+        const data = await response.json();
+        const container = document.getElementById('active-events');
+        container.innerHTML = '';
 
-  <script src="script.js"></script>
+        data.forEach(event => {
+          const end = new Date(event.end_utc);
+          const now = new Date();
+          const timeLeft = Math.floor((end - now) / 1000 / 60);
+
+          if (timeLeft > 0) {
+            const card = document.createElement('div');
+            card.style = "background:#1a1a2e; padding:1rem; border:1px solid #333; border-radius:5px;";
+            card.innerHTML = `
+              <h3 style="color:#00d4ff; margin:0;">${event.name}</h3>
+              <p style="margin:5px 0;">Location: <strong>${event.map}</strong></p>
+              <p style="color:#ff4b2b; font-weight:bold;">Ends in: ${timeLeft}m</p>
+            `;
+            container.appendChild(card);
+          }
+        });
+      } catch (e) {
+        document.getElementById('active-events').innerHTML = "Unable to reach MetaForge API. Try again later.";
+      }
+    }
+    updateTimers();
+    setInterval(updateTimers, 60000); // Auto-refresh every minute
+  </script>
 </body>
 </html>
