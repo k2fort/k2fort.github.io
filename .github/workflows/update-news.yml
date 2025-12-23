@@ -24,4 +24,8 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-update: News"
-          file_pattern: "news.json"
+          file_pattern: "news.json patches.json" # Added patches.json just in case
+          repository: .
+          status_options: '--untracked-files=no'
+          # This is the secret sauce: it pulls latest changes before pushing
+          push_options: '--force'
