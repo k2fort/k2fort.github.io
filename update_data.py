@@ -182,3 +182,17 @@ print(f"Update complete!")
 print(f"Patches: {len(patches)} items saved to patches.json")
 print(f"News: {len(news)} items saved to news.json")
 print(f"{'='*60}")
+
+# Fetching Live Event Timers
+import requests
+print("\nFetching Live Event Timers...")
+try:
+    event_response = requests.get('https://metaforge.app/api/arc-raiders/event-timers', timeout=15)
+    if event_response.status_code == 200:
+        with open('events.json', 'w', encoding='utf-8') as f:
+            json.dump(event_response.json(), f, indent=2)
+        print("Success: events.json updated.")
+    else:
+        print(f"Failed to fetch events: Status {event_response.status_code}")
+except Exception as e:
+    print(f"Error updating events: {e}")
