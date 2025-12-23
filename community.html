@@ -2,11 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Arc Raiders Community - Player Profiles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
+  <meta name="theme-color" content="#0a0e27">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Arc Raiders Patch Notes & News</title>
+  <meta name="description" content="Latest Arc Raiders patch notes, updates, news and community hub. Stay updated with all game changes and events.">
+  
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
-  <!-- Google Analytics -->
+  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -14,6 +23,23 @@
     gtag('js', new Date());
     gtag('config', 'G-ZXL0TEFZ57');
   </script>
+  
+  <!-- Prevent text size adjustment on mobile -->
+  <style>
+    html {
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    
+    /* Improve tap targets on mobile */
+    @media (max-width: 768px) {
+      a, button, input, select, textarea {
+        -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
