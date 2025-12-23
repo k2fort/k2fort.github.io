@@ -1,0 +1,23 @@
+name: Update Events
+on:
+  schedule:
+    - cron: '*/3 * * * *' # Runs every 3 minutes
+  workflow_dispatch:
+
+jobs:
+  fetch-events:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install API Deps
+        run: pip install requests
+      - name: Run Event Update
+        run: python update_events.py
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update: Event Timers"
+          file_pattern: "events.json"
