@@ -1,3 +1,4 @@
+<!-- community.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,23 +47,15 @@
 
         <div style="margin-bottom: 1rem;">
           <label for="bio">Bio / Playstyle:</label>
-          <textarea id="bio" name="bio" rows="3" required placeholder="e.g. Medic main, looking for Buried City runs." style="width:100%; padding:0.8rem; margin-top:0.5rem;"></textarea>
+          <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself..." style="width:100%; padding:0.8rem; margin-top:0.5rem;"></textarea>
         </div>
 
-        <button type="submit" class="nav-btn" style="background:#00d4ff; color:#0a0e27; font-weight:bold; border:none; width:100%; cursor:pointer;">
-          <i class="fab fa-github"></i> Submit via GitHub
-        </button>
+        <button type="submit" class="nav-btn" style="width:100%;">Submit Profile</button>
       </form>
-      <p id="form-message" style="margin-top: 1rem; font-size: 0.9rem; color: #00d4ff;">
-        Note: Clicking submit will open a GitHub Issue. Simply click "Submit new issue" on the next page to finish.
-      </p>
     </section>
 
-    <section class="profiles-list">
-      <h3>Community Members</h3>
-      <div id="profiles-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
-        <p>Loading active Raiders...</p>
-      </div>
+    <section id="profiles-container" class="profiles-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+      <!-- Profiles will load here -->
     </section>
   </main>
 
@@ -72,11 +65,14 @@
         <div class="footer-socials">
           <a href="https://discord.gg/arcraiders" target="_blank"><i class="fab fa-discord"></i></a>
           <a href="https://twitter.com/arcraidersgame" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.reddit.com/r/ArcRaiders/" target="_blank"><i class="fab fa-reddit"></i></a>
         </div>
         <p>© 2025 Speranza HUB - Arc Raiders News & Updates | Community-driven site for Arc Raiders players | Not affiliated with Embark | <a href="sitemap.xml">Sitemap</a> | <a href="rss.xml">RSS Feed</a></p>
       </div>
     </div>
   </footer>
+
+  <script src="script.js"></script>
 
   <script>
     // 1. Handle Form Submission (Redirect to GitHub Issue)
@@ -121,11 +117,6 @@
     }
 
     loadProfiles();
-
-    // Theme Toggle
-    document.getElementById('theme-toggle').onclick = () => {
-      document.body.classList.toggle('light-mode');
-    };
   </script>
 </body>
 </html>
