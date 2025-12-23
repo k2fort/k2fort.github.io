@@ -48,30 +48,29 @@ with sync_playwright() as p:
 
             if not title or not link: continue
 
-            # Check if we already have this article to avoid redundant scraping
+            # Determine category early
             is_patch = any(kw in title.lower() for kw in ['patch', 'hotfix', 'update', 'notes'])
             target = patches if is_patch else news
-            existing = next((item for item in target if item['title'] == title or item.get('link') == link), None)
             
+            # Check if exists
+            existing = next((item for item in target if item['title'] == title or item.get('link') == link), None)
             if existing:
                 continue
 
+            print(f"Scraping new article: {title}")
             full_content = ''
             summary = title
             
             # Fetch full article
-            print(f"Scraping article: {title}")
             article_page = browser.new_page()
             article_page.goto(link, wait_until='networkidle', timeout=30000)
             article_page.wait_for_timeout(2000)
             
             content_element = article_page.query_selector('article') or article_page.query_selector('div[class*="article"]')
             if content_element:
-                # Get the raw HTML
                 raw_html = content_element.inner_html()
                 
-                # Logic to remove everything after "More articles"
-                # We split by the text and keep index 0 (everything before it)
+                # Split at "More articles" to remove footer content
                 if "More articles" in raw_html:
                     full_content = raw_html.split("More articles")[0]
                 else:
@@ -83,7 +82,6 @@ with sync_playwright() as p:
             
             article_page.close()
 
-            # Append new data
             target.append({
                 "title": title, 
                 "date": date_str, 
@@ -94,17 +92,21 @@ with sync_playwright() as p:
             
             time.sleep(1)
         except Exception as e:
-            print(f"Error scraping card {idx}: {e}")
+            print(f"Error: {e}")
 
     browser.close()
 
-# Sort and add isLatest flag
+# Final processing and sorting
 for lst in [patches, news]:
-    # Sort by date descending
     lst.sort(key=lambda x: x.get('date', ''), reverse=True)
     for i, item in enumerate(lst):
         item['isLatest'] = (i == 0)
 
-# Save files
+# Save the files properly
 with open('patches.json', 'w', encoding='utf-8') as f:
-    json.dump(patches, f, indent=
+    json.dump(patches, f, indent=2, ensure_ascii=False)
+
+with open('news.json', 'w', encoding='utf-8') as f:
+    json.dump(news, f, indent=2, ensure_ascii=False)
+
+print("News and patches updated successfully.")
