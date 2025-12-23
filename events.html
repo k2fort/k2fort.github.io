@@ -3,28 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Arc Raiders Live Events</title>
+  <title>Live Events | Arc Raiders Hub</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body class="dark-mode">
   <header>
     <div class="container header-content">
       <nav class="nav-buttons">
-        <a href="index.html" class="nav-btn active">Home</a>
-        <a href="events.html" class="nav-btn">Event Timers</a>
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="events.html" class="nav-btn active">Event Timers</a>
         <a href="community.html" class="nav-btn">Community</a>
       </nav>
+      <button id="theme-toggle">🌙</button>
     </div>
   </header>
 
   <main class="container">
-    <section>
-      <h2>Active Map Conditions</h2>
-      <div id="active-events" class="event-grid" style="display:grid; gap:1rem;">
-        <p>Syncing with Rust Belt satellites...</p>
-      </div>
+    <section class="event-intro" style="margin: 2rem 0;">
+      <h2><i class="fas fa-satellite-dish"></i> Live Satellite Feed</h2>
+      <p>Current Rust Belt conditions and upcoming map rotations. Refreshes every minute.</p>
     </section>
+
+    <div id="active-events" class="event-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
+      <p>Scanning frequencies...</p>
+    </div>
   </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-socials">
+          <a href="https://discord.gg/arcraiders" target="_blank"><i class="fab fa-discord"></i></a>
+          <a href="https://twitter.com/arcraidersgame" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>© 2025 Arc Raiders Hub | Data provided by MetaForge API</p>
+      </div>
+    </div>
+  </footer>
 
   <script>
     async function updateTimers() {
@@ -36,26 +52,27 @@
 
         data.forEach(event => {
           const end = new Date(event.end_utc);
-          const now = new Date();
-          const timeLeft = Math.floor((end - now) / 1000 / 60);
+          const timeLeft = Math.floor((end - new Date()) / 1000 / 60);
 
           if (timeLeft > 0) {
-            const card = document.createElement('div');
-            card.style = "background:#1a1a2e; padding:1rem; border:1px solid #333; border-radius:5px;";
-            card.innerHTML = `
-              <h3 style="color:#00d4ff; margin:0;">${event.name}</h3>
-              <p style="margin:5px 0;">Location: <strong>${event.map}</strong></p>
-              <p style="color:#ff4b2b; font-weight:bold;">Ends in: ${timeLeft}m</p>
-            `;
-            container.appendChild(card);
+            container.innerHTML += `
+              <div class="event-card" style="background:var(--bg-secondary); padding:1.5rem; border:1px solid #333; border-top:4px solid #ff4b2b;">
+                <h3 style="color:var(--accent-blue); margin-top:0;">${event.name}</h3>
+                <p>Location: <strong>${event.map}</strong></p>
+                <p style="color:#ff4b2b; font-weight:bold;"><i class="fas fa-clock"></i> Ends in: ${timeLeft}m</p>
+              </div>`;
           }
         });
-      } catch (e) {
-        document.getElementById('active-events').innerHTML = "Unable to reach MetaForge API. Try again later.";
-      }
+      } catch (e) { container.innerHTML = "Signal lost. Check back later."; }
     }
     updateTimers();
-    setInterval(updateTimers, 60000); // Auto-refresh every minute
+    setInterval(updateTimers, 60000);
+
+    const themeBtn = document.getElementById('theme-toggle');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      themeBtn.innerText = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+    });
   </script>
 </body>
 </html>
