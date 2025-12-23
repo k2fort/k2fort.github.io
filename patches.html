@@ -2,105 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
-  <meta name="theme-color" content="#0a0e27">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Arc Raiders Patch Notes & News</title>
-  <meta name="description" content="Latest Arc Raiders patch notes, updates, news and community hub. Stay updated with all game changes and events.">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Article | Arc Raiders Hub</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
-  <link rel="apple-touch-icon" href="logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXL0TEFZ57"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-ZXL0TEFZ57');
-  </script>
-  
-  <!-- Prevent text size adjustment on mobile -->
-  <style>
-    html {
-      -webkit-text-size-adjust: 100%;
-      -moz-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-    
-    /* Improve tap targets on mobile */
-    @media (max-width: 768px) {
-      a, button, input, select, textarea {
-        -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
-      }
-    }
-  </style>
 </head>
-<body>
+<body class="dark-mode">
   <header>
-  <div class="container">
-    <div class="logo-wrapper">
-      <img src="logo.png" alt="Arc Raiders Patch Notes Logo" class="logo">
-      <h1>Arc Raiders Patch Notes</h1>
+    <div class="container header-content">
+      <nav class="nav-buttons">
+        <a href="index.html" class="nav-btn">← Back Home</a>
+      </nav>
     </div>
-    <nav class="nav-buttons">
-  <a href="index.html" class="nav-btn">Home</a>
-  <a href="index.html#patches" class="nav-btn">Patches</a>
-  <a href="index.html#news" class="nav-btn">News</a>
-  <a href="community.html" class="nav-btn">Community</a>
-  <a href="events.html" class="nav-btn">Event Timers</a>
-  <a href="index.html#about" class="nav-btn">About</a>
-</nav>
-    <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
-  </div>
-</header>
-<br>
+  </header>
+
   <main class="container">
-    <article class="patch-detail" id="patch-content">
-      <section id="patch-content">
-      <h2>Loading patch...</h2>
-      <p class="meta"></p>
-      <div class="patch-content"></div>
-      <a href="#" class="button">View Official Notes</a>
-      <div class="social-share">
-  <a href="https://twitter.com/intent/tweet?text=Check this Arc Raiders patch&url=${encodeURIComponent(window.location.href)}" class="social-btn" target="_blank">
-    <i class="fab fa-twitter"></i> Share on X
-  </a>
-  <a href="https://www.reddit.com/submit?url=${encodeURIComponent(window.location.href)}&title=Arc Raiders Patch Notes" class="social-btn" target="_blank">
-    <i class="fab fa-reddit"></i> Share on Reddit
-  </a>
-  <a href="#" class="social-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!'); return false;">
-    <i class="fas fa-link"></i> Copy Link
-  </a>
-</div>
-      <a href="index.html#patches" class="back-link">← Back to All Patches</a>
-<br>
-  <h3>Community Discussion</h3>
-  <div id="utterances-comments"></div>
-  <script src="https://utteranc.es/client.js"
-          repo="k2fort/k2fort.github.io"
-          issue-term="pathname"
-          label="comments"
-          theme="github-dark"
-          crossorigin="anonymous"
-          async>
-  </script>
-      </section>
-    </article>    
+    <article style="background:#16213e; padding:2.5rem; margin-top:2rem; border-radius:8px;">
+      <h2 id="article-title">Synchronizing Article Data...</h2>
+      <p id="article-date" style="color:#00d4ff;"></p>
+      <hr style="border:0; border-top:1px solid #333; margin:1.5rem 0;">
+      <div id="article-content" class="news-content"></div>
+      
+      <div class="social-share" style="margin-top:2.5rem; display:flex; gap:1rem;">
+        <a id="share-tw" href="#" class="nav-btn" target="_blank"><i class="fab fa-twitter"></i> Share</a>
+        <a id="share-rd" href="#" class="nav-btn" target="_blank"><i class="fab fa-reddit"></i> Share</a>
+        <a href="#" class="nav-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!'); return false;"><i class="fas fa-link"></i> Copy</a>
+      </div>
+    </article>
   </main>
-<br>
+
   <footer>
     <div class="container">
-      <p>© 2025 Arc Raiders Patch Notes | Built for the community</p>
+      <p>© 2025 Arc Raiders Hub | <a href="index.html">Return to Home</a></p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
-  <button id="back-to-top" title="Back to Top">↑</button>
+  <script>
+    async function loadArticle() {
+      const params = new URLSearchParams(window.location.search);
+      const targetLink = params.get('link');
+      
+      const [news, patches] = await Promise.all([
+        fetch('news.json').then(r => r.json()),
+        fetch('patches.json').then(r => r.json())
+      ]);
+      
+      const article = [...news, ...patches].find(a => a.link === targetLink);
+
+      if (article) {
+        document.title = `${article.title} | Arc Raiders Hub`;
+        document.getElementById('article-title').innerText = article.title;
+        document.getElementById('article-date').innerText = `Date: ${article.date}`;
+        document.getElementById('article-content').innerHTML = article.fullContent;
+        
+        const currentUrl = encodeURIComponent(window.location.href);
+        document.getElementById('share-tw').href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${article.title}`;
+        document.getElementById('share-rd').href = `https://www.reddit.com/submit?url=${currentUrl}&title=${article.title}`;
+      } else {
+        document.getElementById('article-content').innerText = "Data file not found for this article.";
+      }
+    }
+    loadArticle();
+  </script>
 </body>
 </html>
