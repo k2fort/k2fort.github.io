@@ -38,7 +38,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background:
+  background: 
     radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 40% 20%, rgba(167, 139, 250, 0.1) 0%, transparent 50%);
@@ -181,6 +181,25 @@ h1 {
   color: #fff;
   border-color: transparent;
   box-shadow: 0 4px 15px rgba(0, 212, 255, 0.5);
+}
+
+#theme-toggle {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  font-size: 1.8rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--primary);
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  margin-left: 1rem;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.1) rotate(15deg);
+  background: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
 }
 
 main {
@@ -813,6 +832,390 @@ footer p {
   box-shadow: 0 8px 30px rgba(0, 212, 255, 0.6);
 }
 
+/* Light Mode */
+body.light-mode {
+  --bg-dark: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-elevated: #f1f5f9;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode::before {
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(167, 139, 250, 0.06) 0%, transparent 50%);
+}
+
+body.light-mode .update-card,
+body.light-mode .news-card,
+body.light-mode .profile-card,
+body.light-mode .event-card,
+body.light-mode .patch-detail,
+body.light-mode .news-detail,
+body.light-mode .profile-form {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Navigation Toggle */
+.mobile-nav-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  padding: 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--primary);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-toggle:hover {
+  background: rgba(0, 212, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .nav-buttons {
+    gap: 0.6rem;
+  }
+
+  .nav-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    min-width: 80px;
+  }
+
+  #latest-updates,
+  #latest-news {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .event-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  /* Better mobile header */
+  header {
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+  }
+
+  header .container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .logo-wrapper {
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+    margin-left: auto;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    flex: 1;
+  }
+
+  .logo {
+    height: 60px;
+  }
+
+  /* Mobile Navigation */
+  .nav-buttons {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .nav-buttons.active {
+    display: flex;
+    max-height: 500px;
+    animation: slideDown 0.3s ease;
+  }
+
+  .nav-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 1rem;
+    min-width: unset;
+  }
+
+  #theme-toggle {
+    margin-left: 0.5rem;
+    padding: 0.6rem;
+    font-size: 1.5rem;
+  }
+
+  /* Mobile spacing */
+  main {
+    padding: 2rem 0;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2::after {
+    width: 80px;
+    height: 3px;
+  }
+
+  /* Mobile cards - full width */
+  #latest-updates,
+  #latest-news {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .update-card,
+  .news-card {
+    padding: 1.5rem;
+  }
+
+  .update-card h3,
+  .news-card h3 {
+    font-size: 1.3rem;
+  }
+
+  /* Mobile tables - make them scrollable */
+  .patch-history,
+  #news-archive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 0.8rem 0.5rem;
+  }
+
+  /* Mobile event grid */
+  .event-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .event-card {
+    padding: 1.5rem;
+  }
+
+  .event-card h4 {
+    font-size: 1.3rem;
+  }
+
+  /* Mobile profile cards */
+  .profile-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+  }
+
+  /* Mobile forms */
+  .profile-form {
+    padding: 1.5rem;
+  }
+
+  .profile-form input,
+  .profile-form textarea {
+    padding: 0.9rem 1rem;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Mobile buttons */
+  .button {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .social-share {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .social-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  /* Mobile detail pages */
+  .patch-detail,
+  .news-detail {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  /* Mobile search */
+  #searchInput {
+    padding: 0.9rem 1rem;
+    font-size: 16px; /* Prevents iOS zoom */
+    margin: 1rem 0 1.5rem;
+  }
+
+  /* Mobile back to top button */
+  #back-to-top {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+  }
+
+  /* Touch-friendly hover states on mobile */
+  .update-card:active,
+  .news-card:active,
+  .event-card:active {
+    transform: scale(0.98);
+  }
+
+  .nav-btn:active,
+  .button:active,
+  .social-btn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .update-card,
+  .news-card,
+  .event-card,
+  .profile-card {
+    padding: 1.2rem;
+  }
+
+  .update-card h3,
+  .news-card h3,
+  .event-card h4 {
+    font-size: 1.1rem;
+  }
+
+  .button {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .nav-btn {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    padding: 0.6rem 0.4rem;
+  }
+
+  .patch-detail,
+  .news-detail,
+  .profile-form {
+    padding: 1.2rem;
+  }
+
+  #back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+
+  .new-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  header {
+    padding: 0.8rem 0;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  main {
+    padding: 1.5rem 0;
+  }
+
+  #back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 12px;
@@ -864,6 +1267,7 @@ footer p {
   header,
   footer,
   .nav-buttons,
+  #theme-toggle,
   #back-to-top,
   .social-share {
     display: none;
