@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,28 +39,20 @@
     
     <section class="search-section">
       <input type="text" id="news-search" placeholder="Search patches or news..." style="width:100%; padding:0.8rem; margin:1rem 0; font-size:1rem;">
-      <div id="latest-updates"></div>
-    </section>
-
-    <section id="patches" class="patch-history">
-      <h2>Full Patch History</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Version</th>
-            <th>Date</th>
-            <th>Link</th>
-          </tr>
-        </thead>
-        <tbody id="patch-table-body">
-          </tbody>
-      </table>
-    </section>
-
-    <section class="latest-news" style="margin-top: 2rem;">
-      <h2>Latest News</h2>
-      <div id="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
-          </div>
+      <div id="latest-updates">
+        <h2>Patch History</h2>
+        <table id="patch-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="patch-table-body"></tbody>
+        </table>
+      </div>
+      <div id="news-grid"></div>
     </section>
   </main>
 
@@ -76,14 +69,9 @@
     </div>
   </footer>
 
-  <script>
-    // Theme Toggle
-    const themeBtn = document.getElementById('theme-toggle');
-    themeBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-      themeBtn.innerText = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
-    });
+  <script src="script.js"></script>
 
+  <script>
     // Load JSON Data
     async function loadData() {
       const [patchRes, newsRes] = await Promise.all([
@@ -126,12 +114,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
