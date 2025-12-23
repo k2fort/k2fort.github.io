@@ -189,7 +189,7 @@ def update_events():
     print("Fetching Live Event Timers...")
     try:
         # Replace this URL with the actual MetaForge API endpoint for Arc Raiders
-        API_URL = "https://api.metaforge.gg/arc-raiders/events" 
+        API_URL = "https://metaforge.app/api/arc-raiders/event-timers" 
         response = requests.get(API_URL, timeout=10)
         
         if response.status_code == 200:
