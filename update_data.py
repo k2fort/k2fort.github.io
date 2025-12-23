@@ -227,3 +227,21 @@ def update_event_timers():
 
 # Run the event update
 update_event_timers()
+
+import requests
+
+def update_events():
+    print("Fetching Live Event Timers...")
+    try:
+        # The new reliable endpoint for Arc Raiders events
+        response = requests.get('https://metaforge.app/api/arc-raiders/event-timers', timeout=15)
+        if response.status_code == 200:
+            with open('events.json', 'w', encoding='utf-8') as f:
+                json.dump(response.json(), f, indent=2)
+            print("Success: events.json updated with live data.")
+        else:
+            print(f"Failed to fetch: Status {response.status_code}")
+    except Exception as e:
+        print(f"Error: {e}")
+
+update_events()
