@@ -1,3 +1,4 @@
+<!-- events.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,61 +55,53 @@
     </div>
   </footer>
 
-  <script>
-    // Helper: Convert UTC "HH:MM" to a local Date object for today
-    function utcToLocal(utcStr) {
-      const [hours, minutes] = utcStr.split(':').map(Number);
-      const d = new Date();
-      d.setUTCHours(hours, minutes, 0, 0);
-      return d;
-    }
+  <script src="script.js"></script>
 
+  <script>
     async function updateEvents() {
       const activeContainer = document.getElementById('active-events');
       const upcomingContainer = document.getElementById('upcoming-events');
       const status = document.getElementById('status-bar');
-      
+
       try {
-        const response = await fetch('events.json');
-        const json = await response.json();
-        const events = json.data;
-        const now = new Date();
+        const res = await fetch('events.json');
+        const { data: events } = await res.json();
 
         let activeHtml = '';
         let upcomingHtml = '';
-        let activeCount = 0;
+
+        const now = new Date();
+        const timezoneOffset = now.getTimezoneOffset() * 60000; // in ms
 
         events.forEach(event => {
-          event.times.forEach(timeSlot => {
-            const start = utcToLocal(timeSlot.start);
-            let end = utcToLocal(timeSlot.end);
+          event.times.forEach(time => {
+            const [startHour, startMin] = time.start.split(':').map(Number);
+            const [endHour, endMin] = time.end.split(':').map(Number);
 
-            // Handle midnight wrap-around (e.g., 23:00 to 01:00)
-            if (end <= start) end.setDate(end.getDate() + 1);
+            const start = new Date(now);
+            start.setHours(startHour, startMin, 0, 0);
+            start.setTime(start.getTime() - timezoneOffset);
 
-            const isCurrent = now >= start && now < end;
-            const isSoon = start > now && start < new Date(now.getTime() + 6 * 60 * 60 * 1000); // Next 6 hours
+            const end = new Date(now);
+            end.setHours(endHour, endMin, 0, 0);
+            end.setTime(end.getTime() - timezoneOffset);
 
-            const timeString = `${start.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})} - ${end.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+            if (start > end) end.setDate(end.getDate() + 1);
 
-            if (isCurrent) {
-              activeCount++;
-              const diffMs = end - now;
-              const minsLeft = Math.floor(diffMs / 60000);
-              
+            const timeString = `${time.start} - ${time.end} (local)`;
+
+            const isActive = now >= start && now < end;
+            const isSoon = now < start && (start - now) < 3600000; // within 1 hour
+
+            if (isActive) {
+              const remainingMins = Math.floor((end - now) / 60000);
               activeHtml += `
-                <div class="event-card active-pulse" style="background: #16213e; padding: 1.5rem; border-left: 4px solid #ff4b2b; position: relative; overflow: hidden;">
-                  <div style="display:flex; justify-content: space-between; align-items: start;">
-                    <div>
-                      <h4 style="margin:0; color: #ff4b2b; text-transform: uppercase;">${event.name}</h4>
-                      <p style="margin: 5px 0; font-size: 0.9rem;"><i class="fas fa-map-marker-alt"></i> ${event.map}</p>
-                    </div>
-                    <img src="${event.icon}" style="width: 40px; height: 40px; filter: drop-shadow(0 0 5px #ff4b2b);">
+                <div class="event-card active-pulse" style="background: #1a1f3a; padding: 1rem; border-left: 4px solid #ff4b2b;">
+                  <h4 style="margin:0; font-size: 1rem;">${event.name}</h4>
+                  <p style="margin: 2px 0; font-size: 0.8rem; color: #aaa;">${event.map}</p>
+                  <div style="margin-top: 10px; font-size: 0.85rem; color: #ff4b2b;">
+                    Ends in: ${remainingMins}m
                   </div>
-                  <div style="margin-top: 15px; font-weight: bold; color: #fff;">
-                    <i class="fas fa-clock"></i> ENDS IN: ${minsLeft}m
-                  </div>
-                  <div style="font-size: 0.7rem; color: #888; margin-top: 5px;">Window: ${timeString}</div>
                 </div>`;
             } else if (isSoon) {
               const diffMs = start - now;
@@ -145,11 +138,6 @@
     // Refresh every minute
     setInterval(updateEvents, 60000);
     updateEvents();
-
-    // Theme Toggle Script
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-    });
   </script>
 
   <style>
