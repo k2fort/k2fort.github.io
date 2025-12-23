@@ -29,8 +29,10 @@
       <p>Current map conditions in the Rust Belt. Data synced via MetaForge API.</p>
     </section>
 
+    <div id="status-bar" style="font-size: 0.8rem; color: #555; margin-bottom: 1rem;">Scanning frequencies...</div>
+
     <div id="active-events" class="event-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem; margin-top:2rem;">
-      <p>Scanning frequencies...</p>
+      <p>Waiting for satellite uplink...</p>
     </div>
   </main>
 
@@ -46,11 +48,29 @@
 
   <script>
     async function updateTimers() {
+      const container = document.getElementById('active-events');
+      const status = document.getElementById('status-bar');
+      
+      // We use a CORS proxy (allorigins) to bypass the browser block
+      const apiTarget = 'https://metaforge.app/api/arc-raiders/event-timers';
+      const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(apiTarget);
+
       try {
-        const response = await fetch('https://metaforge.app/api/arc-raiders/event-timers');
-        const data = await response.json();
-        const container = document.getElementById('active-events');
+        status.innerText = "Connecting to Rust Belt satellites...";
+        const response = await fetch(proxyUrl);
+        
+        if (!response.ok) throw new Error('Network error');
+        
+        const wrapper = await response.json();
+        const data = JSON.parse(wrapper.contents); // AllOrigins wraps the data in a 'contents' string
+
         container.innerHTML = '';
+        
+        if (!data || data.length === 0) {
+          container.innerHTML = "<p>No active signatures detected. Rust Belt is currently clear.</p>";
+          status.innerText = "Scan complete: No events found.";
+          return;
+        }
 
         data.forEach(event => {
           const end = new Date(event.end_utc);
@@ -58,17 +78,29 @@
 
           if (timeLeft > 0) {
             container.innerHTML += `
-              <div class="event-card" style="background:#16213e; padding:1.5rem; border-top:4px solid #ff4b2b; border-radius:4px;">
+              <div class="event-card" style="background:#16213e; padding:1.5rem; border-top:4px solid #ff4b2b; border-radius:4px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
                 <h3 style="color:#00d4ff; margin-top:0;">${event.name}</h3>
                 <p>Location: <strong>${event.map}</strong></p>
                 <p style="color:#ff4b2b; font-weight:bold;"><i class="fas fa-clock"></i> Ends in: ${timeLeft}m</p>
+                <div style="font-size:0.7rem; color:#666; margin-top:10px;">Local End Time: ${end.toLocaleTimeString()}</div>
               </div>`;
           }
         });
+        
+        status.innerText = "Last sync: " + new Date().toLocaleTimeString();
+        
       } catch (e) {
-        document.getElementById('active-events').innerHTML = "Signal interrupted. Please refresh.";
+        console.error("Fetch Error:", e);
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 2rem; border: 1px dashed #ff4b2b;">
+            <p style="color: #ff4b2b;">Signal interrupted. API may be down or your connection is blocked.</p>
+            <button onclick="updateTimers()" class="nav-btn" style="margin-top: 10px;">Retry Connection</button>
+          </div>`;
+        status.innerText = "Sync failed.";
       }
     }
+
+    // Load on start and every 60 seconds
     updateTimers();
     setInterval(updateTimers, 60000);
 
