@@ -1,0 +1,9 @@
+[
+  {
+    "title": "HOTFIX - DEC 18",
+    "date": "2025-12-23",
+    "summary": "Raiders!\u00a0...",
+    "link": "https://arcraiders.com/news/hotfix-dec-18",
+    "fullContent": "<p>Raiders!&nbsp;</p><p>Update 1.7.2 is going live now on all platforms. Please restart your client to download.</p><ul class=\"list-bullet\"><li class=\"\" value=\"1\">Blueprint drop rates have been slightly lowered, but are still higher overall than before the 1.7.0 update.</li><li class=\"\" value=\"2\">Hidden Bunker has been re-enabled.</li><li class=\"\" value=\"3\">Fixed an issue where spamming the interact input while having a bad connection would make players unable to perform the interact action.</li><li class=\"\" value=\"4\">Added missing volumes to make sure inside areas don\u2019t deal cold damage during Cold Snap.</li><li class=\"\" value=\"5\">Updated the driver warning for AMD GPUs.</li><li class=\"\" value=\"6\">Fixed an issue that caused the \u2018Unexpected Initiative\u2019 quest to not spawn quest items making it impossible to complete.</li></ul><p>Stay warm. Stay alive.</p><p>//The ARC Raiders Team</p>"
+  }
+]
