@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
-  <title>Arc Raiders Hub | Patch Notes & News</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
+  <meta name="theme-color" content="#0a0e27">
+  <title>Arc Raiders Patch Notes & News</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="https://arcraiders.com/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="dark-mode"> <header>
+<body class="dark-mode">
+  <header>
     <div class="container header-content">
       <div class="logo-wrapper">
         <img src="logo.png" alt="Arc Raiders Hub Logo" class="logo">
@@ -24,25 +27,34 @@
 
   <main class="container">
     <section class="search-section">
-      <input type="text" id="news-search" placeholder="Search patches, news, or updates..." 
-             style="width:100%; padding:1rem; margin:1.5rem 0; background:var(--bg-secondary); color:var(--text-main); border:1px solid var(--accent-blue); border-radius:4px; font-size:1rem;">
+      <input type="text" id="news-search" placeholder="Search patches or news..." style="width:100%; padding:0.8rem; margin:1rem 0; font-size:1rem;">
+      <div id="latest-updates"></div>
     </section>
 
-    <section id="patches">
-      <h2><i class="fas fa-tools"></i> Recent Patches</h2>
+    <section id="patches" class="patch-history">
+      <h2>Full Patch History</h2>
       <table>
         <thead>
-          <tr><th>Version/Title</th><th>Date</th><th>Link</th></tr>
+          <tr>
+            <th>Version</th>
+            <th>Date</th>
+            <th>Link</th>
+          </tr>
         </thead>
         <tbody id="patch-table-body">
           </tbody>
       </table>
     </section>
 
-    <section id="news" style="margin-top:3rem;">
-      <h2><i class="fas fa-newspaper"></i> Latest News</h2>
+    <section class="latest-news" style="margin-top: 2rem;">
+      <h2>Latest News</h2>
       <div id="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
           </div>
+    </section>
+
+    <section id="about">
+      <h2>About</h2>
+      <p>© 2025 Arc Raiders Patch Notes | Community-driven site for Arc Raiders players | Not affiliated with Embark | <a href="sitemap.xml">Sitemap</a> | <a href="rss.xml">RSS Feed</a></p>
     </section>
   </main>
 
@@ -54,59 +66,56 @@
           <a href="https://twitter.com/arcraidersgame" target="_blank"><i class="fab fa-twitter"></i></a>
           <a href="https://www.reddit.com/r/ArcRaiders/" target="_blank"><i class="fab fa-reddit"></i></a>
         </div>
-        <p>© 2025 Arc Raiders Hub | Community-driven site | Not affiliated with Embark Studios</p>
-        <div class="footer-links">
-          <a href="sitemap.xml">Sitemap</a> | <a href="rss.xml">RSS Feed</a>
-        </div>
+        <p>© 2025 Arc Raiders Hub | Not affiliated with Embark Studios</p>
       </div>
     </div>
   </footer>
 
   <script>
-    // Theme Toggle Logic
+    // Theme Toggle
     const themeBtn = document.getElementById('theme-toggle');
     themeBtn.addEventListener('click', () => {
       document.body.classList.toggle('light-mode');
       themeBtn.innerText = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
     });
 
-    // Data Loading & Search
+    // Load JSON Data
     async function loadData() {
-      try {
-        const [patchRes, newsRes] = await Promise.all([
-          fetch('patches.json'), fetch('news.json')
-        ]);
-        const patches = await patchRes.json();
-        const news = await newsRes.json();
+      const [patchRes, newsRes] = await Promise.all([
+        fetch('patches.json'),
+        fetch('news.json')
+      ]);
+      const patches = await patchRes.json();
+      const news = await newsRes.json();
 
-        const patchBody = document.getElementById('patch-table-body');
-        const newsGrid = document.getElementById('news-grid');
+      const patchBody = document.getElementById('patch-table-body');
+      const newsGrid = document.getElementById('news-grid');
 
-        patches.forEach(p => {
-          patchBody.innerHTML += `<tr>
-            <td><strong>${p.title}</strong></td>
-            <td>${p.date}</td>
-            <td><a href="patches.html?link=${encodeURIComponent(p.link)}" class="nav-btn">View Notes</a></td>
-          </tr>`;
+      patches.forEach(p => {
+        patchBody.innerHTML += `<tr>
+          <td><strong>${p.title}</strong></td>
+          <td>${p.date}</td>
+          <td><a href="patches.html?link=${encodeURIComponent(p.link)}" class="nav-btn">View Notes</a></td>
+        </tr>`;
+      });
+
+      news.forEach(n => {
+        newsGrid.innerHTML += `
+          <div class="news-card" style="background:var(--bg-secondary, #16213e); padding:1.5rem; border-left:4px solid #00d4ff;">
+            <h3>${n.title}</h3>
+            <p><small>${n.date}</small></p>
+            <p>${n.summary}</p>
+            <a href="news.html?link=${encodeURIComponent(n.link)}" style="color:#00d4ff;">Read More →</a>
+          </div>`;
+      });
+
+      // Search Filter Logic
+      document.getElementById('news-search').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('tr, .news-card').forEach(el => {
+          el.style.display = el.innerText.toLowerCase().includes(term) ? '' : 'none';
         });
-
-        news.forEach(n => {
-          newsGrid.innerHTML += `
-            <div class="news-card" style="background:var(--bg-secondary); padding:1.5rem; border-left:4px solid var(--accent-blue); border-radius:4px;">
-              <h3>${n.title}</h3>
-              <p><small>${n.date}</small></p>
-              <p>${n.summary}</p>
-              <a href="news.html?link=${encodeURIComponent(n.link)}" style="color:var(--accent-blue); font-weight:bold;">Read More →</a>
-            </div>`;
-        });
-
-        document.getElementById('news-search').addEventListener('input', (e) => {
-          const term = e.target.value.toLowerCase();
-          document.querySelectorAll('tr, .news-card').forEach(el => {
-            el.style.display = el.innerText.toLowerCase().includes(term) ? '' : 'none';
-          });
-        });
-      } catch (err) { console.error("Error loading news data:", err); }
+      });
     }
     loadData();
   </script>
