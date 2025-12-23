@@ -18,7 +18,7 @@ jobs:
         run: pip install requests
       - name: Run processor
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.AUTO_UPDATE_TOKEN }}
         run: python process_profiles.py
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
