@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Live Events | Arc Raiders Hub</title>
+  <title>Arc Raiders Live Events</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="dark-mode">
   <header>
     <div class="container header-content">
+      <div class="logo-wrapper">
+        <img src="logo.png" alt="Logo" class="logo">
+        <h1>Arc Raiders Live Events</h1>
+      </div>
       <nav class="nav-buttons">
         <a href="index.html" class="nav-btn">Home</a>
         <a href="events.html" class="nav-btn active">Event Timers</a>
@@ -20,24 +24,22 @@
   </header>
 
   <main class="container">
-    <section class="event-intro" style="margin: 2rem 0;">
-      <h2><i class="fas fa-satellite-dish"></i> Live Satellite Feed</h2>
-      <p>Current Rust Belt conditions and upcoming map rotations. Refreshes every minute.</p>
+    <section class="event-intro">
+      <h2>Live Event Timers</h2>
+      <p>Current map conditions in the Rust Belt. Data synced via MetaForge API.</p>
     </section>
 
-    <div id="active-events" class="event-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
+    <div id="active-events" class="event-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem; margin-top:2rem;">
       <p>Scanning frequencies...</p>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-socials">
+      <p>© 2025 Arc Raiders Hub | Data provided by MetaForge API</p>
+      <div class="footer-socials">
           <a href="https://discord.gg/arcraiders" target="_blank"><i class="fab fa-discord"></i></a>
           <a href="https://twitter.com/arcraidersgame" target="_blank"><i class="fab fa-twitter"></i></a>
-        </div>
-        <p>© 2025 Arc Raiders Hub | Data provided by MetaForge API</p>
       </div>
     </div>
   </footer>
@@ -56,23 +58,23 @@
 
           if (timeLeft > 0) {
             container.innerHTML += `
-              <div class="event-card" style="background:var(--bg-secondary); padding:1.5rem; border:1px solid #333; border-top:4px solid #ff4b2b;">
-                <h3 style="color:var(--accent-blue); margin-top:0;">${event.name}</h3>
+              <div class="event-card" style="background:#16213e; padding:1.5rem; border-top:4px solid #ff4b2b; border-radius:4px;">
+                <h3 style="color:#00d4ff; margin-top:0;">${event.name}</h3>
                 <p>Location: <strong>${event.map}</strong></p>
                 <p style="color:#ff4b2b; font-weight:bold;"><i class="fas fa-clock"></i> Ends in: ${timeLeft}m</p>
               </div>`;
           }
         });
-      } catch (e) { container.innerHTML = "Signal lost. Check back later."; }
+      } catch (e) {
+        document.getElementById('active-events').innerHTML = "Signal interrupted. Please refresh.";
+      }
     }
     updateTimers();
     setInterval(updateTimers, 60000);
 
-    const themeBtn = document.getElementById('theme-toggle');
-    themeBtn.addEventListener('click', () => {
+    document.getElementById('theme-toggle').onclick = () => {
       document.body.classList.toggle('light-mode');
-      themeBtn.innerText = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
-    });
+    };
   </script>
 </body>
 </html>
