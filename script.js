@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
   if (localStorage.getItem('theme') === 'light') {
     body.classList.add('light-mode');
-    if (themeToggle) themeToggle.textContent = '🌞';
+    themeToggle.textContent = '🌞';
   } else {
     body.classList.remove('light-mode');
-    if (themeToggle) themeToggle.textContent = '🌙';
+    themeToggle.textContent = '🌙';
   }
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput');
 
   if (latestDiv && tableBody) {
+    // Load patches
     fetch('patches.json')
       .then(res => res.json())
       .then(patches => {
@@ -56,25 +57,25 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = '';
         if (patches.length > 0) {
           const latest = patches[0];
-          const slug = createSlug(latest.version);
+          const slug = createSlug(latest.title);
           const badge = isNew(latest.date) ? '<span class="new-badge">NEW</span>' : '';
           const card = document.createElement('div');
           card.className = 'update-card';
           card.innerHTML = `
-            <h3>${latest.version} ${badge} - ${latest.date}</h3>
-            <p>${latest.keyChanges}</p>
+            <h3>${latest.title} ${badge} - ${latest.date}</h3>
+            <p>${latest.summary}</p>
             <a href="patches.html?v=${slug}">Read Full Patch Notes</a>
           `;
           latestDiv.appendChild(card);
         }
         patches.forEach(patch => {
-          const slug = createSlug(patch.version);
+          const slug = createSlug(patch.title);
           const badge = isNew(patch.date) ? '<span class="new-badge">NEW</span>' : '';
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${patch.version} ${badge}</td>
+            <td>${patch.title} ${badge}</td>
             <td>${patch.date}</td>
-            <td>${patch.keyChanges}</td>
+            <td>${patch.summary}</td>
             <td><a href="patches.html?v=${slug}">View Full Notes</a></td>
           `;
           tableBody.appendChild(row);
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => console.error('Patches load error:', err));
 
+    // Load news
     fetch('news.json')
       .then(res => res.json())
       .then(news => {
@@ -117,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => console.error('News load error:', err));
 
+    // Search
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         const value = e.target.value.toLowerCase();
@@ -137,18 +140,17 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch('patches.json')
         .then(res => res.json())
         .then(patches => {
-          const patch = patches.find(p => createSlug(p.version) === slug);
+          const patch = patches.find(p => createSlug(p.title) === slug);
           if (patch) {
-            document.title = `Arc Raiders | ${patch.version}`;
-            patchContent.querySelector('h2').textContent = `${patch.version} - ${patch.date}`;
+            document.title = `Arc Raiders | ${patch.title}`;
+            patchContent.querySelector('h2').textContent = `${patch.title} - ${patch.date}`;
             patchContent.querySelector('.meta').textContent = `Released: ${patch.date}`;
-            patchContent.querySelector('.patch-content').innerHTML = patch.fullNotes || '<p>No detailed notes available.</p>';
+            patchContent.querySelector('.patch-content').innerHTML = patch.fullContent || '<p>No detailed notes available.</p>';
             patchContent.querySelector('.button').href = patch.link;
           } else {
             patchContent.innerHTML = '<p>Patch not found.</p>';
           }
-        })
-        .catch(err => console.error('Patch detail error:', err));
+        });
     }
   }
 
@@ -171,8 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             newsContent.innerHTML = '<p>News item not found.</p>';
           }
-        })
-        .catch(err => console.error('News detail error:', err));
+        });
     }
   }
 
@@ -249,31 +250,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Event Timers Page with beautiful icons and real-time countdown
+  // Event Timers Page
   if (document.getElementById('active-events') || document.getElementById('upcoming-events')) {
-    const loading = document.getElementById('loading');
-    const eventTimers = document.getElementById('event-timers');
     const activeContainer = document.getElementById('active-events');
     const upcomingContainer = document.getElementById('upcoming-events');
     const API_URL = 'https://metaforge.app/api/arc-raiders/event-timers';
     const PROXY_URL = 'https://api.allorigins.win/raw?url=';
 
-    // Map icons (Font Awesome classes)
-    const mapIcons = {
-      'Dam': 'fa-water',
-      'Blue Gate': 'fa-gate',
-      'Spaceport': 'fa-rocket',
-      'Buried City': 'fa-city',
-      'Stella Montis': 'fa-mountain',
-      'Buried City': 'fa-city',
-      'Blue Gate': 'fa-gate',
-      'Dam': 'fa-water'
-      // Add more maps as needed
-    };
-
     function fetchEvents() {
-      loading.style.display = 'flex';
-      eventTimers.style.display = 'none';
+      activeContainer.innerHTML = '<p>Loading events...</p>';
+      upcomingContainer.innerHTML = '';
 
       fetch(PROXY_URL + encodeURIComponent(API_URL))
         .then(res => {
@@ -281,9 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
           return res.json();
         })
         .then(data => {
-          loading.style.display = 'none';
-          eventTimers.style.display = 'block';
-
           activeContainer.innerHTML = '';
           upcomingContainer.innerHTML = '';
 
@@ -309,12 +292,10 @@ document.addEventListener('DOMContentLoaded', () => {
               const remainingMinutes = endTimeAdjusted - currentTime;
               const remaining = isActive ? `${Math.floor(remainingMinutes / 60)}h ${remainingMinutes % 60}m` : '';
 
-              const iconClass = mapIcons[event.map] || 'fa-question-circle';
-
               const card = document.createElement('div');
               card.className = 'event-card' + (isActive ? ' active' : '');
               card.innerHTML = `
-                <h4><i class="fas ${iconClass}"></i> ${event.name}</h4>
+                <h4>${event.name}</h4>
                 <p class="status">${isActive ? 'ACTIVE NOW' : 'SCHEDULED'}</p>
                 <p class="map">${event.map.toUpperCase()}</p>
                 <p class="time">${time.start} - ${time.end}${isActive ? ` (Ends in ${remaining})` : ''}</p>
@@ -344,13 +325,13 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         })
         .catch(err => {
-          loading.style.display = 'none';
+          console.error('Event fetch error:', err);
           activeContainer.innerHTML = `<p>Error loading events: ${err.message}. Try refreshing.</p>`;
           upcomingContainer.innerHTML = '';
         });
     }
 
     fetchEvents();
-    setInterval(fetchEvents, 30000); // Refresh every 30 seconds
+    setInterval(fetchEvents, 60000);
   }
 });
