@@ -182,28 +182,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Cold Snap",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "02:00",
-          "end": "04:00"
-        },
-        {
-          "start": "10:00",
-          "end": "12:00"
-        },
-        {
-          "start": "18:00",
-          "end": "20:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Stella Montis",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -233,6 +211,28 @@
         {
           "start": "22:00",
           "end": "23:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Cold Snap",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "02:00",
+          "end": "04:00"
+        },
+        {
+          "start": "10:00",
+          "end": "12:00"
+        },
+        {
+          "start": "18:00",
+          "end": "20:00"
         }
       ]
     },
@@ -490,6 +490,24 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Prospecting Probes",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "01:00",
+          "end": "02:00"
+        },
+        {
+          "start": "17:00",
+          "end": "18:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Uncovered Caches",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
@@ -507,24 +525,6 @@
         {
           "start": "23:00",
           "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Prospecting Probes",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "01:00",
-          "end": "02:00"
-        },
-        {
-          "start": "17:00",
-          "end": "18:00"
         }
       ]
     },
