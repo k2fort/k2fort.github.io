@@ -72,6 +72,28 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Cold Snap",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "04:00",
+          "end": "06:00"
+        },
+        {
+          "start": "12:00",
+          "end": "14:00"
+        },
+        {
+          "start": "20:00",
+          "end": "22:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Lush Blooms",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
@@ -140,28 +162,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Cold Snap",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "04:00",
-          "end": "06:00"
-        },
-        {
-          "start": "12:00",
-          "end": "14:00"
-        },
-        {
-          "start": "20:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Harvester",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
@@ -175,6 +175,24 @@
         {
           "start": "20:00",
           "end": "21:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Harvester",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
         }
       ]
     },
@@ -201,24 +219,6 @@
         {
           "start": "20:00",
           "end": "21:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "09:00",
-          "end": "10:00"
         },
         {
           "start": "21:00",
@@ -310,20 +310,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "23:00",
-          "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -358,6 +344,20 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Harvester",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "23:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Prospecting Probes",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
@@ -380,9 +380,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Hidden Bunker",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/hiddenbunker.webp",
+      "name": "Prospecting Probes",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
       "description": "",
       "days": [],
       "times": [
@@ -402,9 +402,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Prospecting Probes",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
+      "name": "Hidden Bunker",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/hiddenbunker.webp",
       "description": "",
       "days": [],
       "times": [
