@@ -24,65 +24,19 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Lush Blooms",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
+      "name": "Prospecting Probes",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
       "description": "",
       "days": [],
       "times": [
         {
-          "start": "04:00",
-          "end": "05:00"
+          "start": "05:00",
+          "end": "06:00"
         },
         {
-          "start": "12:00",
-          "end": "13:00"
-        },
-        {
-          "start": "20:00",
-          "end": "21:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Night Raid",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "03:00",
-          "end": "04:00"
-        },
-        {
-          "start": "04:00",
-          "end": "05:00"
-        },
-        {
-          "start": "07:00",
-          "end": "08:00"
-        },
-        {
-          "start": "11:00",
-          "end": "12:00"
-        },
-        {
-          "start": "12:00",
-          "end": "13:00"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00"
-        },
-        {
-          "start": "19:00",
-          "end": "20:00"
-        },
-        {
-          "start": "20:00",
-          "end": "21:00"
+          "start": "17:00",
+          "end": "18:00"
         },
         {
           "start": "23:00",
@@ -105,28 +59,6 @@
         {
           "start": "13:00",
           "end": "14:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Prospecting Probes",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "05:00",
-          "end": "06:00"
-        },
-        {
-          "start": "17:00",
-          "end": "18:00"
-        },
-        {
-          "start": "23:00",
-          "end": "00:00"
         }
       ]
     },
@@ -157,28 +89,6 @@
         {
           "start": "21:00",
           "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Cold Snap",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "06:00",
-          "end": "08:00"
-        },
-        {
-          "start": "14:00",
-          "end": "16:00"
-        },
-        {
-          "start": "22:00",
-          "end": "00:00"
         }
       ]
     },
@@ -248,6 +158,28 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Cold Snap",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "06:00",
+          "end": "08:00"
+        },
+        {
+          "start": "14:00",
+          "end": "16:00"
+        },
+        {
+          "start": "22:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -300,28 +232,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Prospecting Probes",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "00:00",
-          "end": "01:00"
-        },
-        {
-          "start": "08:00",
-          "end": "09:00"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Matriarch",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
@@ -361,6 +271,28 @@
         {
           "start": "16:00",
           "end": "18:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Prospecting Probes",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "00:00",
+          "end": "01:00"
+        },
+        {
+          "start": "08:00",
+          "end": "09:00"
+        },
+        {
+          "start": "16:00",
+          "end": "17:00"
         }
       ]
     },
@@ -520,6 +452,74 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Lush Blooms",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "04:00",
+          "end": "05:00"
+        },
+        {
+          "start": "12:00",
+          "end": "13:00"
+        },
+        {
+          "start": "20:00",
+          "end": "21:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Night Raid",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "04:00",
+          "end": "05:00"
+        },
+        {
+          "start": "07:00",
+          "end": "08:00"
+        },
+        {
+          "start": "11:00",
+          "end": "12:00"
+        },
+        {
+          "start": "12:00",
+          "end": "13:00"
+        },
+        {
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "start": "19:00",
+          "end": "20:00"
+        },
+        {
+          "start": "20:00",
+          "end": "21:00"
+        },
+        {
+          "start": "23:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Electromagnetic Storm",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
@@ -542,6 +542,20 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Lush Blooms",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "17:00",
+          "end": "18:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Prospecting Probes",
       "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
@@ -552,20 +566,6 @@
           "start": "01:00",
           "end": "02:00"
         },
-        {
-          "start": "17:00",
-          "end": "18:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Lush Blooms",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
-      "description": "",
-      "days": [],
-      "times": [
         {
           "start": "17:00",
           "end": "18:00"
@@ -714,20 +714,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Husk Graveyard",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "17:00",
-          "end": "18:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Uncovered Caches",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
@@ -745,6 +731,20 @@
         {
           "start": "23:00",
           "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Husk Graveyard",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "17:00",
+          "end": "18:00"
         }
       ]
     },
