@@ -20,28 +20,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Cold Snap",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "04:00",
-          "end": "06:00"
-        },
-        {
-          "start": "12:00",
-          "end": "14:00"
-        },
-        {
-          "start": "20:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Lush Blooms",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
@@ -105,6 +83,28 @@
         {
           "start": "23:00",
           "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Cold Snap",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "04:00",
+          "end": "06:00"
+        },
+        {
+          "start": "12:00",
+          "end": "14:00"
+        },
+        {
+          "start": "20:00",
+          "end": "22:00"
         }
       ]
     },
