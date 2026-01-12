@@ -3,60 +3,6 @@
     {
       "game": "arc-raiders",
       "name": "Cold Snap",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "00:00",
-          "end": "02:00"
-        },
-        {
-          "start": "16:00",
-          "end": "18:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Uncovered Caches",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "05:00",
-          "end": "06:00"
-        },
-        {
-          "start": "17:00",
-          "end": "18:00"
-        },
-        {
-          "start": "23:00",
-          "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Husk Graveyard",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "17:00",
-          "end": "18:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Cold Snap",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
       "description": "",
@@ -420,6 +366,28 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Hidden Bunker",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/hiddenbunker.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "00:00",
+          "end": "01:00"
+        },
+        {
+          "start": "08:00",
+          "end": "09:00"
+        },
+        {
+          "start": "16:00",
+          "end": "17:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Husk Graveyard",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
@@ -442,23 +410,15 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Hidden Bunker",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/hiddenbunker.webp",
+      "name": "Cold Snap",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
       "description": "",
       "days": [],
       "times": [
         {
           "start": "00:00",
-          "end": "01:00"
-        },
-        {
-          "start": "08:00",
-          "end": "09:00"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00"
+          "end": "02:00"
         }
       ]
     },
@@ -581,6 +541,42 @@
         {
           "start": "12:00",
           "end": "13:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Uncovered Caches",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "05:00",
+          "end": "06:00"
+        },
+        {
+          "start": "17:00",
+          "end": "18:00"
+        },
+        {
+          "start": "23:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Husk Graveyard",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "17:00",
+          "end": "18:00"
         }
       ]
     },
