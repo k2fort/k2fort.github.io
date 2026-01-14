@@ -2,46 +2,6 @@
   "data": [
     {
       "game": "arc-raiders",
-      "name": "Locked Gate",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lockedgate.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "05:00",
-          "end": "06:00"
-        },
-        {
-          "start": "13:00",
-          "end": "14:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Stella Montis",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -342,6 +302,28 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Locked Gate",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lockedgate.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "05:00",
+          "end": "06:00"
+        },
+        {
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Matriarch",
       "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
@@ -405,6 +387,24 @@
         {
           "start": "09:00",
           "end": "10:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Harvester",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
         }
       ]
     },
