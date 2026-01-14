@@ -2,38 +2,6 @@
   "data": [
     {
       "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Electromagnetic Storm",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "09:00",
-          "end": "10:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Stella Montis",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -90,6 +58,24 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Harvester",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "11:00",
+          "end": "12:00"
+        },
+        {
+          "start": "20:00",
+          "end": "21:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Uncovered Caches",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
@@ -133,24 +119,6 @@
         {
           "start": "23:00",
           "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "11:00",
-          "end": "12:00"
-        },
-        {
-          "start": "20:00",
-          "end": "21:00"
         }
       ]
     },
@@ -429,14 +397,18 @@
     {
       "game": "arc-raiders",
       "name": "Harvester",
-      "map": "Spaceport",
+      "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
       "description": "",
       "days": [],
       "times": [
         {
-          "start": "23:00",
-          "end": "00:00"
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
         }
       ]
     },
@@ -460,6 +432,20 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Harvester",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "23:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Uncovered Caches",
       "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
@@ -473,6 +459,20 @@
         {
           "start": "17:00",
           "end": "18:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Electromagnetic Storm",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "09:00",
+          "end": "10:00"
         }
       ]
     },
