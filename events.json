@@ -46,6 +46,40 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Night Raid",
+      "map": "Stella Montis",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "02:00",
+          "end": "03:00"
+        },
+        {
+          "start": "06:00",
+          "end": "07:00"
+        },
+        {
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "14:00",
+          "end": "15:00"
+        },
+        {
+          "start": "18:00",
+          "end": "19:00"
+        },
+        {
+          "start": "22:00",
+          "end": "23:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Matriarch",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
@@ -78,40 +112,6 @@
       "description": "",
       "days": [],
       "times": [
-        {
-          "start": "06:00",
-          "end": "07:00"
-        },
-        {
-          "start": "10:00",
-          "end": "11:00"
-        },
-        {
-          "start": "14:00",
-          "end": "15:00"
-        },
-        {
-          "start": "18:00",
-          "end": "19:00"
-        },
-        {
-          "start": "22:00",
-          "end": "23:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Night Raid",
-      "map": "Stella Montis",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "02:00",
-          "end": "03:00"
-        },
         {
           "start": "06:00",
           "end": "07:00"
