@@ -118,6 +118,20 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Husk Graveyard",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "23:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -144,20 +158,6 @@
           "start": "19:00",
           "end": "20:00"
         },
-        {
-          "start": "23:00",
-          "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Husk Graveyard",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
-      "description": "",
-      "days": [],
-      "times": [
         {
           "start": "23:00",
           "end": "00:00"
