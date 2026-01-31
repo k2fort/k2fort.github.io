@@ -2,32 +2,6 @@
   "data": [
     {
       "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "03:00",
-          "end": "04:00"
-        },
-        {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -57,6 +31,32 @@
         {
           "start": "23:00",
           "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Matriarch",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
         }
       ]
     },
@@ -306,9 +306,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Night Raid",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "name": "Lush Blooms",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
       "description": "",
       "days": [],
       "times": [
@@ -328,9 +328,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Lush Blooms",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
+      "name": "Night Raid",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
       "description": "",
       "days": [],
       "times": [
