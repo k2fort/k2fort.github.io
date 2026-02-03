@@ -1,32 +1,3 @@
 {
-  "data": [
-    {
-      "game": "arc-raiders",
-      "name": "Night Raid",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "23:00",
-          "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "23:00",
-          "end": "00:00"
-        }
-      ]
-    }
-  ]
+  "data": []
 }
