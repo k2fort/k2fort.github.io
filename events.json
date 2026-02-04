@@ -2,80 +2,6 @@
   "data": [
     {
       "game": "arc-raiders",
-      "name": "Night Raid",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "03:00",
-          "end": "04:00"
-        },
-        {
-          "start": "07:00",
-          "end": "08:00"
-        },
-        {
-          "start": "11:00",
-          "end": "12:00"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00"
-        },
-        {
-          "start": "19:00",
-          "end": "20:00"
-        },
-        {
-          "start": "23:00",
-          "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "01:00",
-          "end": "02:00"
-        },
-        {
-          "start": "07:00",
-          "end": "08:00"
-        },
-        {
-          "start": "13:00",
-          "end": "14:00"
-        },
-        {
-          "start": "19:00",
-          "end": "20:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Husk Graveyard",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "07:00",
-          "end": "08:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Electromagnetic Storm",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
@@ -176,24 +102,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Uncovered Caches",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Locked Gate",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/lockedgate.webp",
@@ -219,6 +127,24 @@
         {
           "start": "17:00",
           "end": "18:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Uncovered Caches",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "09:00",
+          "end": "10:00"
         },
         {
           "start": "21:00",
@@ -310,6 +236,40 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Night Raid",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "07:00",
+          "end": "08:00"
+        },
+        {
+          "start": "11:00",
+          "end": "12:00"
+        },
+        {
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "start": "19:00",
+          "end": "20:00"
+        },
+        {
+          "start": "23:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Harvester",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
@@ -336,20 +296,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Uncovered Caches",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "12:00",
-          "end": "13:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Harvester",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
@@ -371,6 +317,20 @@
         {
           "start": "18:00",
           "end": "19:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Uncovered Caches",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "12:00",
+          "end": "13:00"
         }
       ]
     },
@@ -407,6 +367,32 @@
         {
           "start": "13:00",
           "end": "14:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Harvester",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "01:00",
+          "end": "02:00"
+        },
+        {
+          "start": "07:00",
+          "end": "08:00"
+        },
+        {
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "start": "19:00",
+          "end": "20:00"
         }
       ]
     },
@@ -531,6 +517,20 @@
         {
           "start": "21:00",
           "end": "22:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Husk Graveyard",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "07:00",
+          "end": "08:00"
         }
       ]
     },
