@@ -3,92 +3,6 @@
     {
       "game": "arc-raiders",
       "name": "Night Raid",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "03:00",
-          "end": "04:00"
-        },
-        {
-          "start": "07:00",
-          "end": "08:00"
-        },
-        {
-          "start": "11:00",
-          "end": "12:00"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00"
-        },
-        {
-          "start": "19:00",
-          "end": "20:00"
-        },
-        {
-          "start": "23:00",
-          "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "03:00",
-          "end": "04:00"
-        },
-        {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Husk Graveyard",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "03:00",
-          "end": "04:00"
-        },
-        {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Night Raid",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
       "description": "",
@@ -308,6 +222,40 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Night Raid",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "07:00",
+          "end": "08:00"
+        },
+        {
+          "start": "11:00",
+          "end": "12:00"
+        },
+        {
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "start": "19:00",
+          "end": "20:00"
+        },
+        {
+          "start": "23:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Uncovered Caches",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
@@ -392,6 +340,32 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Matriarch",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -471,6 +445,32 @@
         {
           "start": "13:00",
           "end": "14:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Husk Graveyard",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
         }
       ]
     },
