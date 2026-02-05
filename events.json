@@ -2,50 +2,6 @@
   "data": [
     {
       "game": "arc-raiders",
-      "name": "Night Raid",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "00:00",
-          "end": "01:00"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "04:00",
-          "end": "05:00"
-        },
-        {
-          "start": "10:00",
-          "end": "11:00"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00"
-        },
-        {
-          "start": "22:00",
-          "end": "23:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Hidden Bunker",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/hiddenbunker.webp",
@@ -140,6 +96,32 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Harvester",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "00:00",
+          "end": "01:00"
+        },
+        {
+          "start": "06:00",
+          "end": "07:00"
+        },
+        {
+          "start": "12:00",
+          "end": "13:00"
+        },
+        {
+          "start": "18:00",
+          "end": "19:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Stella Montis",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -169,32 +151,6 @@
         {
           "start": "22:00",
           "end": "23:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "00:00",
-          "end": "01:00"
-        },
-        {
-          "start": "06:00",
-          "end": "07:00"
-        },
-        {
-          "start": "12:00",
-          "end": "13:00"
-        },
-        {
-          "start": "18:00",
-          "end": "19:00"
         }
       ]
     },
@@ -410,6 +366,32 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Matriarch",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "04:00",
+          "end": "05:00"
+        },
+        {
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "16:00",
+          "end": "17:00"
+        },
+        {
+          "start": "22:00",
+          "end": "23:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Electromagnetic Storm",
       "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
@@ -427,6 +409,24 @@
         {
           "start": "22:00",
           "end": "23:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Night Raid",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "00:00",
+          "end": "01:00"
+        },
+        {
+          "start": "16:00",
+          "end": "17:00"
         }
       ]
     },
