@@ -253,28 +253,6 @@
     {
       "game": "arc-raiders",
       "name": "Night Raid",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "02:00",
-          "end": "03:00"
-        },
-        {
-          "start": "10:00",
-          "end": "11:00"
-        },
-        {
-          "start": "18:00",
-          "end": "19:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Night Raid",
       "map": "Stella Montis",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
       "description": "",
@@ -303,6 +281,28 @@
         {
           "start": "22:00",
           "end": "23:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Night Raid",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "02:00",
+          "end": "03:00"
+        },
+        {
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "18:00",
+          "end": "19:00"
         }
       ]
     },
