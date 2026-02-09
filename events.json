@@ -342,6 +342,24 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Husk Graveyard",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "04:00",
+          "end": "05:00"
+        },
+        {
+          "start": "20:00",
+          "end": "21:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Hidden Bunker",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/hiddenbunker.webp",
@@ -355,24 +373,6 @@
         {
           "start": "12:00",
           "end": "13:00"
-        },
-        {
-          "start": "20:00",
-          "end": "21:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Husk Graveyard",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "04:00",
-          "end": "05:00"
         },
         {
           "start": "20:00",
