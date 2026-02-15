@@ -46,6 +46,24 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Night Raid",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "18:00",
+          "end": "19:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Harvester",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
@@ -106,19 +124,27 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Night Raid",
+      "name": "Harvester",
       "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
       "description": "",
       "days": [],
       "times": [
         {
-          "start": "10:00",
-          "end": "11:00"
+          "start": "01:00",
+          "end": "02:00"
         },
         {
-          "start": "18:00",
-          "end": "19:00"
+          "start": "07:00",
+          "end": "08:00"
+        },
+        {
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "start": "19:00",
+          "end": "20:00"
         }
       ]
     },
@@ -164,27 +190,15 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "name": "Husk Graveyard",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
       "description": "",
       "days": [],
       "times": [
         {
-          "start": "01:00",
-          "end": "02:00"
-        },
-        {
-          "start": "07:00",
-          "end": "08:00"
-        },
-        {
-          "start": "13:00",
-          "end": "14:00"
-        },
-        {
-          "start": "19:00",
-          "end": "20:00"
+          "start": "20:00",
+          "end": "21:00"
         }
       ]
     },
@@ -224,20 +238,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Husk Graveyard",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "20:00",
-          "end": "21:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Matriarch",
       "map": "Blue Gate",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
@@ -259,6 +259,20 @@
         {
           "start": "20:00",
           "end": "21:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Husk Graveyard",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "21:00",
+          "end": "22:00"
         }
       ]
     },
@@ -330,20 +344,6 @@
           "start": "20:00",
           "end": "21:00"
         },
-        {
-          "start": "21:00",
-          "end": "22:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Husk Graveyard",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/husk-graveyard.webp",
-      "description": "",
-      "days": [],
-      "times": [
         {
           "start": "21:00",
           "end": "22:00"
@@ -556,6 +556,24 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Lush Blooms",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Electromagnetic Storm",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
@@ -573,24 +591,6 @@
         {
           "start": "16:00",
           "end": "17:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Lush Blooms",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
         }
       ]
     },
