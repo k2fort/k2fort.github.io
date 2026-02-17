@@ -298,24 +298,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Prospecting Probes",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "03:00",
-          "end": "04:00"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Night Raid",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
@@ -333,6 +315,24 @@
         {
           "start": "23:00",
           "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Prospecting Probes",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "15:00",
+          "end": "16:00"
         }
       ]
     },
