@@ -192,32 +192,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "01:00",
-          "end": "02:00"
-        },
-        {
-          "start": "07:00",
-          "end": "08:00"
-        },
-        {
-          "start": "13:00",
-          "end": "14:00"
-        },
-        {
-          "start": "19:00",
-          "end": "20:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Launch Tower Loot",
       "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/launchtowerloot.webp",
@@ -262,27 +236,27 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Cold Snap",
+      "name": "Harvester",
       "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
       "description": "",
       "days": [],
       "times": [
         {
-          "start": "02:00",
-          "end": "03:00"
+          "start": "01:00",
+          "end": "02:00"
         },
         {
-          "start": "10:00",
-          "end": "11:00"
+          "start": "07:00",
+          "end": "08:00"
         },
         {
-          "start": "14:00",
-          "end": "15:00"
+          "start": "13:00",
+          "end": "14:00"
         },
         {
-          "start": "18:00",
-          "end": "19:00"
+          "start": "19:00",
+          "end": "20:00"
         }
       ]
     },
@@ -315,6 +289,32 @@
     {
       "game": "arc-raiders",
       "name": "Cold Snap",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "02:00",
+          "end": "03:00"
+        },
+        {
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "14:00",
+          "end": "15:00"
+        },
+        {
+          "start": "18:00",
+          "end": "19:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Cold Snap",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
       "description": "",
@@ -336,9 +336,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Uncovered Caches",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
+      "name": "Matriarch",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
       "description": "",
       "days": [],
       "times": [
@@ -362,9 +362,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+      "name": "Uncovered Caches",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
       "description": "",
       "days": [],
       "times": [
