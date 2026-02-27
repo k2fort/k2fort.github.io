@@ -88,9 +88,35 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Night Raid",
-      "map": "Stella Montis",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+      "name": "Matriarch",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "04:00",
+          "end": "05:00"
+        },
+        {
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "16:00",
+          "end": "17:00"
+        },
+        {
+          "start": "22:00",
+          "end": "23:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Electromagnetic Storm",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
       "description": "",
       "days": [],
       "times": [
@@ -122,35 +148,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "04:00",
-          "end": "05:00"
-        },
-        {
-          "start": "10:00",
-          "end": "11:00"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00"
-        },
-        {
-          "start": "22:00",
-          "end": "23:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Electromagnetic Storm",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
+      "name": "Night Raid",
+      "map": "Stella Montis",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
       "description": "",
       "days": [],
       "times": [
