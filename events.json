@@ -3,100 +3,6 @@
     {
       "game": "arc-raiders",
       "name": "Night Raid",
-      "map": "Stella Montis",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "02:00",
-          "end": "03:00"
-        },
-        {
-          "start": "06:00",
-          "end": "07:00"
-        },
-        {
-          "start": "10:00",
-          "end": "11:00"
-        },
-        {
-          "start": "14:00",
-          "end": "15:00"
-        },
-        {
-          "start": "18:00",
-          "end": "19:00"
-        },
-        {
-          "start": "22:00",
-          "end": "23:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "04:00",
-          "end": "05:00"
-        },
-        {
-          "start": "10:00",
-          "end": "11:00"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00"
-        },
-        {
-          "start": "22:00",
-          "end": "23:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Electromagnetic Storm",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "02:00",
-          "end": "03:00"
-        },
-        {
-          "start": "06:00",
-          "end": "07:00"
-        },
-        {
-          "start": "10:00",
-          "end": "11:00"
-        },
-        {
-          "start": "14:00",
-          "end": "15:00"
-        },
-        {
-          "start": "18:00",
-          "end": "19:00"
-        },
-        {
-          "start": "22:00",
-          "end": "23:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Night Raid",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
       "description": "",
@@ -192,9 +98,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Cold Snap",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "name": "Launch Tower Loot",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/launchtowerloot.webp",
       "description": "",
       "days": [],
       "times": [
@@ -203,16 +109,8 @@
           "end": "02:00"
         },
         {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "17:00",
-          "end": "18:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
+          "start": "13:00",
+          "end": "14:00"
         }
       ]
     },
@@ -244,9 +142,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Launch Tower Loot",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/launchtowerloot.webp",
+      "name": "Cold Snap",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
       "description": "",
       "days": [],
       "times": [
@@ -255,34 +153,16 @@
           "end": "02:00"
         },
         {
-          "start": "13:00",
-          "end": "14:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "02:00",
-          "end": "03:00"
+          "start": "09:00",
+          "end": "10:00"
         },
         {
-          "start": "08:00",
-          "end": "09:00"
+          "start": "17:00",
+          "end": "18:00"
         },
         {
-          "start": "14:00",
-          "end": "15:00"
-        },
-        {
-          "start": "20:00",
-          "end": "21:00"
+          "start": "21:00",
+          "end": "22:00"
         }
       ]
     },
@@ -314,49 +194,61 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Cold Snap",
-      "map": "Buried City",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "name": "Night Raid",
+      "map": "Stella Montis",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
       "description": "",
       "days": [],
       "times": [
         {
-          "start": "03:00",
-          "end": "04:00"
+          "start": "02:00",
+          "end": "03:00"
         },
         {
-          "start": "11:00",
-          "end": "12:00"
+          "start": "06:00",
+          "end": "07:00"
         },
         {
-          "start": "19:00",
-          "end": "20:00"
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "14:00",
+          "end": "15:00"
+        },
+        {
+          "start": "18:00",
+          "end": "19:00"
+        },
+        {
+          "start": "22:00",
+          "end": "23:00"
         }
       ]
     },
     {
       "game": "arc-raiders",
-      "name": "Uncovered Caches",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
+      "name": "Matriarch",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
       "description": "",
       "days": [],
       "times": [
         {
-          "start": "03:00",
-          "end": "04:00"
+          "start": "02:00",
+          "end": "03:00"
         },
         {
-          "start": "09:00",
-          "end": "10:00"
+          "start": "08:00",
+          "end": "09:00"
         },
         {
-          "start": "15:00",
-          "end": "16:00"
+          "start": "14:00",
+          "end": "15:00"
         },
         {
-          "start": "21:00",
-          "end": "22:00"
+          "start": "20:00",
+          "end": "21:00"
         }
       ]
     },
@@ -389,8 +281,56 @@
     {
       "game": "arc-raiders",
       "name": "Uncovered Caches",
-      "map": "Buried City",
+      "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Cold Snap",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
+        {
+          "start": "11:00",
+          "end": "12:00"
+        },
+        {
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Hidden Bunker",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/hiddenbunker.webp",
       "description": "",
       "days": [],
       "times": [
@@ -410,9 +350,35 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Hidden Bunker",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/hiddenbunker.webp",
+      "name": "Matriarch",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "04:00",
+          "end": "05:00"
+        },
+        {
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "16:00",
+          "end": "17:00"
+        },
+        {
+          "start": "22:00",
+          "end": "23:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Uncovered Caches",
+      "map": "Buried City",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
       "description": "",
       "days": [],
       "times": [
@@ -461,6 +427,40 @@
         {
           "start": "21:00",
           "end": "22:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Electromagnetic Storm",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/electrical.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "02:00",
+          "end": "03:00"
+        },
+        {
+          "start": "06:00",
+          "end": "07:00"
+        },
+        {
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "start": "14:00",
+          "end": "15:00"
+        },
+        {
+          "start": "18:00",
+          "end": "19:00"
+        },
+        {
+          "start": "22:00",
+          "end": "23:00"
         }
       ]
     },
