@@ -3,60 +3,26 @@
     {
       "game": "arc-raiders",
       "name": "Harvester",
-      "map": "Blue Gate",
+      "map": "Spaceport",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
       "description": "",
       "days": [],
       "times": [
         {
-          "start": "05:00",
-          "end": "06:00"
+          "start": "00:00",
+          "end": "01:00"
         },
         {
-          "start": "11:00",
-          "end": "12:00"
+          "start": "06:00",
+          "end": "07:00"
         },
         {
-          "start": "17:00",
-          "end": "18:00"
+          "start": "12:00",
+          "end": "13:00"
         },
         {
-          "start": "23:00",
-          "end": "00:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Locked Gate",
-      "map": "Blue Gate",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lockedgate.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "01:00",
-          "end": "02:00"
-        },
-        {
-          "start": "05:00",
-          "end": "06:00"
-        },
-        {
-          "start": "09:00",
-          "end": "10:00"
-        },
-        {
-          "start": "13:00",
-          "end": "14:00"
-        },
-        {
-          "start": "17:00",
-          "end": "18:00"
-        },
-        {
-          "start": "21:00",
-          "end": "22:00"
+          "start": "18:00",
+          "end": "19:00"
         }
       ]
     },
@@ -91,32 +57,6 @@
         {
           "start": "22:00",
           "end": "23:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
-      "name": "Harvester",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "00:00",
-          "end": "01:00"
-        },
-        {
-          "start": "06:00",
-          "end": "07:00"
-        },
-        {
-          "start": "12:00",
-          "end": "13:00"
-        },
-        {
-          "start": "18:00",
-          "end": "19:00"
         }
       ]
     },
@@ -270,12 +210,16 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Uncovered Caches",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
+      "name": "Matriarch",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
       "description": "",
       "days": [],
       "times": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        },
         {
           "start": "09:00",
           "end": "10:00"
@@ -292,16 +236,12 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+      "name": "Uncovered Caches",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
       "description": "",
       "days": [],
       "times": [
-        {
-          "start": "03:00",
-          "end": "04:00"
-        },
         {
           "start": "09:00",
           "end": "10:00"
@@ -414,6 +354,32 @@
     },
     {
       "game": "arc-raiders",
+      "name": "Harvester",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "05:00",
+          "end": "06:00"
+        },
+        {
+          "start": "11:00",
+          "end": "12:00"
+        },
+        {
+          "start": "17:00",
+          "end": "18:00"
+        },
+        {
+          "start": "23:00",
+          "end": "00:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
       "name": "Uncovered Caches",
       "map": "Buried City",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/cache.webp",
@@ -471,6 +437,40 @@
         {
           "start": "13:00",
           "end": "14:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Locked Gate",
+      "map": "Blue Gate",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/lockedgate.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "01:00",
+          "end": "02:00"
+        },
+        {
+          "start": "05:00",
+          "end": "06:00"
+        },
+        {
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "start": "17:00",
+          "end": "18:00"
+        },
+        {
+          "start": "21:00",
+          "end": "22:00"
         }
       ]
     },
