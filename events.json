@@ -210,24 +210,6 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Launch Tower Loot",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/launchtowerloot.webp",
-      "description": "",
-      "days": [],
-      "times": [
-        {
-          "start": "01:00",
-          "end": "02:00"
-        },
-        {
-          "start": "13:00",
-          "end": "14:00"
-        }
-      ]
-    },
-    {
-      "game": "arc-raiders",
       "name": "Harvester",
       "map": "Dam",
       "icon": "https://cdn.metaforge.app/arc-raiders/custom/harvester.webp",
@@ -249,6 +231,24 @@
         {
           "start": "19:00",
           "end": "20:00"
+        }
+      ]
+    },
+    {
+      "game": "arc-raiders",
+      "name": "Launch Tower Loot",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/launchtowerloot.webp",
+      "description": "",
+      "days": [],
+      "times": [
+        {
+          "start": "01:00",
+          "end": "02:00"
+        },
+        {
+          "start": "13:00",
+          "end": "14:00"
         }
       ]
     },
@@ -342,9 +342,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Matriarch",
-      "map": "Spaceport",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+      "name": "Prospecting Probes",
+      "map": "Dam",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
       "description": "",
       "days": [],
       "times": [
@@ -368,9 +368,9 @@
     },
     {
       "game": "arc-raiders",
-      "name": "Prospecting Probes",
-      "map": "Dam",
-      "icon": "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
+      "name": "Matriarch",
+      "map": "Spaceport",
+      "icon": "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
       "description": "",
       "days": [],
       "times": [
